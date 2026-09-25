@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Instrument+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#efece5;font-family:'Instrument Sans',system-ui,sans-serif;color:#22303c}a{color:oklch(0.45 0.13 235);text-decoration:none}a:hover{color:oklch(0.38 0.12 235)}</style>
+</helmet>
+<div style="padding:48px 56px;min-width:1760px">
+
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;max-width:1680px">
+    <div style="display:flex;align-items:center;gap:16px">
+      <svg width="44" height="44" viewBox="0 0 40 40"><path d="M20 3.5 C22.4 13.6 26.4 17.6 36.5 20 C26.4 22.4 22.4 26.4 20 36.5 C17.6 26.4 13.6 22.4 3.5 20 C13.6 17.6 17.6 13.6 20 3.5 Z" fill="oklch(0.52 0.13 235)"></path><circle cx="31.5" cy="8.5" r="3" fill="oklch(0.72 0.12 260)"></circle></svg>
+      <div>
+        <div style="font-family:'Instrument Serif',serif;font-size:34px">Mirai — High-level System Design</div>
+        <div style="font-size:14px;color:rgba(34,48,60,0.6);margin-top:2px">Multi-tenant health-record platform · tenant = healthcare organization (hospital, clinic chain, diagnostics network) · patients are global identities shared across tenants with consent</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;font-size:11.5px;font-weight:600">
+      <span style="display:flex;align-items:center;gap:6px;background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:999px;padding:5px 12px"><span style="width:10px;height:10px;border-radius:3px;background:oklch(0.94 0.02 235);border:1px solid oklch(0.72 0.08 235)"></span>Tenant-scoped (pooled)</span>
+      <span style="display:flex;align-items:center;gap:6px;background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:999px;padding:5px 12px"><span style="width:10px;height:10px;border-radius:3px;background:oklch(0.93 0.05 150);border:1px solid oklch(0.65 0.1 150)"></span>Isolated per tenant</span>
+      <span style="display:flex;align-items:center;gap:6px;background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:999px;padding:5px 12px"><span style="width:10px;height:10px;border-radius:3px;background:#fff;border:1px solid rgba(34,48,60,0.3)"></span>Shared platform</span>
+      <span style="display:flex;align-items:center;gap:6px;background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:999px;padding:5px 12px"><span style="width:10px;height:10px;border-radius:3px;background:oklch(0.95 0.03 25);border:1px solid oklch(0.7 0.14 25)"></span>Security / audit</span>
+      <span style="display:flex;align-items:center;gap:6px;background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:999px;padding:5px 12px"><span style="width:14px;height:0;border-top:2px dashed rgba(34,48,60,0.5)"></span>Async / events</span>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1240px 420px;gap:20px;margin-top:28px;align-items:start">
+
+    <div style="display:flex;flex-direction:column;gap:0">
+
+      <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:16px;padding:16px 18px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:rgba(34,48,60,0.5)">1 · CLIENTS</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px">
+          <div style="border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">Patient app</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">iOS / Android · QR present · records, consent, family profiles · OTP / passkey / Face ID</div></div>
+          <div style="border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">Doctor app</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">QR scan · patient 360° · write clinical data · org SSO + MFA · break-glass</div></div>
+          <div style="border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">Admin console</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Web · staff &amp; roles · integration config · error queue · audit export</div></div>
+          <div style="border:1px dashed rgba(34,48,60,0.35);border-radius:12px;padding:11px 13px;background:oklch(0.98 0.005 90)"><div style="font-weight:700;font-size:13.5px">Hospital EHR / HIS / LIS</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">External systems of record · push finalized results via integration layer only</div></div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:center;gap:180px;padding:4px 0;color:rgba(34,48,60,0.45);font-size:12px"><span>▼ HTTPS · mTLS for system clients</span></div>
+
+      <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:16px;padding:16px 18px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:rgba(34,48,60,0.5)">2 · EDGE — TENANT RESOLUTION HAPPENS HERE</div>
+        <div style="display:grid;grid-template-columns:1fr 2fr 1fr;gap:10px;margin-top:10px">
+          <div style="border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">CDN + WAF</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Static assets · TLS termination · DDoS / OWASP rules · bot filtering</div></div>
+          <div style="border:1.5px solid oklch(0.52 0.13 235);border-radius:12px;padding:11px 13px;background:oklch(0.97 0.01 235)"><div style="font-weight:700;font-size:13.5px">API Gateway · Tenant Resolver</div><div style="font-size:11.5px;color:rgba(34,48,60,0.65);line-height:1.5;margin-top:3px">Resolves tenant from subdomain (<span style="font-family:ui-monospace,Menlo,monospace">citygeneral.mirai.health</span>), client cert or token claim → stamps immutable <b>tenant context</b> {tenant_id, tier, region, plan} on every request · per-tenant rate limits &amp; quotas · schema validation · request signing · anti-replay nonce for QR endpoints</div></div>
+          <div style="border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">Load balancer</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Regional routing (data residency) · health checks · blue/green deploys</div></div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:center;padding:4px 0;color:rgba(34,48,60,0.45);font-size:12px">▼ tenant context propagated in signed headers — services never trust client-sent tenant ids</div>
+
+      <div style="background:oklch(0.95 0.03 25 / 0.35);border:1px solid oklch(0.8 0.08 25);border-radius:16px;padding:16px 18px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:oklch(0.42 0.13 25)">3 · IDENTITY, AUTHZ &amp; CONSENT — THE QR IDENTIFIES; AUTH DECIDES</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px">
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">AuthN service</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Patients: OTP, passkeys, ABHA federation · Doctors: org IdP (OIDC/SAML per tenant) + MFA · session mgmt · device binding</div></div>
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">QR token service</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Issues opaque, short-lived rotating tokens · no PHI in QR · expiry, revocation, session binding, rate limits, anti-replay</div></div>
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">Policy engine (AuthZ)</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">RBAC (role) + ABAC (tenant, org, specialty) + consent grants · category-level rules (mental health, sensitive) · emergency break-glass policy · decision logs</div></div>
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">Tenant directory</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Tenant registry: tier, region, IdP config, feature flags, branding · org &amp; facility hierarchy · practitioner registry (HPR-ready)</div></div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:center;padding:4px 0;color:rgba(34,48,60,0.45);font-size:12px">▼ authenticated + authorized requests only</div>
+
+      <div style="background:oklch(0.94 0.02 235 / 0.5);border:1px solid oklch(0.72 0.08 235);border-radius:16px;padding:16px 18px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:oklch(0.4 0.11 235)">4 · CORE SERVICES — stateless, tenant-aware, horizontally scalable</span><span style="font-size:11px;color:rgba(34,48,60,0.5)">every read/write carries tenant_id + actor + purpose</span></div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px">
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">Patient identity &amp; registry</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Global Mirai Patient ID (cross-tenant) · demographic golden record · external-ID mapping per tenant · probabilistic matching, ambiguous → manual resolution · family/guardian links</div></div>
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">Medical records</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Timeline events, diagnoses, prescriptions, hospitalizations · FHIR-aligned internal model · versioning + provenance (source system, ids, timestamps) · report lifecycle (ORDERED→FINAL→PUBLISHED)</div></div>
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">Consent &amp; access</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Grants: {grantee, categories, duration, purpose} · request/approve/deny/revoke · auto-expiry · emergency access records · patient-visible access log</div></div>
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">Documents</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Upload/download via pre-signed URLs · malware scan pipeline · metadata + linkage to events · format support (PDF, DICOM, images)</div></div>
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">AI summary service</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Patient-friendly + clinical briefs · ask-the-record Q&amp;A · RAG over the authorized slice only · pluggable provider gateway (Azure OpenAI, Bedrock, Vertex, self-hosted) routed per tenant · guardrails, citations, claim-verification · no cross-tenant training</div></div>
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">Search</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Patient lookup (name, ID, phone, DOB) · permission-trimmed results (identity only until consent check) · per-tenant index partitions</div></div>
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">Notifications</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Push / SMS / email · templates without PHI · consent requests, report-ready, access alerts, follow-up reminders · per-tenant + per-user preferences</div></div>
+          <div style="background:oklch(0.95 0.03 25 / 0.5);border:1px solid oklch(0.8 0.08 25);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">Audit service</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Append-only, hash-chained · every view/write/grant/QR scan/break-glass · {actor, role, tenant, patient, action, resource, method, result, session} · tamper-evident, per-tenant export</div></div>
+        </div>
+      </div>
+
+      <div style="border:2px dashed rgba(34,48,60,0.35);border-radius:14px;padding:12px 18px;margin-top:12px;background:#fdfbf7;display:flex;align-items:center;gap:18px">
+        <div style="font-weight:700;font-size:13.5px;flex:none">Event bus</div>
+        <div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5">Topics partitioned by tenant_id: <span style="font-family:ui-monospace,Menlo,monospace">report.finalized · record.created · consent.granted/revoked · access.viewed · integration.failed · notification.requested</span> · outbox pattern from services · consumers are idempotent · per-tenant ordering keys</div>
+      </div>
+
+      <div style="display:flex;justify-content:center;padding:4px 0;color:rgba(34,48,60,0.45);font-size:12px">▲▼ async events both ways</div>
+
+      <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:16px;padding:16px 18px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:rgba(34,48,60,0.5)">5 · INTEGRATION LAYER — hospitals never write to core stores</span><span style="font-size:11px;color:rgba(34,48,60,0.5)">one logical pipeline, per-tenant connectors &amp; credentials</span></div>
+        <div style="display:grid;grid-template-columns:1fr 2.2fr 1fr;gap:10px;margin-top:10px">
+          <div style="border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13.5px">Protocol adapters</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">REST · FHIR R4 · HL7 v2 · webhooks · SFTP/file drop (legacy) · scheduled sync · adapters plug in without touching the core model</div></div>
+          <div style="border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px;background:oklch(0.97 0.01 235)">
+            <div style="font-weight:700;font-size:13.5px">Processing pipeline</div>
+            <div style="display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;font-weight:600;flex-wrap:wrap">
+              <span style="background:#fff;border:1px solid rgba(34,48,60,0.2);border-radius:999px;padding:4px 10px">Authenticate source</span><span style="color:rgba(34,48,60,0.4)">→</span>
+              <span style="background:#fff;border:1px solid rgba(34,48,60,0.2);border-radius:999px;padding:4px 10px">Validate schema</span><span style="color:rgba(34,48,60,0.4)">→</span>
+              <span style="background:#fff;border:1px solid rgba(34,48,60,0.2);border-radius:999px;padding:4px 10px">Resolve identity</span><span style="color:rgba(34,48,60,0.4)">→</span>
+              <span style="background:#fff;border:1px solid rgba(34,48,60,0.2);border-radius:999px;padding:4px 10px">Map / normalize</span><span style="color:rgba(34,48,60,0.4)">→</span>
+              <span style="background:#fff;border:1px solid rgba(34,48,60,0.2);border-radius:999px;padding:4px 10px">Dedupe</span><span style="color:rgba(34,48,60,0.4)">→</span>
+              <span style="background:#fff;border:1px solid rgba(34,48,60,0.2);border-radius:999px;padding:4px 10px">Persist + provenance</span><span style="color:rgba(34,48,60,0.4)">→</span>
+              <span style="background:#fff;border:1px solid rgba(34,48,60,0.2);border-radius:999px;padding:4px 10px">Publication policy</span><span style="color:rgba(34,48,60,0.4)">→</span>
+              <span style="background:#fff;border:1px solid rgba(34,48,60,0.2);border-radius:999px;padding:4px 10px">Notify</span>
+            </div>
+            <div style="font-size:11.5px;color:rgba(34,48,60,0.6);margin-top:8px">States: RECEIVED → VALIDATING → PROCESSED | REJECTED | RETRYING → FAILED → DEAD_LETTER · idempotency keys = {tenant, source_system, source_record_id, version}</div>
+          </div>
+          <div style="border:1px solid oklch(0.8 0.08 25);border-radius:12px;padding:11px 13px;background:oklch(0.95 0.03 25 / 0.4)"><div style="font-weight:700;font-size:13.5px">Error handling</div><div style="font-size:11.5px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Retry with backoff · DLQ per tenant · admin error queue UI · ambiguous identity → human resolution, never auto-attach · nothing silently dropped</div></div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:center;padding:4px 0;color:rgba(34,48,60,0.45);font-size:12px">▼ all persistence through tenant-aware data access layer (repository enforces tenant_id — no raw cross-tenant queries)</div>
+
+      <div style="background:oklch(0.93 0.05 150 / 0.35);border:1px solid oklch(0.65 0.1 150);border-radius:16px;padding:16px 18px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:oklch(0.38 0.1 150)">6 · DATA LAYER — isolation by tier, encrypted per tenant</span><span style="font-size:11px;color:rgba(34,48,60,0.5)">envelope encryption: per-tenant data keys wrapped by KMS master keys</span></div>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:10px">
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13px">Clinical DB (Postgres)</div><div style="font-size:11px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Pooled: shared tables + tenant_id + row-level security · Siloed: schema-per-tenant · Dedicated: DB/cluster-per-tenant · partitioned by tenant</div></div>
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13px">Identity registry DB</div><div style="font-size:11px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Global patient identities + per-tenant external-ID crosswalk · strict service-only access</div></div>
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13px">Object storage</div><div style="font-size:11px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Documents/DICOM · per-tenant prefix or bucket · pre-signed URLs · lifecycle + legal hold</div></div>
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13px">Search index</div><div style="font-size:11px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Per-tenant partitions/aliases · rebuilt from source of truth · no PHI beyond indexed fields</div></div>
+          <div style="background:oklch(0.95 0.03 25 / 0.5);border:1px solid oklch(0.8 0.08 25);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13px">Audit store (WORM)</div><div style="font-size:11px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Append-only, immutable retention · hash chain anchored daily · separate credentials from app DBs</div></div>
+          <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:11px 13px"><div style="font-weight:700;font-size:13px">Cache / queues</div><div style="font-size:11px;color:rgba(34,48,60,0.6);line-height:1.5;margin-top:3px">Redis: sessions, QR token state, rate counters — keys namespaced by tenant · TTL-bound, no PHI</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="background:#22303c;color:#fff;border-radius:16px;padding:16px 18px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:rgba(255,255,255,0.6)">CONTROL PLANE (shared, no PHI)</div>
+        <div style="font-size:12px;line-height:1.65;margin-top:8px;color:rgba(255,255,255,0.85)">
+          <b>Tenant provisioning</b> — create tenant → pick tier &amp; region → provision schema/DB, storage prefix, KMS key, IdP config, subdomain, quotas · automated, idempotent<br><br>
+          <b>Plans &amp; metering</b> — per-tenant usage (API calls, storage, seats), feature flags, billing hooks<br><br>
+          <b>Config &amp; branding</b> — publication rules, notification prefs, report-type policies, logo/locale per tenant<br><br>
+          <b>Lifecycle</b> — suspend, export (patient-portable data out), offboard with secure deletion &amp; retention holds
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid oklch(0.8 0.08 25);border-radius:16px;padding:16px 18px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:oklch(0.42 0.13 25)">SECURITY &amp; COMPLIANCE (cross-cutting)</div>
+        <div style="font-size:12px;line-height:1.65;margin-top:8px;color:rgba(34,48,60,0.75)">TLS 1.3 in transit · AES-256 at rest · per-tenant envelope keys, rotation · secrets manager (integration creds never exposed) · signed tenant context, defense-in-depth tenant checks at gateway, service and DB (RLS) layers · malware scanning on uploads · pen-testing &amp; SAST/DAST in CI · DPDP (India), HIPAA, GDPR postures via regional cells · data residency pinned per tenant region</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:16px;padding:16px 18px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:rgba(34,48,60,0.5)">OBSERVABILITY</div>
+        <div style="font-size:12px;line-height:1.65;margin-top:8px;color:rgba(34,48,60,0.75)">Structured logs, metrics, traces — all tagged tenant_id · per-tenant dashboards &amp; SLOs (QR-to-patient p95 &lt; 500 ms, overview load &lt; 1 s) · noisy-neighbor detection tied to quotas · integration lag &amp; DLQ depth alerts to tenant admins</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:16px;padding:16px 18px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:rgba(34,48,60,0.5)">RELIABILITY &amp; DR</div>
+        <div style="font-size:12px;line-height:1.65;margin-top:8px;color:rgba(34,48,60,0.75)">Multi-AZ by default · regional cells (in-region failover keeps residency) · PITR backups per tenant DB/schema · restore drills · RPO ≤ 5 min, RTO ≤ 1 h for clinical reads · read replicas for heavy patient-360 queries · graceful degradation: QR + emergency card served from cache if core degraded</div>
+      </div>
+      <div style="background:oklch(0.94 0.02 235 / 0.6);border:1px solid oklch(0.72 0.08 235);border-radius:16px;padding:16px 18px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:oklch(0.4 0.11 235)">WHY PATIENTS SPAN TENANTS</div>
+        <div style="font-size:12px;line-height:1.65;margin-top:8px;color:rgba(34,48,60,0.75)">Patient identity is a <b>global platform entity</b>; clinical records are <b>tenant-owned</b> with provenance. The patient's consolidated timeline is a consented, read-time composition across tenants — this is what makes cross-hospital history possible without hospitals sharing databases.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1240px 420px;gap:20px;margin-top:20px;align-items:start">
+    <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:16px;padding:16px 18px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:rgba(34,48,60,0.5)">TENANCY TIERS — same code, different isolation</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px">
+        <div style="border:1px solid oklch(0.72 0.08 235);border-radius:12px;padding:12px 14px;background:oklch(0.97 0.01 235)"><div style="display:flex;justify-content:space-between"><span style="font-weight:700;font-size:13.5px">Pooled</span><span style="font-size:10.5px;font-weight:700;color:oklch(0.42 0.12 235)">CLINICS · STARTER</span></div><div style="font-size:11.5px;color:rgba(34,48,60,0.65);line-height:1.55;margin-top:5px">Shared DB + tenant_id column + Postgres row-level security · shared compute · per-tenant encryption keys still apply · cheapest, fastest onboarding</div></div>
+        <div style="border:1px solid oklch(0.65 0.1 150);border-radius:12px;padding:12px 14px;background:oklch(0.93 0.05 150 / 0.3)"><div style="display:flex;justify-content:space-between"><span style="font-weight:700;font-size:13.5px">Siloed</span><span style="font-size:10.5px;font-weight:700;color:oklch(0.38 0.1 150)">HOSPITALS · STANDARD</span></div><div style="font-size:11.5px;color:rgba(34,48,60,0.65);line-height:1.55;margin-top:5px">Schema-per-tenant on shared clusters · dedicated search partition &amp; storage bucket · optional dedicated queue consumers · balances cost and blast-radius</div></div>
+        <div style="border:1px solid rgba(34,48,60,0.3);border-radius:12px;padding:12px 14px"><div style="display:flex;justify-content:space-between"><span style="font-weight:700;font-size:13.5px">Dedicated</span><span style="font-size:10.5px;font-weight:700;color:rgba(34,48,60,0.6)">NETWORKS · ENTERPRISE / GOV</span></div><div style="font-size:11.5px;color:rgba(34,48,60,0.65);line-height:1.55;margin-top:5px">Own DB cluster (or full cell) · pinned region for residency · dedicated KMS keys, optional BYOK · custom SLOs · required for national-platform deployments</div></div>
+      </div>
+      <div style="margin-top:14px;border-top:1px solid rgba(34,48,60,0.1);padding-top:12px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:rgba(34,48,60,0.5)">KEY FLOW A — QR CONSULT (sync)</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;font-weight:600;flex-wrap:wrap">
+          <span style="background:oklch(0.94 0.02 235);border-radius:999px;padding:4px 10px">Doctor scans QR</span><span style="color:rgba(34,48,60,0.4)">→</span>
+          <span style="background:oklch(0.94 0.02 235);border-radius:999px;padding:4px 10px">Gateway: tenant + rate + nonce</span><span style="color:rgba(34,48,60,0.4)">→</span>
+          <span style="background:oklch(0.94 0.02 235);border-radius:999px;padding:4px 10px">QR token → patient id</span><span style="color:rgba(34,48,60,0.4)">→</span>
+          <span style="background:oklch(0.94 0.02 235);border-radius:999px;padding:4px 10px">Policy: role + consent + categories</span><span style="color:rgba(34,48,60,0.4)">→</span>
+          <span style="background:oklch(0.94 0.02 235);border-radius:999px;padding:4px 10px">Compose 360° (authorized slice)</span><span style="color:rgba(34,48,60,0.4)">→</span>
+          <span style="background:oklch(0.94 0.02 235);border-radius:999px;padding:4px 10px">AI brief</span><span style="color:rgba(34,48,60,0.4)">→</span>
+          <span style="background:oklch(0.95 0.03 25);border-radius:999px;padding:4px 10px">Audit + patient alert</span>
+        </div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:rgba(34,48,60,0.5);margin-top:12px">KEY FLOW B — LAB REPORT SYNC (async)</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;font-weight:600;flex-wrap:wrap">
+          <span style="background:#fdfbf7;border:1px dashed rgba(34,48,60,0.35);border-radius:999px;padding:4px 10px">LIS finalizes report</span><span style="color:rgba(34,48,60,0.4)">→</span>
+          <span style="background:#fdfbf7;border:1px dashed rgba(34,48,60,0.35);border-radius:999px;padding:4px 10px">Integration gateway (tenant creds)</span><span style="color:rgba(34,48,60,0.4)">→</span>
+          <span style="background:#fdfbf7;border:1px dashed rgba(34,48,60,0.35);border-radius:999px;padding:4px 10px">Pipeline: validate → resolve → normalize</span><span style="color:rgba(34,48,60,0.4)">→</span>
+          <span style="background:#fdfbf7;border:1px dashed rgba(34,48,60,0.35);border-radius:999px;padding:4px 10px">Persist + provenance</span><span style="color:rgba(34,48,60,0.4)">→</span>
+          <span style="background:#fdfbf7;border:1px dashed rgba(34,48,60,0.35);border-radius:999px;padding:4px 10px">Publication policy</span><span style="color:rgba(34,48,60,0.4)">→</span>
+          <span style="background:#fdfbf7;border:1px dashed rgba(34,48,60,0.35);border-radius:999px;padding:4px 10px">event: report.finalized</span><span style="color:rgba(34,48,60,0.4)">→</span>
+          <span style="background:oklch(0.95 0.03 25);border-radius:999px;padding:4px 10px">Notify patient · audit</span>
+        </div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid rgba(34,48,60,0.15);border-radius:16px;padding:16px 18px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:rgba(34,48,60,0.5)">MULTI-TENANCY INVARIANTS</div>
+      <div style="font-size:12px;line-height:1.8;margin-top:8px;color:rgba(34,48,60,0.75)">
+        1 · tenant_id derived server-side, never from client input<br>
+        2 · Every query passes through the tenant-aware repository; RLS is the backstop<br>
+        3 · Per-tenant encryption keys — a leaked key exposes one tenant only<br>
+        4 · Quotas &amp; rate limits per tenant — no noisy neighbors<br>
+        5 · Events, indexes, caches, DLQs all namespaced by tenant<br>
+        6 · Cross-tenant reads exist ONLY via patient-consented composition, always audited<br>
+        7 · Offboarding exports then provably deletes — audit retained per law
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

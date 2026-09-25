@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#efece5;font-family:'Instrument Sans',system-ui,sans-serif}a{color:oklch(0.45 0.13 235);text-decoration:none}a:hover{color:oklch(0.38 0.12 235)}input,textarea{font-family:'Instrument Sans',sans-serif;outline:none}@keyframes toastin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:16px;padding:28px 20px 48px">
+  <div style="width:560px;display:flex;align-items:center;gap:10px">
+    <svg width="26" height="26" viewBox="0 0 40 40"><path d="M20 3.5 C22.4 13.6 26.4 17.6 36.5 20 C26.4 22.4 22.4 26.4 20 36.5 C17.6 26.4 13.6 22.4 3.5 20 C13.6 17.6 17.6 13.6 20 3.5 Z" fill="oklch(0.52 0.13 235)"></path><circle cx="31.5" cy="8.5" r="3" fill="oklch(0.72 0.12 260)"></circle></svg>
+    <div style="font-family:'Instrument Serif',serif;font-size:20px;color:#22303c;white-space:nowrap">Mirai</div>
+    <div style="margin-left:auto;display:flex;gap:4px;background:#fff;border:1px solid rgba(34,48,60,0.12);border-radius:999px;padding:3px">
+      <div onClick="{{ devIos }}" style="cursor:pointer;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:600;background:{{ iosBtnBg }};color:{{ iosBtnC }}">iOS</div>
+      <div onClick="{{ devAndroid }}" style="cursor:pointer;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:600;background:{{ andBtnBg }};color:{{ andBtnC }}">Android</div>
+    </div>
+    <div style="display:flex;gap:4px;background:#fff;border:1px solid rgba(34,48,60,0.12);border-radius:999px;padding:3px">
+      <div onClick="{{ rolePatient }}" style="cursor:pointer;padding:5px 14px;border-radius:999px;font-size:12px;font-weight:600;background:{{ patBtnBg }};color:{{ patBtnC }}">Patient</div>
+      <div onClick="{{ roleDoctor }}" style="cursor:pointer;padding:5px 14px;border-radius:999px;font-size:12px;font-weight:600;background:{{ docBtnBg }};color:{{ docBtnC }}">Doctor</div>
+      <div onClick="{{ roleAdmin }}" style="cursor:pointer;padding:5px 14px;border-radius:999px;font-size:12px;font-weight:600;background:{{ admBtnBg }};color:{{ admBtnC }}">Admin</div>
+    </div>
+  </div>
+  <x-import component-from-global-scope="{{ deviceComp }}" from="./ios-frame.jsx ./android-frame.jsx" dark="{{ frameDark }}" hint-size="390px,844px">
+    <div style="height:100%;display:flex;flex-direction:column;background:#faf7f1;color:#22303c;font-family:'Instrument Sans',sans-serif;position:relative">
+
+      <sc-if value="{{ pWelcome }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Patient welcome" style="flex:1;display:flex;flex-direction:column;padding:0 28px 40px">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:14px">
+            <svg width="72" height="72" viewBox="0 0 40 40"><path d="M20 3.5 C22.4 13.6 26.4 17.6 36.5 20 C26.4 22.4 22.4 26.4 20 36.5 C17.6 26.4 13.6 22.4 3.5 20 C13.6 17.6 17.6 13.6 20 3.5 Z" fill="oklch(0.52 0.13 235)"></path><circle cx="31.5" cy="8.5" r="3" fill="oklch(0.72 0.12 260)"></circle></svg>
+            <div style="font-family:'Instrument Serif',serif;font-size:38px;line-height:1.1">Your health,<br>in one place</div>
+            <div style="font-size:14.5px;color:rgba(34,48,60,0.6);max-width:260px">One identity, one QR, your complete medical history — shared only with doctors you allow.</div>
+            <div style="display:flex;gap:6px">
+              <span style="font-size:11.5px;font-weight:600;padding:4px 12px;border-radius:999px;background:#22303c;color:#fff">English</span>
+              <span style="font-size:11.5px;padding:4px 12px;border-radius:999px;background:#fff;border:1px solid rgba(34,48,60,0.15)">हिंदी</span>
+              <span style="font-size:11.5px;padding:4px 12px;border-radius:999px;background:#fff;border:1px solid rgba(34,48,60,0.15)">मराठी</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <input placeholder="Mobile number" style="border:1px solid rgba(34,48,60,0.18);border-radius:12px;padding:14px 16px;font-size:15px;background:#fff" value="+91 98220 41175" readOnly="{{ true }}">
+            <div onClick="{{ toOtp }}" style="cursor:pointer;background:#22303c;color:#fff;border-radius:12px;padding:15px 0;text-align:center;font-weight:600;font-size:15px" style-hover="opacity:0.88">Continue with OTP</div>
+            <div onClick="{{ toHome }}" style="cursor:pointer;text-align:center;font-size:13.5px;font-weight:600;color:oklch(0.45 0.13 235);padding:4px 0">Sign in with Face ID</div>
+            <div style="text-align:center;font-size:12px;color:rgba(34,48,60,0.5)">Works with ABHA (ABDM) · encrypted · you control access</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pOtp }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Patient OTP" style="flex:1;display:flex;flex-direction:column;padding:62px 28px 40px">
+          <div onClick="{{ toWelcome }}" style="cursor:pointer;font-size:14px;color:rgba(34,48,60,0.6)">‹ Back</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:28px;margin-top:24px">Enter the code</div>
+          <div style="font-size:13.5px;color:rgba(34,48,60,0.6);margin-top:4px">Sent to +91 98220 41175</div>
+          <div style="display:flex;gap:12px;margin-top:24px">
+            <div style="width:56px;height:64px;border:1.5px solid oklch(0.52 0.13 235);border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600">4</div>
+            <div style="width:56px;height:64px;border:1.5px solid oklch(0.52 0.13 235);border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600">7</div>
+            <div style="width:56px;height:64px;border:1px solid rgba(34,48,60,0.2);border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600;color:rgba(34,48,60,0.35)">•</div>
+            <div style="width:56px;height:64px;border:1px solid rgba(34,48,60,0.2);border-radius:12px;background:#fff"></div>
+          </div>
+          <div onClick="{{ toHome }}" style="cursor:pointer;margin-top:28px;background:#22303c;color:#fff;border-radius:12px;padding:15px 0;text-align:center;font-weight:600;font-size:15px">Verify &amp; continue</div>
+          <div style="margin-top:14px;font-size:13px;color:rgba(34,48,60,0.5);text-align:center">Resend code in 0:24</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pHome }}" hint-placeholder-val="{{ true }}">
+        <div data-screen-label="Patient home" style="flex:1;overflow:auto;padding-bottom:16px">
+          <div style="padding:62px 22px 0;display:flex;align-items:flex-start;justify-content:space-between">
+            <div><div style="font-size:13px;color:rgba(34,48,60,0.55)">Wednesday, 21 August</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:30px;line-height:1.15;margin-top:2px">Good morning,<br>{{ firstName }}</div></div>
+            <div onClick="{{ toNotifs }}" style="cursor:pointer;position:relative;width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid rgba(34,48,60,0.12);display:flex;align-items:center;justify-content:center">
+              <div style="width:14px;height:14px;border-radius:50%;border:2px solid #22303c"></div>
+              <span style="position:absolute;top:2px;right:2px;width:10px;height:10px;border-radius:50%;background:oklch(0.55 0.18 25);border:2px solid #faf7f1"></span>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin:14px 22px 0;overflow:auto">
+            <sc-for list="{{ famList }}" as="fm" hint-placeholder-count="3">
+              <div onClick="{{ fm.onPick }}" style="cursor:pointer;flex:none;display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border-radius:999px;background:{{ fm.bg }};border:1px solid rgba(34,48,60,0.15)">
+                <span style="width:26px;height:26px;border-radius:50%;background:{{ fm.avBg }};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:{{ fm.avC }}">{{ fm.init }}</span>
+                <span style="font-size:12px;font-weight:600;color:{{ fm.c }}">{{ fm.n }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div onClick="{{ toQr }}" style="cursor:pointer;margin:14px 22px 0;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:16px;padding:16px;display:flex;gap:14px;align-items:center;box-shadow:0 1px 2px rgba(34,48,60,0.05)">
+            <div style="width:84px;height:84px;flex:none;padding:6px;background:#fff;border:1px solid rgba(34,48,60,0.12);border-radius:10px">{{ qrSmall }}</div>
+            <div style="flex:1"><div style="font-weight:600;font-size:15px">My Mirai QR</div>
+            <div style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:rgba(34,48,60,0.55);margin-top:2px">MIR-82X92K</div>
+            <div style="margin-top:8px;display:inline-block;font-size:12.5px;font-weight:600;color:oklch(0.45 0.13 235);border-bottom:1px solid oklch(0.72 0.08 235)">Present to doctor</div></div>
+          </div>
+          <div style="margin:14px 22px 0;background:linear-gradient(135deg,oklch(0.96 0.02 235),oklch(0.94 0.03 260));border:1px solid oklch(0.86 0.05 245);border-radius:16px;padding:15px 16px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <svg width="15" height="15" viewBox="0 0 20 20"><rect x="6" y="6" width="8" height="8" rx="2" fill="oklch(0.5 0.14 260)" transform="rotate(45 10 10)"></rect></svg>
+              <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;color:oklch(0.42 0.12 260)">AI SUMMARY</span>
+              <span style="margin-left:auto;font-size:10.5px;color:rgba(34,48,60,0.45)">Updated today, 9:15</span>
+            </div>
+            <div style="font-size:13.5px;line-height:1.55;margin-top:8px;color:#22303c">Your new lipid panel looks mostly good — cholesterol is in range, but triglycerides are slightly high. Your diabetes remains well controlled (HbA1c 6.8%). Keep taking both medications; Dr. Menon may discuss diet at your 12 Sep follow-up.</div>
+            <div style="font-size:10.5px;color:rgba(34,48,60,0.45);margin-top:8px">Generated from 7 records · treating doctor: Dr. R. Menon, Endocrinology · not medical advice</div>
+          </div>
+          <div style="padding:16px 22px 0">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Instrument Serif',serif;font-size:19px">Today's medication</span><a onClick="{{ toRecordsRx }}" style="cursor:pointer;font-size:12.5px">All</a></div>
+            <div style="margin-top:6px">
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="width:8px;height:8px;border-radius:50%;background:oklch(0.52 0.13 235)"></span><div style="flex:1"><span style="font-weight:600;font-size:14px">Metformin 500 mg</span><span style="font-size:12.5px;color:rgba(34,48,60,0.55)"> · with breakfast</span></div><span style="font-size:12px;color:rgba(34,48,60,0.45)">8:00</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(34,48,60,0.35)"></span><div style="flex:1"><span style="font-weight:600;font-size:14px">Atorvastatin 10 mg</span><span style="font-size:12.5px;color:rgba(34,48,60,0.55)"> · after dinner</span></div><span style="font-size:12px;color:rgba(34,48,60,0.45)">21:00</span></div>
+            </div>
+          </div>
+          <div style="padding:18px 22px 0">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Instrument Serif',serif;font-size:19px">Recent</span><a onClick="{{ toTimeline }}" style="cursor:pointer;font-size:12.5px">Timeline</a></div>
+            <div style="margin-top:10px;border-left:2px solid oklch(0.85 0.05 235);padding-left:14px;display:flex;flex-direction:column;gap:12px">
+              <div onClick="{{ toReport }}" style="cursor:pointer"><div style="font-size:11px;color:rgba(34,48,60,0.5)">Today · Apollo Diagnostics</div><div style="font-size:14px;font-weight:600">Lipid panel report available</div><div style="font-size:12.5px;color:oklch(0.45 0.13 235);margin-top:1px">View report</div></div>
+              <div><div style="font-size:11px;color:rgba(34,48,60,0.5)">12 Aug · Dr. R. Menon</div><div style="font-size:14px;font-weight:600">Consultation — follow-up, Type 2 diabetes</div></div>
+            </div>
+          </div>
+          <div onClick="{{ toAccess }}" style="cursor:pointer;margin:20px 22px 0;background:oklch(0.94 0.02 235);border-radius:14px;padding:13px 16px;display:flex;align-items:center;gap:12px">
+            <div style="width:10px;height:10px;border-radius:50%;background:oklch(0.52 0.13 235)"></div>
+            <div style="flex:1;font-size:13px"><b>2 providers</b> currently have access to your records</div>
+            <div style="font-size:13px;color:rgba(34,48,60,0.45)">›</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pQr }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Patient QR present" style="flex:1;display:flex;flex-direction:column;background:#22303c;color:#fff;padding:62px 28px 34px">
+          <div onClick="{{ toHome }}" style="cursor:pointer;font-size:14px;color:rgba(255,255,255,0.7)">‹ Close</div>
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:18px;text-align:center">
+            <div style="font-family:'Instrument Serif',serif;font-size:26px">Priya Sharma</div>
+            <div style="width:250px;height:250px;background:#fff;border-radius:20px;padding:18px;box-shadow:0 10px 40px rgba(0,0,0,0.35)">{{ qrBig }}</div>
+            <div style="font-family:ui-monospace,Menlo,monospace;font-size:14px;color:rgba(255,255,255,0.8)">MIR-82X92K</div>
+            <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border-radius:999px;padding:7px 16px;font-size:12.5px"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.8 0.15 150)"></span>Secure token · rotates in 4:52</div>
+          </div>
+          <div style="text-align:center;font-size:12.5px;color:rgba(255,255,255,0.55);max-width:280px;margin:0 auto">This code identifies you — it contains no medical data. The doctor sees only what you've authorized.</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pTimeline }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Patient timeline" style="flex:1;overflow:auto;padding-bottom:16px">
+          <div style="padding:62px 22px 0"><div style="font-family:'Instrument Serif',serif;font-size:28px">Timeline</div>
+            <div style="font-size:12.5px;color:rgba(34,48,60,0.5);margin-top:2px">{{ tlSubtitle }}</div>
+            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+              <span onClick="{{ tlAll }}" style="cursor:pointer;font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;background:{{ tlAllBg }};color:{{ tlAllC }};border:1px solid rgba(34,48,60,0.15)">All</span>
+              <span onClick="{{ tlCon }}" style="cursor:pointer;font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;background:{{ tlConBg }};color:{{ tlConC }};border:1px solid rgba(34,48,60,0.15)">Consultations</span>
+              <span onClick="{{ tlRep }}" style="cursor:pointer;font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;background:{{ tlRepBg }};color:{{ tlRepC }};border:1px solid rgba(34,48,60,0.15)">Reports</span>
+              <span onClick="{{ tlHos }}" style="cursor:pointer;font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;background:{{ tlHosBg }};color:{{ tlHosC }};border:1px solid rgba(34,48,60,0.15)">Hospital</span>
+            </div>
+          </div>
+          <div style="padding-bottom:8px">
+            <sc-for list="{{ tlGroups }}" as="grp" hint-placeholder-count="2">
+              <div style="margin:18px 22px 0">
+                <div style="display:flex;align-items:center;gap:10px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:rgba(34,48,60,0.45)">{{ grp.label }}</span><span style="flex:1;height:1px;background:rgba(34,48,60,0.1)"></span></div>
+                <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ grp.items }}" as="ev" hint-placeholder-count="3">
+                    <div onClick="{{ ev.onTap }}" style="cursor:{{ ev.cursor }};background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start">
+                      <div style="width:38px;height:38px;flex:none;border-radius:12px;background:{{ ev.tintBg }};display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;letter-spacing:0.03em;color:{{ ev.tintC }}">{{ ev.chip }}</div>
+                      <div style="flex:1;min-width:0">
+                        <div style="font-size:11px;color:rgba(34,48,60,0.5)">{{ ev.dt }} · {{ ev.t }}</div>
+                        <div style="font-size:14px;font-weight:600;margin-top:1px">{{ ev.title }}</div>
+                        <div style="font-size:12px;color:rgba(34,48,60,0.55);margin-top:1px">{{ ev.org }}</div>
+                      </div>
+                      <sc-if value="{{ ev.hasDoc }}" hint-placeholder-val="{{ false }}"><span style="font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px;background:oklch(0.94 0.02 235);color:oklch(0.42 0.12 235)">PDF</span></sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pRecords }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Patient records" style="flex:1;overflow:auto;padding-bottom:16px">
+          <div style="padding:62px 22px 0"><div style="font-family:'Instrument Serif',serif;font-size:28px">Records</div>
+            <div style="display:flex;gap:6px;margin-top:12px">
+              <span onClick="{{ recToRep }}" style="cursor:pointer;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px;background:{{ recRepBg }};color:{{ recRepC }};border:1px solid rgba(34,48,60,0.15)">Reports</span>
+              <span onClick="{{ recToRx }}" style="cursor:pointer;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px;background:{{ recRxBg }};color:{{ recRxC }};border:1px solid rgba(34,48,60,0.15)">Prescriptions</span>
+              <span onClick="{{ recToDis }}" style="cursor:pointer;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px;background:{{ recDisBg }};color:{{ recDisC }};border:1px solid rgba(34,48,60,0.15)">Discharge</span>
+            </div>
+          </div>
+          <sc-if value="{{ recReports }}" hint-placeholder-val="{{ true }}">
+            <div style="margin:14px 22px 0;display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ reports }}" as="r" hint-placeholder-count="4">
+                <div onClick="{{ toReport }}" style="cursor:pointer;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px;display:flex;gap:12px;align-items:center">
+                  <div style="width:38px;height:44px;flex:none;background:oklch(0.94 0.02 235);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:oklch(0.45 0.13 235)">PDF</div>
+                  <div style="flex:1"><div style="font-weight:600;font-size:14px">{{ r.n }}</div><div style="font-size:12px;color:rgba(34,48,60,0.55)">{{ r.org }} · {{ r.dt }}</div></div>
+                  <span style="font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:{{ r.sBg }};color:{{ r.sC }}">{{ r.s }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ recRx }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:14px 22px 0;display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ rxList }}" as="r" hint-placeholder-count="3">
+                <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px">
+                  <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">{{ r.n }}</span><span style="font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:{{ r.sBg }};color:{{ r.sC }}">{{ r.s }}</span></div>
+                  <div style="font-size:12.5px;color:rgba(34,48,60,0.6);margin-top:3px">{{ r.f }}</div>
+                  <div style="font-size:11.5px;color:rgba(34,48,60,0.45);margin-top:3px">{{ r.by }} · {{ r.dt }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ recDis }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:14px 22px 0">
+              <div onClick="{{ toDischarge }}" style="cursor:pointer;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px;display:flex;gap:12px;align-items:center">
+                <div style="width:38px;height:44px;flex:none;background:oklch(0.94 0.02 235);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:oklch(0.45 0.13 235)">PDF</div>
+                <div style="flex:1"><div style="font-weight:600;font-size:14px">Discharge summary — appendectomy</div><div style="font-size:12px;color:rgba(34,48,60,0.55)">City General Hospital · 12 Nov 2025</div></div>
+                <div style="font-size:13px;color:rgba(34,48,60,0.45)">›</div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pReport }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Report detail" style="flex:1;overflow:auto;padding-bottom:24px">
+          <div style="padding:62px 22px 0">
+            <div onClick="{{ toRecords }}" style="cursor:pointer;font-size:14px;color:rgba(34,48,60,0.6)">‹ Records</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:26px;margin-top:14px">Lipid panel</div>
+            <div style="font-size:13px;color:rgba(34,48,60,0.55);margin-top:2px">Apollo Diagnostics · 21 Aug 2026 · <span style="color:oklch(0.5 0.12 150);font-weight:600">Final</span></div>
+          </div>
+          <div style="margin:16px 22px 0;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:16px;overflow:hidden">
+            <div style="display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13.5px">Total cholesterol</span><span style="font-size:13.5px;font-weight:600">182 mg/dL</span></div>
+            <div style="display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13.5px">LDL</span><span style="font-size:13.5px;font-weight:600">104 mg/dL</span></div>
+            <div style="display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13.5px">HDL</span><span style="font-size:13.5px;font-weight:600">51 mg/dL</span></div>
+            <div style="display:flex;justify-content:space-between;padding:12px 16px"><span style="font-size:13.5px">Triglycerides</span><span style="font-size:13.5px;font-weight:600;color:oklch(0.55 0.15 60)">168 mg/dL ▲</span></div>
+          </div>
+          <div style="margin:14px 22px 0;background:oklch(0.94 0.02 235);border-radius:14px;padding:12px 16px;font-size:12px;color:rgba(34,48,60,0.7);line-height:1.5">
+            <b>Provenance</b><br>Source: Apollo LIS · LAB-928372<br>Verified 21 Aug 2026, 9:02 · Imported 9:03<br>Status: FINAL · published to patient
+          </div>
+          <div style="margin:14px 22px 0;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:16px;padding:14px 16px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:11px;font-weight:600;color:rgba(34,48,60,0.5);letter-spacing:0.04em">TREND — HBA1C</span><span style="font-size:11px;color:oklch(0.5 0.12 150);font-weight:600">Improving</span></div>
+            <div style="display:flex;align-items:flex-end;gap:18px;margin-top:12px;height:64px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="font-size:11px;font-weight:600">7.4</span><div style="width:34px;height:52px;border-radius:6px 6px 0 0;background:oklch(0.85 0.05 235)"></div><span style="font-size:10px;color:rgba(34,48,60,0.5)">Dec 24</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="font-size:11px;font-weight:600">7.0</span><div style="width:34px;height:44px;border-radius:6px 6px 0 0;background:oklch(0.72 0.09 235)"></div><span style="font-size:10px;color:rgba(34,48,60,0.5)">Mar 25</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="font-size:11px;font-weight:600">6.8</span><div style="width:34px;height:40px;border-radius:6px 6px 0 0;background:oklch(0.52 0.13 235)"></div><span style="font-size:10px;color:rgba(34,48,60,0.5)">Jun 26</span></div>
+            </div>
+          </div>
+          <div style="margin:14px 22px 0;display:flex;gap:10px">
+            <div style="flex:1;text-align:center;border:1px solid rgba(34,48,60,0.18);border-radius:12px;padding:12px 0;font-weight:600;font-size:13.5px;background:#fff">Download PDF</div>
+            <div style="flex:1;text-align:center;border-radius:12px;padding:12px 0;font-weight:600;font-size:13.5px;background:#22303c;color:#fff">Share</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pProfile }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Patient profile" style="flex:1;overflow:auto;padding-bottom:16px">
+          <div style="padding:62px 22px 0;display:flex;align-items:center;gap:14px">
+            <div style="width:56px;height:56px;border-radius:50%;background:oklch(0.9 0.03 235);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:18px;color:oklch(0.42 0.12 235)">PS</div>
+            <div><div style="font-family:'Instrument Serif',serif;font-size:24px">Priya Sharma</div>
+            <div style="font-size:12.5px;color:rgba(34,48,60,0.55);font-family:ui-monospace,Menlo,monospace">MIR-82X92K</div></div>
+          </div>
+          <div style="margin:16px 22px 0;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:16px;padding:4px 16px">
+            <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Date of birth</span><span style="font-size:13.5px;font-weight:600">14 May 1992 (34)</span></div>
+            <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Blood group</span><span style="font-size:13.5px;font-weight:600">B+</span></div>
+            <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Allergies</span><span style="font-size:13.5px;font-weight:600;color:oklch(0.5 0.16 25)">Penicillin</span></div>
+            <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Conditions</span><span style="font-size:13.5px;font-weight:600">Type 2 diabetes</span></div>
+            <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Emergency contact</span><span style="font-size:13.5px;font-weight:600">Aman S. · +91 98111 20844</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0"><span style="font-size:13px;color:rgba(34,48,60,0.55)">ABHA address</span><span style="display:flex;gap:8px;align-items:center"><span style="font-size:13px;font-weight:600;font-family:ui-monospace,Menlo,monospace">priya@abdm</span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px;background:oklch(0.93 0.05 150);color:oklch(0.42 0.12 150)">Linked</span></span></div>
+          </div>
+          <div style="margin:14px 22px 0;display:flex;flex-direction:column;gap:8px">
+            <div onClick="{{ toAccess }}" style="cursor:pointer;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Access &amp; consent</span><span style="font-size:12px;color:rgba(34,48,60,0.5)">2 active ›</span></div>
+            <div onClick="{{ toNotifs }}" style="cursor:pointer;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Notifications</span><span style="font-size:12px;color:rgba(34,48,60,0.5)">1 new ›</span></div>
+            <div onClick="{{ toEmergency }}" style="cursor:pointer;background:oklch(0.96 0.02 25);border:1px solid oklch(0.88 0.05 25);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center"><span style="display:flex;align-items:center;gap:10px"><span style="width:10px;height:10px;border-radius:50%;background:oklch(0.55 0.18 25)"></span><span style="font-weight:600;font-size:14px;color:oklch(0.38 0.13 25)">Emergency card</span></span><span style="font-size:12px;color:oklch(0.45 0.12 25)">Lock-screen access ›</span></div>
+            <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Security &amp; sign-in</span><span style="font-size:12px;color:rgba(34,48,60,0.5)">Face ID + passkey ›</span></div>
+            <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Language</span><span style="font-size:12px;color:rgba(34,48,60,0.5)">English ›</span></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pAccess }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Access and consent" style="flex:1;overflow:auto;padding-bottom:16px">
+          <div style="padding:62px 22px 0">
+            <div onClick="{{ toProfile }}" style="cursor:pointer;font-size:14px;color:rgba(34,48,60,0.6)">‹ Back</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:28px;margin-top:14px">Access &amp; consent</div>
+            <div style="font-size:13px;color:rgba(34,48,60,0.55);margin-top:3px">Who can see your records. Every access is logged.</div>
+          </div>
+          <sc-if value="{{ consentPending }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:16px 22px 0;background:#fff;border:1.5px solid oklch(0.52 0.13 235);border-radius:14px;padding:14px 16px">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Consent request</span><span style="font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:oklch(0.94 0.02 235);color:oklch(0.42 0.12 235)">NEW</span></div>
+              <div style="font-size:12.5px;color:rgba(34,48,60,0.6);margin-top:3px">Dr. Meera Kulkarni · Dermatology, SkinCare Clinic requests access to your records</div>
+              <div onClick="{{ toConsent }}" style="cursor:pointer;margin-top:10px;background:#22303c;color:#fff;border-radius:10px;padding:10px 0;text-align:center;font-weight:600;font-size:13px" style-hover="opacity:0.88">Review request</div>
+            </div>
+          </sc-if>
+          <div style="margin:16px 22px 0;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ accessList }}" as="ac" hint-placeholder-count="3">
+              <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:14px 16px">
+                <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">{{ ac.n }}</span><span style="font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:{{ ac.sBg }};color:{{ ac.sC }}">{{ ac.s }}</span></div>
+                <div style="font-size:12.5px;color:rgba(34,48,60,0.55);margin-top:2px">{{ ac.org }}</div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><span style="font-size:11.5px;color:rgba(34,48,60,0.45)">{{ ac.until }}</span><span style="font-size:12px;font-weight:600;color:{{ ac.actC }};cursor:pointer">{{ ac.act }}</span></div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin:16px 22px 0;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:12px 16px;font-size:12px;line-height:1.55;color:rgba(34,48,60,0.7)"><b style="color:#22303c">Your treating organizations</b><br>City General Hospital and Apollo Diagnostics created these records and already hold them in their own systems. Consent here controls doctors and clinics <b>outside</b> your treating facility.</div>
+          <div style="margin:12px 22px 0;background:oklch(0.94 0.02 235);border-radius:14px;padding:12px 16px;font-size:12px;line-height:1.5;color:rgba(34,48,60,0.7)"><b>Recent access log</b><br>21 Aug 9:03 — Apollo Diagnostics · report sync<br>12 Aug 10:41 — Dr. R. Menon · viewed via QR<br>12 Aug 10:40 — QR scanned · access granted (30 days)</div>
+          <div style="margin:12px 22px 0;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:11px 16px;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13.5px;font-weight:600">Auto-approve doctor requests<div style="font-size:11px;font-weight:400;color:rgba(34,48,60,0.5);max-width:230px">Verified doctors get access instantly; you're notified and can revoke any time. On by default.</div></span>
+            <span onClick="{{ tgAutoAcc }}" style="cursor:pointer;width:40px;height:24px;flex:none;border-radius:999px;background:{{ autoAccBg }};position:relative;display:inline-block"><span style="position:absolute;top:3px;left:{{ autoAccX }};width:18px;height:18px;border-radius:50%;background:#fff;transition:left 0.15s"></span></span>
+          </div>
+          <div style="margin:12px 22px 0;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 16px">
+            <div style="font-size:12px;font-weight:600;letter-spacing:0.04em;color:rgba(34,48,60,0.55)">YOUR DATA RIGHTS · DPDPA 2023</div>
+            <div style="margin-top:6px;display:flex;flex-direction:column;gap:1px">
+              <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(34,48,60,0.07);font-size:13px"><span>Download my data</span><span style="color:rgba(34,48,60,0.4)">›</span></div>
+              <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(34,48,60,0.07);font-size:13px"><span>Request correction or erasure</span><span style="color:rgba(34,48,60,0.4)">›</span></div>
+              <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(34,48,60,0.07);font-size:13px"><span>Nominate someone to act for me</span><span style="color:rgba(34,48,60,0.4)">›</span></div>
+              <div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px"><span>Contact grievance officer</span><span style="color:rgba(34,48,60,0.4)">›</span></div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pConsent }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Consent request" style="flex:1;overflow:auto;padding-bottom:24px">
+          <div style="padding:62px 22px 0">
+            <div onClick="{{ toAccess }}" style="cursor:pointer;font-size:14px;color:rgba(34,48,60,0.6)">‹ Back</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:28px;margin-top:14px">Consent request</div>
+          </div>
+          <div style="margin:14px 22px 0;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:center">
+            <div style="width:42px;height:42px;flex:none;border-radius:50%;background:oklch(0.9 0.03 235);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:oklch(0.42 0.12 235)">MK</div>
+            <div><div style="font-weight:600;font-size:14.5px">Dr. Meera Kulkarni</div><div style="font-size:12px;color:rgba(34,48,60,0.55)">Dermatology · SkinCare Clinic · verified professional</div></div>
+          </div>
+          <div style="margin:18px 22px 0">
+            <div style="font-size:12px;font-weight:600;color:rgba(34,48,60,0.55)">ACCESS DURATION</div>
+            <div style="display:flex;gap:6px;margin-top:8px">
+              <span onClick="{{ setDur1 }}" style="cursor:pointer;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px;background:{{ dur1Bg }};color:{{ dur1C }};border:1px solid rgba(34,48,60,0.15)">24 hours</span>
+              <span onClick="{{ setDur2 }}" style="cursor:pointer;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px;background:{{ dur2Bg }};color:{{ dur2C }};border:1px solid rgba(34,48,60,0.15)">30 days</span>
+              <span onClick="{{ setDur3 }}" style="cursor:pointer;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px;background:{{ dur3Bg }};color:{{ dur3C }};border:1px solid rgba(34,48,60,0.15)">90 days</span>
+            </div>
+          </div>
+          <div style="margin:18px 22px 0">
+            <div style="font-size:12px;font-weight:600;color:rgba(34,48,60,0.55)">WHAT SHE CAN SEE</div>
+            <div style="margin-top:8px;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:4px 16px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13.5px;font-weight:600">General history</span><span onClick="{{ tgGen }}" style="cursor:pointer;width:40px;height:24px;border-radius:999px;background:{{ catGenBg }};position:relative;display:inline-block"><span style="position:absolute;top:3px;left:{{ catGenX }};width:18px;height:18px;border-radius:50%;background:#fff;transition:left 0.15s"></span></span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13.5px;font-weight:600">Reports &amp; labs</span><span onClick="{{ tgRep }}" style="cursor:pointer;width:40px;height:24px;border-radius:999px;background:{{ catRepBg }};position:relative;display:inline-block"><span style="position:absolute;top:3px;left:{{ catRepX }};width:18px;height:18px;border-radius:50%;background:#fff;transition:left 0.15s"></span></span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13.5px;font-weight:600">Medications</span><span onClick="{{ tgMed }}" style="cursor:pointer;width:40px;height:24px;border-radius:999px;background:{{ catMedBg }};position:relative;display:inline-block"><span style="position:absolute;top:3px;left:{{ catMedX }};width:18px;height:18px;border-radius:50%;background:#fff;transition:left 0.15s"></span></span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0"><span style="font-size:13.5px;font-weight:600">Mental health<div style="font-size:11px;font-weight:400;color:rgba(34,48,60,0.5)">Off by default — sensitive category</div></span><span onClick="{{ tgMh }}" style="cursor:pointer;width:40px;height:24px;border-radius:999px;background:{{ catMhBg }};position:relative;display:inline-block"><span style="position:absolute;top:3px;left:{{ catMhX }};width:18px;height:18px;border-radius:50%;background:#fff;transition:left 0.15s"></span></span></div>
+            </div>
+          </div>
+          <div style="margin:14px 22px 0;font-size:12px;color:rgba(34,48,60,0.55);line-height:1.5">She sees only the categories you enable. Access expires automatically and every view is logged in your access log. Consent is purpose-limited and revocable any time, per DPDPA 2023.</div>
+          <div style="margin:14px 22px 0;display:flex;flex-direction:column;gap:8px">
+            <div onClick="{{ consentApprove }}" style="cursor:pointer;background:#22303c;color:#fff;border-radius:12px;padding:15px 0;text-align:center;font-weight:600;font-size:15px" style-hover="opacity:0.88">Approve access</div>
+            <div onClick="{{ consentDeny }}" style="cursor:pointer;border:1px solid rgba(34,48,60,0.2);border-radius:12px;padding:14px 0;text-align:center;font-weight:600;font-size:14px;background:#fff" style-hover="background:#f2eee6">Deny</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pNotifs }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Notifications" style="flex:1;overflow:auto;padding-bottom:16px">
+          <div style="padding:62px 22px 0">
+            <div onClick="{{ toHome }}" style="cursor:pointer;font-size:14px;color:rgba(34,48,60,0.6)">‹ Back</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:28px;margin-top:14px">Notifications</div>
+          </div>
+          <div style="margin:14px 22px 0;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ notifs }}" as="nt" hint-placeholder-count="4">
+              <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px;display:flex;gap:12px;align-items:flex-start">
+                <span style="margin-top:5px;width:9px;height:9px;flex:none;border-radius:50%;background:{{ nt.dot }}"></span>
+                <div style="flex:1"><div style="font-weight:600;font-size:13.5px">{{ nt.t }}</div><div style="font-size:12px;color:rgba(34,48,60,0.55);margin-top:1px">{{ nt.s }}</div>
+                  <sc-if value="{{ nt.fu }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;gap:8px;margin-top:9px">
+                      <span onClick="{{ fuConfirm }}" style="cursor:pointer;font-size:12px;font-weight:600;padding:6px 14px;border-radius:999px;background:#22303c;color:#fff">Confirm</span>
+                      <span onClick="{{ fuReschedule }}" style="cursor:pointer;font-size:12px;font-weight:600;padding:6px 14px;border-radius:999px;background:#fff;border:1px solid rgba(34,48,60,0.18)">Reschedule</span>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ nt.review }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;gap:8px;margin-top:9px">
+                      <span onClick="{{ toConsent }}" style="cursor:pointer;font-size:12px;font-weight:600;padding:6px 14px;border-radius:999px;background:#22303c;color:#fff">Review request</span>
+                    </div>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pTabbar }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;justify-content:space-around;align-items:center;padding:12px 8px 30px;border-top:1px solid rgba(34,48,60,0.1);background:#fdfbf7">
+          <div onClick="{{ toHome }}" style="cursor:pointer;text-align:center;font-size:10.5px;font-weight:600;color:{{ cHome }}"><div style="width:5px;height:5px;border-radius:50%;background:{{ cHome }};margin:0 auto 4px"></div>Home</div>
+          <div onClick="{{ toTimeline }}" style="cursor:pointer;text-align:center;font-size:10.5px;font-weight:600;color:{{ cTimeline }}"><div style="width:5px;height:5px;border-radius:50%;background:{{ cTimeline }};margin:0 auto 4px"></div>Timeline</div>
+          <div onClick="{{ toQr }}" style="cursor:pointer;width:46px;height:46px;border-radius:50%;background:#22303c;display:flex;align-items:center;justify-content:center;margin-top:-18px;box-shadow:0 4px 10px rgba(34,48,60,0.3)"><div style="width:18px;height:18px;border:2.5px solid #fff;border-radius:4px"></div></div>
+          <div onClick="{{ toRecords }}" style="cursor:pointer;text-align:center;font-size:10.5px;font-weight:600;color:{{ cRecords }}"><div style="width:5px;height:5px;border-radius:50%;background:{{ cRecords }};margin:0 auto 4px"></div>Records</div>
+          <div onClick="{{ toProfile }}" style="cursor:pointer;text-align:center;font-size:10.5px;font-weight:600;color:{{ cProfile }}"><div style="width:5px;height:5px;border-radius:50%;background:{{ cProfile }};margin:0 auto 4px"></div>Profile</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pEmergency }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Emergency card" style="flex:1;overflow:auto;padding-bottom:24px">
+          <div style="padding:62px 22px 0">
+            <div onClick="{{ toProfile }}" style="cursor:pointer;font-size:14px;color:rgba(34,48,60,0.6)">‹ Back</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:28px;margin-top:14px">Emergency card</div>
+            <div style="font-size:13px;color:rgba(34,48,60,0.55);margin-top:3px">Visible from the lock screen — no sign-in needed.</div>
+          </div>
+          <div style="margin:16px 22px 0;background:#fff;border:1.5px solid oklch(0.8 0.09 25);border-radius:16px;overflow:hidden">
+            <div style="background:oklch(0.55 0.18 25);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">MEDICAL EMERGENCY INFO</span><span style="font-size:11px;opacity:0.85">Mirai · MIR-82X92K</span></div>
+            <div style="padding:6px 16px">
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Name</span><span style="font-size:14px;font-weight:600">Priya Sharma · 34 F</span></div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Blood group</span><span style="font-size:14px;font-weight:700;color:oklch(0.45 0.15 25)">B+</span></div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Allergies</span><span style="font-size:14px;font-weight:700;color:oklch(0.45 0.15 25)">Penicillin — severe</span></div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Conditions</span><span style="font-size:14px;font-weight:600">Type 2 diabetes</span></div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Medications</span><span style="font-size:14px;font-weight:600;text-align:right">Metformin · Atorvastatin</span></div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Emergency contact</span><span style="font-size:14px;font-weight:600">Aman S. · +91 98111 20844</span></div>
+            </div>
+          </div>
+          <div style="margin:14px 22px 0;background:oklch(0.94 0.02 235);border-radius:14px;padding:12px 16px;font-size:12px;color:rgba(34,48,60,0.7);line-height:1.5">Anyone who opens this card is logged. Doctors using emergency (break-glass) access are reviewed by compliance.</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pDischarge }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Discharge detail" style="flex:1;overflow:auto;padding-bottom:24px">
+          <div style="padding:62px 22px 0">
+            <div onClick="{{ toRecords }}" style="cursor:pointer;font-size:14px;color:rgba(34,48,60,0.6)">‹ Records</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:26px;margin-top:14px">Hospitalization</div>
+            <div style="font-size:13px;color:rgba(34,48,60,0.55);margin-top:2px">City General Hospital · 09 – 12 Nov 2025</div>
+          </div>
+          <div style="margin:16px 22px 0;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:16px;padding:4px 16px">
+            <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Reason for admission</span><span style="font-size:13.5px;font-weight:600">Acute appendicitis</span></div>
+            <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Procedure</span><span style="font-size:13.5px;font-weight:600">Laparoscopic appendectomy</span></div>
+            <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Doctors</span><span style="font-size:13.5px;font-weight:600">Dr. A. Fernandes (Surgery)</span></div>
+            <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Discharge condition</span><span style="font-size:13.5px;font-weight:600;color:oklch(0.5 0.12 150)">Stable, recovered</span></div>
+            <div style="display:flex;justify-content:space-between;padding:11px 0"><span style="font-size:13px;color:rgba(34,48,60,0.55)">Meds at discharge</span><span style="font-size:13.5px;font-weight:600">Amoxicillin 500 mg · 5 days</span></div>
+          </div>
+          <div style="margin:14px 22px 0;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:16px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:rgba(34,48,60,0.5);letter-spacing:0.04em">FOLLOW-UP INSTRUCTIONS</div>
+            <div style="font-size:13.5px;line-height:1.6;margin-top:6px">Wound review in 10 days. Avoid heavy lifting for 4 weeks. Resume Metformin from day 2. Report fever or wound discharge immediately.</div>
+          </div>
+          <div style="margin:14px 22px 0;display:flex;gap:10px">
+            <div style="flex:1;text-align:center;border:1px solid rgba(34,48,60,0.18);border-radius:12px;padding:12px 0;font-weight:600;font-size:13.5px;background:#fff">Download summary</div>
+            <div style="flex:1;text-align:center;border-radius:12px;padding:12px 0;font-weight:600;font-size:13.5px;background:#22303c;color:#fff">Share</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ dLogin }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Doctor login" style="flex:1;display:flex;flex-direction:column;padding:62px 28px 40px;background:#22303c;color:#fff">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px">
+            <svg width="56" height="56" viewBox="0 0 40 40"><path d="M20 3.5 C22.4 13.6 26.4 17.6 36.5 20 C26.4 22.4 22.4 26.4 20 36.5 C17.6 26.4 13.6 22.4 3.5 20 C13.6 17.6 17.6 13.6 20 3.5 Z" fill="oklch(0.72 0.1 235)"></path><circle cx="31.5" cy="8.5" r="3" fill="#ffffff"></circle></svg>
+            <div style="font-family:'Instrument Serif',serif;font-size:32px;line-height:1.15">Mirai for<br>clinicians</div>
+            <div style="font-size:13.5px;color:rgba(255,255,255,0.6)">Choose your profile — sign-in continues with your organization's SSO + MFA</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+              <sc-for list="{{ loginDocs }}" as="ld" hint-placeholder-count="3">
+                <div onClick="{{ ld.onPick }}" style="cursor:pointer;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:14px;padding:13px 15px" style-hover="background:rgba(255,255,255,0.15)">
+                  <div style="width:42px;height:42px;flex:none;border-radius:50%;background:oklch(0.62 0.12 235);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">{{ ld.init }}</div>
+                  <div style="flex:1;min-width:0"><div style="font-weight:600;font-size:15px">{{ ld.name }}</div><div style="font-size:11.5px;color:rgba(255,255,255,0.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ ld.dept }} · {{ ld.email }}</div></div>
+                  <div style="color:rgba(255,255,255,0.5)">›</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.45);text-align:center">Verified professional identity · all activity is audited</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ dHome }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Doctor home" style="flex:1;overflow:auto;padding-bottom:16px">
+          <div style="padding:62px 22px 0;display:flex;align-items:center;justify-content:space-between">
+            <div><div style="font-size:13px;color:rgba(34,48,60,0.55)">{{ docDept }}</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:26px;margin-top:1px">{{ docName }}</div></div>
+            <div onClick="{{ dToLogin }}" style="cursor:pointer;width:40px;height:40px;border-radius:50%;background:oklch(0.9 0.03 235);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:oklch(0.42 0.12 235)" title="Switch profile">{{ docInit }}</div>
+          </div>
+          <div style="margin:14px 22px 0;display:flex;gap:8px">
+            <div style="flex:1;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:12px;padding:10px 12px"><div style="font-family:'Instrument Serif',serif;font-size:21px">23</div><div style="font-size:10.5px;color:rgba(34,48,60,0.55)">OPD patients today</div></div>
+            <div style="flex:1;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:12px;padding:10px 12px"><div style="font-family:'Instrument Serif',serif;font-size:21px">14s</div><div style="font-size:10.5px;color:rgba(34,48,60,0.55)">scan → full chart</div></div>
+            <div style="flex:1;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:12px;padding:10px 12px"><div style="font-family:'Instrument Serif',serif;font-size:21px">0</div><div style="font-size:10.5px;color:rgba(34,48,60,0.55)">paper files pulled</div></div>
+          </div>
+          <div onClick="{{ dToScan }}" style="cursor:pointer;margin:14px 22px 0;background:#22303c;color:#fff;border-radius:16px;padding:18px;display:flex;gap:14px;align-items:center">
+            <div style="width:46px;height:46px;flex:none;border:2.5px solid oklch(0.72 0.1 235);border-radius:12px;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;background:oklch(0.72 0.1 235);border-radius:4px"></div></div>
+            <div><div style="font-weight:600;font-size:16px">Scan patient QR</div><div style="font-size:12.5px;color:rgba(255,255,255,0.6)">Start a consult — identity &amp; consent checked automatically</div></div>
+          </div>
+          <div style="padding:20px 22px 0">
+            <input onChange="{{ dSearch }}" placeholder="Search by name, Mirai ID or phone" style="width:100%;box-sizing:border-box;border:1px solid rgba(34,48,60,0.15);border-radius:12px;padding:12px 15px;font-size:14px;background:#fff">
+            <div style="font-size:11px;color:rgba(34,48,60,0.45);margin-top:6px">Results show identity only — records open after consent check</div>
+          </div>
+          <div style="padding:16px 22px 0">
+            <div style="font-family:'Instrument Serif',serif;font-size:19px">Recent patients</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ docPatients }}" as="pt" hint-placeholder-count="3">
+                <div onClick="{{ pt.onOpen }}" style="cursor:pointer;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px;display:flex;gap:12px;align-items:center">
+                  <div style="width:38px;height:38px;flex:none;border-radius:50%;background:{{ pt.avBg }};display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:{{ pt.avC }}">{{ pt.init }}</div>
+                  <div style="flex:1"><div style="font-weight:600;font-size:14px">{{ pt.n }}</div><div style="font-size:12px;color:rgba(34,48,60,0.55)">{{ pt.meta }}</div></div>
+                  <div style="font-size:13px;color:rgba(34,48,60,0.45)">›</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="margin:20px 22px 0;background:oklch(0.94 0.02 235);border-radius:14px;padding:12px 16px;font-size:12px;color:rgba(34,48,60,0.7);line-height:1.5"><b>Access expires</b> — {{ dExpNote }}</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ dScan }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Doctor QR scan" style="flex:1;display:flex;flex-direction:column;background:#101820;color:#fff;padding:62px 28px 34px">
+          <div onClick="{{ dToHome }}" style="cursor:pointer;font-size:14px;color:rgba(255,255,255,0.7)">‹ Cancel</div>
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:22px">
+            <div style="position:relative;width:240px;height:240px">
+              <div style="position:absolute;inset:0;border-radius:24px;background:rgba(255,255,255,0.04)"></div>
+              <div style="position:absolute;top:0;left:0;width:44px;height:44px;border-top:3.5px solid oklch(0.72 0.1 235);border-left:3.5px solid oklch(0.72 0.1 235);border-top-left-radius:18px"></div>
+              <div style="position:absolute;top:0;right:0;width:44px;height:44px;border-top:3.5px solid oklch(0.72 0.1 235);border-right:3.5px solid oklch(0.72 0.1 235);border-top-right-radius:18px"></div>
+              <div style="position:absolute;bottom:0;left:0;width:44px;height:44px;border-bottom:3.5px solid oklch(0.72 0.1 235);border-left:3.5px solid oklch(0.72 0.1 235);border-bottom-left-radius:18px"></div>
+              <div style="position:absolute;bottom:0;right:0;width:44px;height:44px;border-bottom:3.5px solid oklch(0.72 0.1 235);border-right:3.5px solid oklch(0.72 0.1 235);border-bottom-right-radius:18px"></div>
+              <sc-if value="{{ scanning }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px">
+                  <div style="width:130px;height:130px;background:#fff;border-radius:12px;padding:8px;opacity:0.95">{{ qrSmall }}</div>
+                  <div style="font-size:12.5px;color:oklch(0.8 0.1 235)">Identity resolved · checking consent…</div>
+                </div>
+              </sc-if>
+            </div>
+            <div style="text-align:center;font-size:14px;color:rgba(255,255,255,0.7);max-width:250px">Align the patient's Mirai QR within the frame</div>
+            <div onClick="{{ dSimulateScan }}" style="cursor:pointer;background:oklch(0.62 0.12 235);border-radius:999px;padding:13px 32px;font-weight:600;font-size:14.5px" style-hover="opacity:0.88">Simulate scan</div>
+            <div onClick="{{ dToBreak }}" style="cursor:pointer;font-size:13px;font-weight:600;color:oklch(0.75 0.12 25);border-bottom:1px solid oklch(0.55 0.1 25)">Emergency access — no QR available</div>
+          </div>
+          <div style="text-align:center;font-size:12px;color:rgba(255,255,255,0.45)">The QR identifies the patient — your authorization decides what you see.</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ dBreak }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Emergency break-glass access" style="flex:1;display:flex;flex-direction:column;background:#1c1214;color:#fff;padding:62px 28px 34px">
+          <div onClick="{{ dToScan }}" style="cursor:pointer;font-size:14px;color:rgba(255,255,255,0.7)">‹ Back</div>
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px">
+            <div style="width:46px;height:46px;border-radius:50%;background:oklch(0.55 0.18 25);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px">!</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:30px;line-height:1.15">Emergency<br>access</div>
+            <div style="font-size:13.5px;color:rgba(255,255,255,0.65);line-height:1.5">For situations where the patient cannot present their QR or give consent. Access is limited to the emergency profile plus critical history.</div>
+            <div>
+              <div style="font-size:11.5px;font-weight:600;letter-spacing:0.05em;color:rgba(255,255,255,0.5)">REASON</div>
+              <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+                <span style="font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:999px;background:oklch(0.55 0.18 25);color:#fff">Unconscious patient</span>
+                <span style="font-size:12.5px;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2)">Critical care</span>
+                <span style="font-size:12.5px;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2)">Other</span>
+              </div>
+            </div>
+            <input placeholder="Patient identifier (Mirai ID, ABHA or phone)" value="{{ dpMiraiId }}" readOnly="{{ true }}" style="border:1px solid rgba(255,255,255,0.25);border-radius:12px;padding:14px 16px;font-size:14.5px;background:rgba(255,255,255,0.08);color:#fff">
+            <div onClick="{{ emgProceed }}" style="cursor:pointer;background:oklch(0.55 0.18 25);border-radius:12px;padding:15px 0;text-align:center;font-weight:600;font-size:15px" style-hover="opacity:0.88">Proceed — logged &amp; reviewed</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);text-align:center">Compliance is notified immediately. Misuse ends access rights.</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ dPatient }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Doctor patient 360" style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+          <div style="padding:62px 22px 0;background:#fdfbf7;border-bottom:1px solid rgba(34,48,60,0.1)">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div onClick="{{ dToHome }}" style="cursor:pointer;font-size:14px;color:rgba(34,48,60,0.6)">‹ Patients</div>
+              <div style="font-size:11px;color:rgba(34,48,60,0.5);background:oklch(0.94 0.02 235);border-radius:999px;padding:4px 10px">Session 28:44 · audited</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;margin-top:12px">
+              <div style="width:46px;height:46px;border-radius:50%;background:oklch(0.9 0.03 235);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;color:oklch(0.42 0.12 235)">{{ dpInit }}</div>
+              <div style="flex:1"><div style="font-family:'Instrument Serif',serif;font-size:22px">{{ dpName }}</div>
+              <div style="font-size:12px;color:rgba(34,48,60,0.55)">{{ dpMeta }}</div></div>
+            </div>
+            <sc-if value="{{ emgBanner }}" hint-placeholder-val="{{ false }}">
+              <div style="margin:10px 0 0;background:oklch(0.55 0.18 25);color:#fff;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:600;display:flex;justify-content:space-between"><span>EMERGENCY ACCESS · unconscious patient</span><span style="opacity:0.85">compliance notified</span></div>
+            </sc-if>
+            <sc-if value="{{ dpHasAllergy }}" hint-placeholder-val="{{ true }}">
+              <div style="margin:10px 0;background:oklch(0.95 0.03 25);border:1px solid oklch(0.85 0.06 25);border-radius:10px;padding:8px 12px;font-size:12.5px;color:oklch(0.42 0.15 25)"><b>Allergy:</b> {{ dpAllergy }}</div>
+            </sc-if>
+            <sc-if value="{{ dpHasScope }}" hint-placeholder-val="{{ false }}">
+              <div style="margin:0 0 10px;background:oklch(0.94 0.02 235);border:1px solid oklch(0.86 0.05 245);border-radius:10px;padding:8px 12px;font-size:12px;line-height:1.45;color:oklch(0.42 0.12 235)"><b>Shared care:</b> {{ dpScope }}</div>
+            </sc-if>
+            <div style="display:flex;gap:2px">
+              <div onClick="{{ dTabOv }}" style="cursor:pointer;padding:9px 12px;font-size:12.5px;font-weight:600;color:{{ tOvC }};border-bottom:2px solid {{ tOvB }}">Overview</div>
+              <div onClick="{{ dTabTl }}" style="cursor:pointer;padding:9px 12px;font-size:12.5px;font-weight:600;color:{{ tTlC }};border-bottom:2px solid {{ tTlB }}">Timeline</div>
+              <div onClick="{{ dTabRep }}" style="cursor:pointer;padding:9px 12px;font-size:12.5px;font-weight:600;color:{{ tRepC }};border-bottom:2px solid {{ tRepB }}">Reports</div>
+              <div onClick="{{ dTabRx }}" style="cursor:pointer;padding:9px 12px;font-size:12.5px;font-weight:600;color:{{ tRxC }};border-bottom:2px solid {{ tRxB }}">Meds</div>
+            </div>
+          </div>
+          <div style="flex:1;overflow:auto;padding-bottom:12px">
+            <sc-if value="{{ dTabOverview }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:14px 22px 0;display:flex;flex-direction:column;gap:10px">
+                <div style="background:linear-gradient(135deg,oklch(0.96 0.02 235),oklch(0.94 0.03 260));border:1px solid oklch(0.86 0.05 245);border-radius:14px;padding:13px 15px">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <svg width="15" height="15" viewBox="0 0 20 20"><rect x="6" y="6" width="8" height="8" rx="2" fill="oklch(0.5 0.14 260)" transform="rotate(45 10 10)"></rect></svg>
+                    <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;color:oklch(0.42 0.12 260)">AI CLINICAL SUMMARY</span>
+                    <sc-if value="{{ aiGenerating }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto;font-size:10.5px;color:oklch(0.42 0.12 260)">Generating…</span></sc-if>
+                  </div>
+                  <sc-if value="{{ aiGenerating }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:10px;display:flex;flex-direction:column;gap:7px">
+                      <div style="height:9px;border-radius:5px;background:oklch(0.88 0.03 250);width:95%"></div>
+                      <div style="height:9px;border-radius:5px;background:oklch(0.88 0.03 250);width:85%"></div>
+                      <div style="height:9px;border-radius:5px;background:oklch(0.88 0.03 250);width:60%"></div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ aiReady }}" hint-placeholder-val="{{ true }}">
+                    <div style="font-size:13px;line-height:1.55;margin-top:8px">{{ dpBrief }}</div>
+                    <div style="margin-top:12px;background:rgba(255,255,255,0.72);border:1px solid oklch(0.88 0.04 245);border-radius:12px;padding:11px 13px">
+                      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:11px;font-weight:600;color:rgba(34,48,60,0.6)">{{ agTitle }}</span><span style="font-size:10px;color:rgba(34,48,60,0.45)">{{ agTLbl }}</span></div>
+                      {{ agChart }}
+                      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid rgba(34,48,60,0.08)">
+                        <span style="font-size:11px;font-weight:600;color:rgba(34,48,60,0.6)">{{ agBarTitle }}</span>
+                        <span style="font-size:10px;color:rgba(34,48,60,0.45)">{{ agBarRef }}</span>
+                      </div>
+                      <div style="position:relative;height:10px;border-radius:6px;background:oklch(0.93 0.02 235);margin-top:5px;overflow:hidden">
+                        <div style="position:absolute;left:0;top:0;bottom:0;width:{{ agBarPct }};background:linear-gradient(90deg,oklch(0.62 0.1 235),oklch(0.65 0.13 60))"></div>
+                        <div style="position:absolute;left:{{ agBarMark }};top:-2px;bottom:-2px;width:2px;background:oklch(0.6 0.12 25)"></div>
+                      </div>
+                      <div style="display:flex;justify-content:space-between;font-size:9.5px;color:rgba(34,48,60,0.5);margin-top:3px"><span>{{ agBarMin }}</span><span style="color:{{ agBarCapC }};font-weight:600">{{ agBarCap }}</span><span>{{ agBarMax }}</span></div>
+                    </div>
+                    <div style="font-size:10.5px;color:rgba(34,48,60,0.45);margin-top:8px">{{ dpBriefSrc }}</div>
+                    <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
+                      <sc-for list="{{ aiChips }}" as="q" hint-placeholder-count="3">
+                        <span onClick="{{ q.onAsk }}" style="cursor:pointer;font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:999px;background:rgba(255,255,255,0.75);border:1px solid oklch(0.86 0.05 245);color:oklch(0.42 0.12 260)">{{ q.q }}</span>
+                      </sc-for>
+                    </div>
+                    <sc-if value="{{ aiAnswer }}" hint-placeholder-val="{{ false }}">
+                      <div style="margin-top:8px;background:rgba(255,255,255,0.8);border-radius:10px;padding:10px 12px">
+                        <div style="font-size:11px;font-weight:700;color:oklch(0.42 0.12 260)">{{ aiQuestion }}</div>
+                        <div style="font-size:12.5px;line-height:1.5;margin-top:3px">{{ aiAnswer }}</div>
+                      </div>
+                    </sc-if>
+                  </sc-if>
+                </div>
+                <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px">
+                  <div style="font-size:11px;font-weight:600;color:rgba(34,48,60,0.5);letter-spacing:0.04em">CONDITIONS</div>
+                  <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+                    <sc-for list="{{ dpConds }}" as="cd" hint-placeholder-count="2"><span style="font-size:12px;font-weight:600;background:oklch(0.94 0.02 235);color:oklch(0.4 0.11 235);border-radius:999px;padding:4px 11px">{{ cd.t }}</span></sc-for>
+                  </div>
+                </div>
+                <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px">
+                  <div style="font-size:11px;font-weight:600;color:rgba(34,48,60,0.5);letter-spacing:0.04em">CURRENT MEDICATIONS</div>
+                  <div style="margin-top:6px;font-size:13.5px;line-height:1.7;display:flex;flex-direction:column">
+                    <sc-for list="{{ dpMeds }}" as="md" hint-placeholder-count="2"><span>{{ md.t }}</span></sc-for>
+                  </div>
+                </div>
+                <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px">
+                  <div style="font-size:11px;font-weight:600;color:rgba(34,48,60,0.5);letter-spacing:0.04em">LATEST RESULTS</div>
+                  <sc-for list="{{ dpResults }}" as="rs" hint-placeholder-count="2">
+                    <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:13.5px"><span>{{ rs.n }}</span><span style="font-weight:600;color:{{ rs.vC }}">{{ rs.v }}</span></div>
+                  </sc-for>
+                </div>
+                <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px">
+                  <div style="font-size:11px;font-weight:600;color:rgba(34,48,60,0.5);letter-spacing:0.04em">LAST VISIT</div>
+                  <div style="margin-top:6px;font-size:13.5px">{{ dpLastVisit }}</div>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ dTabTimeline }}" hint-placeholder-val="{{ false }}">
+              <div style="padding-bottom:8px">
+                <sc-for list="{{ dGroups }}" as="grp" hint-placeholder-count="2">
+                  <div style="margin:16px 22px 0">
+                    <div style="display:flex;align-items:center;gap:10px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:rgba(34,48,60,0.45)">{{ grp.label }}</span><span style="flex:1;height:1px;background:rgba(34,48,60,0.1)"></span></div>
+                    <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+                      <sc-for list="{{ grp.items }}" as="ev" hint-placeholder-count="3">
+                        <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start">
+                          <div style="width:38px;height:38px;flex:none;border-radius:12px;background:{{ ev.tintBg }};display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;letter-spacing:0.03em;color:{{ ev.tintC }}">{{ ev.chip }}</div>
+                          <div style="flex:1;min-width:0">
+                            <div style="font-size:11px;color:rgba(34,48,60,0.5)">{{ ev.dt }} · {{ ev.t }}</div>
+                            <div style="font-size:14px;font-weight:600;margin-top:1px">{{ ev.title }}</div>
+                            <div style="font-size:12px;color:rgba(34,48,60,0.55);margin-top:1px">{{ ev.org }}</div>
+                          </div>
+                          <sc-if value="{{ ev.hasDoc }}" hint-placeholder-val="{{ false }}"><span onClick="{{ ev.onPdf }}" style="cursor:pointer;font-size:10px;font-weight:600;padding:4px 9px;border-radius:999px;background:oklch(0.42 0.12 235);color:#fff" style-hover="opacity:0.85">PDF ↗</span></sc-if>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ dTabReports }}" hint-placeholder-val="{{ false }}">
+              <div style="margin:14px 22px 0;display:flex;gap:6px">
+                <span onClick="{{ toRepList }}" style="cursor:pointer;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px;background:{{ rpLBg }};color:{{ rpLC }};border:1px solid rgba(34,48,60,0.15)">List</span>
+                <sc-if value="{{ dpHasCompare }}" hint-placeholder-val="{{ true }}"><span onClick="{{ toRepCompare }}" style="cursor:pointer;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px;background:{{ rpCBg }};color:{{ rpCC }};border:1px solid rgba(34,48,60,0.15)">Compare</span></sc-if>
+              </div>
+              <sc-if value="{{ repCompare }}" hint-placeholder-val="{{ false }}">
+                <div style="margin:12px 22px 0;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:16px;overflow:hidden">
+                  <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr;padding:11px 16px;background:oklch(0.96 0.01 235);font-size:11px;font-weight:600;color:rgba(34,48,60,0.55)"><span>LIPID PANEL</span><span style="text-align:right">14 FEB</span><span style="text-align:right">TODAY</span></div>
+                  <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr;padding:11px 16px;border-top:1px solid rgba(34,48,60,0.08);font-size:13px"><span>Total cholesterol</span><span style="text-align:right;color:rgba(34,48,60,0.6)">190</span><span style="text-align:right;font-weight:600">182 ▼</span></div>
+                  <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr;padding:11px 16px;border-top:1px solid rgba(34,48,60,0.08);font-size:13px"><span>LDL</span><span style="text-align:right;color:rgba(34,48,60,0.6)">112</span><span style="text-align:right;font-weight:600">104 ▼</span></div>
+                  <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr;padding:11px 16px;border-top:1px solid rgba(34,48,60,0.08);font-size:13px"><span>HDL</span><span style="text-align:right;color:rgba(34,48,60,0.6)">49</span><span style="text-align:right;font-weight:600">51 ▲</span></div>
+                  <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr;padding:11px 16px;border-top:1px solid rgba(34,48,60,0.08);font-size:13px"><span>Triglycerides</span><span style="text-align:right;color:rgba(34,48,60,0.6)">155</span><span style="text-align:right;font-weight:700;color:oklch(0.55 0.15 60)">168 ▲</span></div>
+                </div>
+                <div style="margin:10px 22px 0;font-size:11.5px;color:rgba(34,48,60,0.5)">Both reports FINAL · Apollo Diagnostics · same fasting protocol</div>
+              </sc-if>
+              <sc-if value="{{ repList }}" hint-placeholder-val="{{ true }}">
+              <div style="margin:12px 22px 0;display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ dReports }}" as="r" hint-placeholder-count="4">
+                  <div onClick="{{ r.onPdf }}" style="cursor:pointer;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px;display:flex;gap:12px;align-items:center" style-hover="border-color:oklch(0.52 0.13 235)">
+                    <div style="width:38px;height:44px;flex:none;background:oklch(0.94 0.02 235);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:oklch(0.45 0.13 235)">PDF</div>
+                    <div style="flex:1"><div style="font-weight:600;font-size:14px">{{ r.n }}</div><div style="font-size:12px;color:rgba(34,48,60,0.55)">{{ r.org }} · {{ r.dt }}</div></div>
+                    <span style="font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:{{ r.sBg }};color:{{ r.sC }}">{{ r.s }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              </sc-if>
+            </sc-if>
+            <sc-if value="{{ dTabMeds }}" hint-placeholder-val="{{ false }}">
+              <div style="margin:14px 22px 0;display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ dRxList }}" as="r" hint-placeholder-count="3">
+                  <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px">
+                    <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">{{ r.n }}</span><span style="font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:{{ r.sBg }};color:{{ r.sC }}">{{ r.s }}</span></div>
+                    <div style="font-size:12.5px;color:rgba(34,48,60,0.6);margin-top:3px">{{ r.f }}</div>
+                    <div style="font-size:11.5px;color:rgba(34,48,60,0.45);margin-top:3px">{{ r.by }} · {{ r.dt }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+          <div style="display:flex;gap:10px;padding:12px 22px 30px;border-top:1px solid rgba(34,48,60,0.1);background:#fdfbf7">
+            <div onClick="{{ dToAdd }}" style="cursor:pointer;flex:1;text-align:center;background:#22303c;color:#fff;border-radius:12px;padding:13px 0;font-weight:600;font-size:14px" style-hover="opacity:0.88">+ Add to record</div>
+            <div onClick="{{ dEnd }}" style="cursor:pointer;text-align:center;border:1px solid rgba(34,48,60,0.2);border-radius:12px;padding:13px 18px;font-weight:600;font-size:14px;background:#fff" style-hover="background:#f2eee6">End consult</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ dPdfOpen }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Doctor PDF viewer" style="position:absolute;inset:0;z-index:40;background:#3a4652;display:flex;flex-direction:column">
+          <div style="padding:58px 20px 12px;display:flex;align-items:center;gap:12px;color:#fff">
+            <div onClick="{{ pdfClose }}" style="cursor:pointer;font-size:14px;color:rgba(255,255,255,0.75)">‹ Close</div>
+            <div style="flex:1;min-width:0"><div style="font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ pdfT }}.pdf</div><div style="font-size:11px;color:rgba(255,255,255,0.55)">{{ pdfOrg }} · {{ pdfDt }} · original document</div></div>
+            <div style="font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,0.14)">1 / 2</div>
+          </div>
+          <div style="flex:1;overflow:auto;padding:6px 16px 18px">
+            <div style="background:#fff;border-radius:6px;box-shadow:0 8px 28px rgba(0,0,0,0.35);padding:26px 24px;min-height:430px">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #22303c;padding-bottom:10px">
+                <div><div style="font-weight:700;font-size:15px;letter-spacing:0.02em">{{ pdfOrg }}</div><div style="font-size:9.5px;color:rgba(34,48,60,0.55)">NABL accredited laboratory · Report — {{ pdfT }}</div></div>
+                <div style="text-align:right;font-size:9.5px;color:rgba(34,48,60,0.55)">Patient: {{ dpName }}<br>{{ dpMeta }} · {{ pdfDt }}</div>
+              </div>
+              <sc-if value="{{ pdfIsOther }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+                  <div style="height:8px;border-radius:4px;background:rgba(34,48,60,0.12);width:55%"></div>
+                  <div style="height:8px;border-radius:4px;background:rgba(34,48,60,0.09);width:96%"></div>
+                  <div style="height:8px;border-radius:4px;background:rgba(34,48,60,0.09);width:92%"></div>
+                  <div style="height:8px;border-radius:4px;background:rgba(34,48,60,0.09);width:88%"></div>
+                  <div style="height:90px;border-radius:6px;background:rgba(34,48,60,0.07);margin:6px 0;display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(34,48,60,0.4)">document content — {{ pdfT }}</div>
+                  <div style="height:8px;border-radius:4px;background:rgba(34,48,60,0.09);width:94%"></div>
+                  <div style="height:8px;border-radius:4px;background:rgba(34,48,60,0.09);width:60%"></div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ pdfIsLipid }}" hint-placeholder-val="{{ true }}">
+              <div style="display:grid;grid-template-columns:1.4fr 0.8fr 1fr;gap:0;margin-top:14px;font-size:11px">
+                <div style="font-weight:700;padding:6px 0;border-bottom:1px solid rgba(34,48,60,0.25)">TEST</div><div style="font-weight:700;padding:6px 0;border-bottom:1px solid rgba(34,48,60,0.25);text-align:right">RESULT</div><div style="font-weight:700;padding:6px 0;border-bottom:1px solid rgba(34,48,60,0.25);text-align:right">REFERENCE</div>
+                <div style="padding:7px 0;border-bottom:1px solid rgba(34,48,60,0.08)">Total cholesterol</div><div style="padding:7px 0;border-bottom:1px solid rgba(34,48,60,0.08);text-align:right">182 mg/dL</div><div style="padding:7px 0;border-bottom:1px solid rgba(34,48,60,0.08);text-align:right;color:rgba(34,48,60,0.55)">&lt; 200</div>
+                <div style="padding:7px 0;border-bottom:1px solid rgba(34,48,60,0.08)">LDL cholesterol</div><div style="padding:7px 0;border-bottom:1px solid rgba(34,48,60,0.08);text-align:right">104 mg/dL</div><div style="padding:7px 0;border-bottom:1px solid rgba(34,48,60,0.08);text-align:right;color:rgba(34,48,60,0.55)">&lt; 130</div>
+                <div style="padding:7px 0;border-bottom:1px solid rgba(34,48,60,0.08)">HDL cholesterol</div><div style="padding:7px 0;border-bottom:1px solid rgba(34,48,60,0.08);text-align:right">51 mg/dL</div><div style="padding:7px 0;border-bottom:1px solid rgba(34,48,60,0.08);text-align:right;color:rgba(34,48,60,0.55)">&gt; 40</div>
+                <div style="padding:7px 0;font-weight:700">Triglycerides</div><div style="padding:7px 0;text-align:right;font-weight:700">168 mg/dL ↑</div><div style="padding:7px 0;text-align:right;color:rgba(34,48,60,0.55)">&lt; 150</div>
+              </div>
+              <div style="font-size:9.5px;color:rgba(34,48,60,0.55);margin-top:14px">Method: enzymatic colorimetric · Sample: fasting serum, collected 07:40</div>
+              </sc-if>
+              <div style="margin-top:12px;font-size:9.5px;color:rgba(34,48,60,0.55);line-height:1.6">{{ pdfMeta }}</div>
+            </div>
+            <div style="background:#fff;border-radius:6px;box-shadow:0 8px 28px rgba(0,0,0,0.35);padding:26px 24px;height:120px;margin-top:12px;opacity:0.75">
+              <div style="font-size:9.5px;color:rgba(34,48,60,0.45)">Page 2 — cumulative history &amp; interpretation</div>
+              <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px"><div style="height:7px;border-radius:4px;background:rgba(34,48,60,0.1);width:90%"></div><div style="height:7px;border-radius:4px;background:rgba(34,48,60,0.1);width:96%"></div><div style="height:7px;border-radius:4px;background:rgba(34,48,60,0.1);width:70%"></div></div>
+            </div>
+          </div>
+          <div style="padding:10px 20px 30px;text-align:center;font-size:10.5px;color:rgba(255,255,255,0.5)">Original as received from {{ pdfOrg }} · view logged in audit trail</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ dAdd }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Doctor add to record" style="flex:1;display:flex;flex-direction:column;overflow:auto">
+          <div style="padding:62px 22px 0">
+            <div onClick="{{ dToPatient }}" style="cursor:pointer;font-size:14px;color:rgba(34,48,60,0.6)">‹ {{ dpName }}</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:26px;margin-top:12px">Add to record</div>
+            <div style="display:flex;gap:6px;margin-top:12px">
+              <span onClick="{{ addDx }}" style="cursor:pointer;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px;background:{{ adDxBg }};color:{{ adDxC }};border:1px solid rgba(34,48,60,0.15)">Diagnosis</span>
+              <span onClick="{{ addRx }}" style="cursor:pointer;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px;background:{{ adRxBg }};color:{{ adRxC }};border:1px solid rgba(34,48,60,0.15)">Prescription</span>
+              <span onClick="{{ addDoc }}" style="cursor:pointer;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px;background:{{ adDocBg }};color:{{ adDocC }};border:1px solid rgba(34,48,60,0.15)">Report</span>
+            </div>
+          </div>
+          <div style="padding:16px 22px 0;display:flex;flex-direction:column;gap:12px">
+            <sc-if value="{{ addIsDx }}" hint-placeholder-val="{{ true }}">
+              <div><div style="font-size:12px;font-weight:600;color:rgba(34,48,60,0.55);margin-bottom:5px">Diagnosis</div><input onChange="{{ fA }}" placeholder="e.g. Seasonal allergic conjunctivitis" style="width:100%;box-sizing:border-box;border:1px solid rgba(34,48,60,0.18);border-radius:12px;padding:13px 15px;font-size:14.5px;background:#fff"></div>
+              <div><div style="font-size:12px;font-weight:600;color:rgba(34,48,60,0.55);margin-bottom:5px">Code (optional)</div><input onChange="{{ fB }}" placeholder="ICD-10, e.g. H10.1" style="width:100%;box-sizing:border-box;border:1px solid rgba(34,48,60,0.18);border-radius:12px;padding:13px 15px;font-size:14.5px;background:#fff"></div>
+              <div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><span style="font-size:12px;font-weight:600;color:rgba(34,48,60,0.55)">Clinical notes</span><span onClick="{{ dictate }}" style="cursor:pointer;font-size:11.5px;font-weight:600;color:oklch(0.45 0.13 235);border:1px solid oklch(0.72 0.08 235);border-radius:999px;padding:3px 11px">● Dictate</span></div><textarea rows="{{ four }}" value="{{ fCVal }}" onChange="{{ fC }}" placeholder="Findings, plan, advice… or tap Dictate" style="width:100%;box-sizing:border-box;border:1px solid rgba(34,48,60,0.18);border-radius:12px;padding:13px 15px;font-size:14.5px;background:#fff;resize:none"></textarea></div>
+            </sc-if>
+            <sc-if value="{{ addIsRx }}" hint-placeholder-val="{{ false }}">
+              <div><div style="font-size:12px;font-weight:600;color:rgba(34,48,60,0.55);margin-bottom:5px">Medication</div><input onChange="{{ fA }}" placeholder="e.g. Cetirizine 10 mg" style="width:100%;box-sizing:border-box;border:1px solid rgba(34,48,60,0.18);border-radius:12px;padding:13px 15px;font-size:14.5px;background:#fff"></div>
+              <sc-if value="{{ rxWarn }}" hint-placeholder-val="{{ false }}">
+                <div style="background:oklch(0.95 0.03 25);border:1.5px solid oklch(0.7 0.14 25);border-radius:12px;padding:11px 14px;font-size:12.5px;color:oklch(0.4 0.15 25);line-height:1.45"><b>Allergy conflict:</b> Priya has a recorded severe penicillin allergy (2019). Saving will require an override reason and is flagged to compliance.</div>
+              </sc-if>
+              <div><div style="font-size:12px;font-weight:600;color:rgba(34,48,60,0.55);margin-bottom:5px">Dosage &amp; frequency</div><input onChange="{{ fB }}" placeholder="e.g. once daily · 14 days" style="width:100%;box-sizing:border-box;border:1px solid rgba(34,48,60,0.18);border-radius:12px;padding:13px 15px;font-size:14.5px;background:#fff"></div>
+              <div><div style="font-size:12px;font-weight:600;color:rgba(34,48,60,0.55);margin-bottom:5px">Instructions</div><textarea rows="{{ three }}" placeholder="With food, avoid alcohol…" style="width:100%;box-sizing:border-box;border:1px solid rgba(34,48,60,0.18);border-radius:12px;padding:13px 15px;font-size:14.5px;background:#fff;resize:none"></textarea></div>
+            </sc-if>
+            <sc-if value="{{ addIsDoc }}" hint-placeholder-val="{{ false }}">
+              <div style="border:1.5px dashed rgba(34,48,60,0.25);border-radius:14px;padding:26px;text-align:center;background:#fff">
+                <div style="width:38px;height:44px;margin:0 auto;background:oklch(0.94 0.02 235);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:oklch(0.45 0.13 235)">PDF</div>
+                <div style="font-weight:600;font-size:14px;margin-top:10px">Upload report or photo</div>
+                <div style="font-size:12px;color:rgba(34,48,60,0.5);margin-top:2px">PDF, JPG, DICOM · scanned for malware</div>
+              </div>
+              <div><div style="font-size:12px;font-weight:600;color:rgba(34,48,60,0.55);margin-bottom:5px">Title</div><input onChange="{{ fA }}" placeholder="e.g. Clinical photo — left eye" style="width:100%;box-sizing:border-box;border:1px solid rgba(34,48,60,0.18);border-radius:12px;padding:13px 15px;font-size:14.5px;background:#fff"></div>
+            </sc-if>
+            <div onClick="{{ dSave }}" style="cursor:pointer;background:#22303c;color:#fff;border-radius:12px;padding:15px 0;text-align:center;font-weight:600;font-size:15px" style-hover="opacity:0.88">Save to Priya's record</div>
+            <div style="text-align:center;font-size:11.5px;color:rgba(34,48,60,0.5)">Signed as Dr. R. Menon · added to audit trail</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ aDash }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Admin dashboard" style="flex:1;overflow:auto;padding-bottom:24px">
+          <div style="padding:62px 22px 0;display:flex;align-items:center;justify-content:space-between">
+            <div><div style="font-size:13px;color:rgba(34,48,60,0.55)">City General Hospital · Admin</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:26px;margin-top:1px">Organization</div></div>
+            <div style="width:40px;height:40px;border-radius:12px;background:oklch(0.9 0.03 235);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:oklch(0.42 0.12 235)">CG</div>
+          </div>
+          <div style="margin:16px 22px 0;display:flex;gap:10px">
+            <div style="flex:1;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:16px;padding:12px"><div style="font-size:11px;color:rgba(34,48,60,0.5)">Doctors</div><div style="font-family:'Instrument Serif',serif;font-size:22px;margin-top:2px">42</div></div>
+            <div style="flex:1;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:16px;padding:12px"><div style="font-size:11px;color:rgba(34,48,60,0.5)">Patients</div><div style="font-family:'Instrument Serif',serif;font-size:22px;margin-top:2px">12,408</div></div>
+            <div style="flex:1;background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:16px;padding:12px"><div style="font-size:11px;color:rgba(34,48,60,0.5)">Integrations</div><div style="font-family:'Instrument Serif',serif;font-size:22px;margin-top:2px">3</div></div>
+          </div>
+          <div style="padding:20px 22px 0">
+            <div style="font-family:'Instrument Serif',serif;font-size:19px">Integrations</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+              <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px;display:flex;gap:12px;align-items:center"><span style="width:10px;height:10px;flex:none;border-radius:50%;background:oklch(0.65 0.15 150)"></span><div style="flex:1"><div style="font-weight:600;font-size:14px">Apollo LIS</div><div style="font-size:12px;color:rgba(34,48,60,0.55)">FHIR · 1,204 events today · healthy</div></div></div>
+              <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px;display:flex;gap:12px;align-items:center"><span style="width:10px;height:10px;flex:none;border-radius:50%;background:oklch(0.65 0.15 150)"></span><div style="flex:1"><div style="font-weight:600;font-size:14px">Radiology PACS</div><div style="font-size:12px;color:rgba(34,48,60,0.55)">Webhooks · 96 events today · healthy</div></div></div>
+              <div onClick="{{ toQueue }}" style="cursor:pointer;background:#fff;border:1.5px solid oklch(0.7 0.14 25);border-radius:14px;padding:13px 15px;display:flex;gap:12px;align-items:center"><span style="width:10px;height:10px;flex:none;border-radius:50%;background:oklch(0.55 0.18 25)"></span><div style="flex:1"><div style="font-weight:600;font-size:14px">Legacy HIS</div><div style="font-size:12px;color:rgba(34,48,60,0.55)">File-based · last sync 08:40</div></div><span style="font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:oklch(0.94 0.04 25);color:oklch(0.45 0.15 25)">3 failed ›</span></div>
+            </div>
+          </div>
+          <div style="margin:20px 22px 0;display:flex;flex-direction:column;gap:8px">
+            <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Staff &amp; roles</span><span style="font-size:12px;color:rgba(34,48,60,0.5)">42 doctors · 8 admins ›</span></div>
+            <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Access policies</span><span style="font-size:12px;color:rgba(34,48,60,0.5)">Publication rules ›</span></div>
+            <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:14px">Audit log</span><span style="font-size:12px;color:rgba(34,48,60,0.5)">Export · 30 days ›</span></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ aQueue }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Admin integration queue" style="flex:1;overflow:auto;padding-bottom:24px">
+          <div style="padding:62px 22px 0">
+            <div onClick="{{ toDash }}" style="cursor:pointer;font-size:14px;color:rgba(34,48,60,0.6)">‹ Organization</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:26px;margin-top:14px">Legacy HIS — events</div>
+            <div style="font-size:13px;color:rgba(34,48,60,0.55);margin-top:2px">Failed events never silently drop clinical data.</div>
+          </div>
+          <div style="margin:16px 22px 0;display:flex;flex-direction:column;gap:8px">
+            <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:13.5px">Lab result LAB-102993</span><span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;background:oklch(0.94 0.04 25);color:oklch(0.45 0.15 25)">FAILED</span></div>
+              <div style="font-size:12px;color:rgba(34,48,60,0.55);margin-top:3px">HOSP-928372 → ambiguous identity (2 candidate matches)</div>
+              <div onClick="{{ resolveId }}" style="cursor:pointer;margin-top:9px;display:inline-block;font-size:12px;font-weight:600;padding:7px 14px;border-radius:999px;background:#22303c;color:#fff">Resolve identity</div>
+            </div>
+            <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:13.5px">Discharge summary DS-5521</span><span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;background:rgba(34,48,60,0.1);color:rgba(34,48,60,0.65)">DEAD_LETTER</span></div>
+              <div style="font-size:12px;color:rgba(34,48,60,0.55);margin-top:3px">Schema validation failed · missing encounter reference</div>
+              <div onClick="{{ viewPayload }}" style="cursor:pointer;margin-top:9px;display:inline-block;font-size:12px;font-weight:600;padding:7px 14px;border-radius:999px;background:#fff;border:1px solid rgba(34,48,60,0.18)">View payload</div>
+            </div>
+            <div style="background:#fff;border:1px solid rgba(34,48,60,0.1);border-radius:14px;padding:13px 15px">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:13.5px">Imaging report IMG-8817</span><span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;background:oklch(0.93 0.06 80);color:oklch(0.45 0.12 60)">RETRYING</span></div>
+              <div style="font-size:12px;color:rgba(34,48,60,0.55);margin-top:3px">Endpoint timeout · attempt 3 of 5 · next retry 11:20</div>
+            </div>
+          </div>
+          <div onClick="{{ retryAll }}" style="cursor:pointer;margin:14px 22px 0;background:#22303c;color:#fff;border-radius:12px;padding:14px 0;text-align:center;font-weight:600;font-size:14px" style-hover="opacity:0.88">Retry all recoverable</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:22px;right:22px;bottom:36px;background:#22303c;color:#fff;border-radius:12px;padding:12px 16px;font-size:13px;box-shadow:0 8px 24px rgba(34,48,60,0.35);animation:toastin 0.25s ease;z-index:50">{{ toast }}</div>
+      </sc-if>
+
+    </div>
+  </x-import>
+  <div style="width:390px;font-size:12px;color:rgba(34,48,60,0.5);text-align:center">Patient: QR, timeline, records, consent request, emergency card · Doctor: search, scan or emergency access → 360° → ask AI, add to record · Admin: integrations &amp; error queue</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startRole&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;patient&quot;, &quot;options&quot;: [&quot;patient&quot;, &quot;doctor&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Prototype&quot;}, &quot;showAuditToasts&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Prototype&quot;}, &quot;device&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;ios&quot;, &quot;options&quot;: [&quot;ios&quot;, &quot;android&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Prototype&quot;}}">
+class Component extends DCLogic {
+  state = {
+    role: null, pScreen: 'welcome', dScreen: 'login', recTab: 'reports', dTab: 'overview', addType: 'dx', toast: null, scanning: false, f: {}, famSel: 0, consentRes: null, consentDur: '30 days', cats: { gen: true, rep: true, med: true, mh: false }, aScreen: 'dash', emg: false, dQuery: '', aiQ: null, repView: 'list',
+    events: [
+      { dt: 'Today', t: 'Lab report', title: 'Lipid panel — final', org: 'Apollo Diagnostics', chip: 'LAB', h: 235, g: '2026', doc: true, tap: true },
+      { dt: '12 Aug', t: 'Consultation', title: 'Follow-up — Type 2 diabetes', org: 'Dr. R. Menon · City General', chip: 'CON', h: 280, g: '2026' },
+      { dt: '12 Aug', t: 'Prescription', title: 'Metformin 500 mg renewed', org: 'Dr. R. Menon', chip: 'RX', h: 150, g: '2026' },
+      { dt: '03 Jun', t: 'Lab report', title: 'HbA1c — 6.8%', org: 'Apollo Diagnostics', chip: 'LAB', h: 235, g: '2026', doc: true },
+      { dt: '18 Feb', t: 'Vaccination', title: 'Influenza vaccine', org: 'City General', chip: 'VAX', h: 190, g: '2026' },
+      { dt: '09–12 Nov', t: 'Hospitalization', title: 'Appendectomy — discharged', org: 'City General Hospital', chip: 'HSP', h: 60, g: '2025', doc: true },
+      { dt: '14 Mar', t: 'Diagnosis', title: 'Type 2 diabetes (E11.9)', org: 'Dr. S. Iyer', chip: 'DX', h: 25, g: '2022' }
+    ]
+  };
+  qrSvg(fg, bg) {
+    let seed = 42;
+    const rnd = () => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
+    const c = 6, n = 21, els = [];
+    const finder = (fx, fy, k) => {
+      els.push(React.createElement('rect', { key: 'o' + k, x: fx * c, y: fy * c, width: 7 * c, height: 7 * c, rx: 3, fill: fg }));
+      els.push(React.createElement('rect', { key: 'm' + k, x: (fx + 1) * c, y: (fy + 1) * c, width: 5 * c, height: 5 * c, rx: 2, fill: bg }));
+      els.push(React.createElement('rect', { key: 'i' + k, x: (fx + 2) * c, y: (fy + 2) * c, width: 3 * c, height: 3 * c, rx: 1.5, fill: fg }));
+    };
+    finder(0, 0, 'a'); finder(14, 0, 'b'); finder(0, 14, 'c');
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+      const inF = (x < 8 && y < 8) || (x > 12 && y < 8) || (x < 8 && y > 12);
+      if (!inF && rnd() < 0.42) els.push(React.createElement('rect', { key: x + '_' + y, x: x * c, y: y * c, width: c, height: c, fill: fg }));
+    }
+    return React.createElement('svg', { viewBox: '0 0 126 126', style: { width: '100%', height: '100%', display: 'block' } }, els);
+  }
+  toastMsg(m) {
+    if (this.props.showAuditToasts === false) return;
+    this.setState({ toast: m });
+    clearTimeout(this._tt);
+    this._tt = setTimeout(() => this.setState({ toast: null }), 2800);
+  }
+  RAVI = {
+    key: 'ravi', name: 'Ravi Krishnan', init: 'RK', meta: '62 M · AB+ · MIR-33H77Q', atlasId: 'MIR-33H77Q',
+    allergy: 'Aspirin — bronchospasm (2018)',
+    briefSrc: 'Generated from 18 records at scan · visuals picked by AI for this visit · verify against source data before clinical decisions',
+    conds: [{ t: 'CAD — post-PCI, LAD stent · Feb 2026' }, { t: 'Heart failure · EF 38%' }, { t: 'Type 2 diabetes · 2019' }, { t: 'Hypertension' }],
+    meds: [{ t: 'Clopidogrel 75 mg — once daily' }, { t: 'Metoprolol XL 50 mg — morning' }, { t: 'Dapagliflozin 10 mg — morning' }, { t: 'Rosuvastatin 20 mg — night' }],
+    results: [{ n: 'Echo · 20 Aug', v: 'EF 38% ▲', vC: '#22303c' }, { n: 'NT-proBNP · today', v: '890 ▼', vC: '#22303c' }, { n: 'HbA1c · 18 Aug', v: '7.4% ▲', vC: 'oklch(0.55 0.15 60)' }],
+    lastVisit: '20 Aug — HF review. EF improved 32 → 38%; metoprolol up-titrated. (Dr. V. Bose)',
+    expNote: 'Ravi Krishnan consent ends 19 Sep 2026. Re-scan his QR to renew.',
+    events: [
+      { dt: 'Today', t: 'Lab report', title: 'NT-proBNP — 890 pg/mL', org: 'City General Labs', chip: 'LAB', h: 235, g: '2026', doc: true },
+      { dt: '20 Aug', t: 'Lab report', title: 'Echocardiogram — EF 38%', org: 'City General · Cardiology', chip: 'IMG', h: 260, g: '2026', doc: true },
+      { dt: '20 Aug', t: 'Consultation', title: 'HF review — metoprolol up-titrated', org: 'Dr. V. Bose · City General', chip: 'CON', h: 150, g: '2026' },
+      { dt: '18 Aug', t: 'Lab report', title: 'HbA1c — 7.4%', org: 'Apollo Diagnostics', chip: 'LAB', h: 235, g: '2026', doc: true },
+      { dt: '18 Aug', t: 'Consultation', title: 'Diabetes review — co-management', org: 'Dr. R. Menon · City General', chip: 'CON', h: 150, g: '2026' },
+      { dt: '09 Feb', t: 'Hospitalization', title: 'NSTEMI — PCI, LAD stent · discharge summary', org: 'City General', chip: 'HOS', h: 25, g: '2026', doc: true },
+      { dt: 'Jun', t: 'Diagnosis', title: 'Type 2 diabetes', org: 'Dr. R. Menon · City General', chip: 'DX', h: 25, g: '2019' }
+    ],
+    reports: [
+      { n: 'NT-proBNP', org: 'City General Labs', dt: '01 Sep 2026', s: 'Final' },
+      { n: 'Echocardiogram', org: 'City General', dt: '20 Aug 2026', s: 'Final' },
+      { n: 'HbA1c', org: 'Apollo Diagnostics', dt: '18 Aug 2026', s: 'Final' },
+      { n: 'Coronary angiogram', org: 'City General', dt: '09 Feb 2026', s: 'Final' },
+      { n: 'Discharge summary — PCI', org: 'City General', dt: '12 Feb 2026', s: 'Final' }
+    ],
+    rx: [
+      { n: 'Clopidogrel 75 mg', f: 'Once daily · aspirin contraindicated', s: 'Active', by: 'Dr. V. Bose', dt: '12 Feb 2026' },
+      { n: 'Metoprolol XL 50 mg', f: 'Morning · up-titrated 20 Aug', s: 'Active', by: 'Dr. V. Bose', dt: '20 Aug 2026' },
+      { n: 'Dapagliflozin 10 mg', f: 'Morning · HF + glycemic benefit', s: 'Active', by: 'Dr. R. Menon', dt: '18 Aug 2026' },
+      { n: 'Rosuvastatin 20 mg', f: 'Night · high-intensity statin', s: 'Active', by: 'Dr. V. Bose', dt: '12 Feb 2026' }
+    ]
+  };
+  DOCS = {
+    menon: {
+      id: 'menon', name: 'Dr. Rohan Menon', init: 'RM', dept: 'City General · Endocrinology', org: 'City General', email: 'r.menon@citygeneral.org',
+      p: {
+        name: 'Priya Sharma', init: 'PS', meta: '34 F · B+ · MIR-82X92K', atlasId: 'MIR-82X92K',
+        allergy: 'Penicillin — severe reaction (2019)',
+        brief: '34 F, T2DM (2022), followed by Dr. R. Menon (Endocrinology, City General) since 2022 — well controlled: HbA1c 6.8% (Jun). New lipid panel today: TG 168 ↑, LDL 104, otherwise in range. On Metformin 500 BD + Atorvastatin 10 OD since Aug. Appendectomy Nov 2025, uneventful. Penicillin allergy. Suggested focus: hypertriglyceridemia — diet review vs. dose adjustment.',
+        briefSrc: 'Generated from 7 records at scan · visuals picked by AI for this visit · verify against source data before clinical decisions',
+        aiMap: {
+          'Last eye exam?': 'No ophthalmology records in Mirai. Retinopathy screening was advised at diagnosis (Mar 2022) — no result on file. Consider referral.',
+          'HbA1c trend?': '7.4% (Dec 2024) → 7.0% (Mar 2025) → 6.8% (Jun 2026). Improving; under 7% target for 14 months.',
+          'Med adherence?': 'Metformin refills on schedule for 12 months. Atorvastatin started 12 Aug — first refill due 11 Sep.'
+        },
+        chart: { title: "HbA1c trend — chosen for today's visit", tLbl: 'target < 7.0%', tY: 38, tV: '7.0',
+          pts: [{ x: 30, y: 14, v: '7.9', l: 'Mar 23' }, { x: 116, y: 26, v: '7.4', l: 'Jan 24' }, { x: 202, y: 34, v: '7.1', l: 'Sep 25' }, { x: 274, y: 44, v: '6.8', l: 'Jun 26' }],
+          barTitle: 'Triglycerides today', barRef: 'ref < 150 mg/dL', barPct: '75%', barMark: '67%', barCap: '168 ↑ mildly high', barCapC: 'oklch(0.5 0.12 25)', barMin: '0', barMax: '225' },
+        conds: [{ t: 'Type 2 diabetes · 2022' }, { t: 'Allergic rhinitis' }],
+        meds: [{ t: 'Metformin 500 mg — twice daily' }, { t: 'Atorvastatin 10 mg — once daily, night' }],
+        results: [{ n: 'Lipid panel · today', v: 'TG 168 ▲', vC: 'oklch(0.55 0.15 60)' }, { n: 'HbA1c · 03 Jun', v: '6.8%', vC: '#22303c' }],
+        lastVisit: '12 Aug — follow-up, Type 2 diabetes. Renewed Metformin; advised lipid panel. (Dr. R. Menon)',
+        roster: [
+          { n: 'Priya Sharma', meta: '34 F · Type 2 diabetes · seen 12 Aug', init: 'PS', hl: true },
+          { n: 'Ravi Krishnan', meta: '62 M · T2DM + CAD · co-managed with Dr. Bose', init: 'RK', pid: 'ravi' },
+          { n: 'Arjun Rao', meta: '58 M · hypertension · seen 11 Aug', init: 'AR' },
+          { n: 'Meena Joshi', meta: '42 F · asthma · seen 08 Aug', init: 'MJ' },
+          { n: 'Sanjay Patel', meta: '61 M · CKD stage 2 · seen 05 Aug', init: 'SP' }
+        ],
+        expNote: 'Priya Sharma consent ends 12 Sep 2026. Re-scan her QR to renew.'
+      },
+      xp: {
+        ravi: {
+          ...this.RAVI,
+          scope: 'Co-management grant — history, reports & meds shared. Cardiology procedure notes summarized by Dr. V. Bose.',
+          brief: '62 M, T2DM (2019) with CAD — post-PCI Feb 2026, co-managed with Dr. V. Bose (Cardiology). HbA1c drifting up: 7.4% (18 Aug) from 7.1% — activity limited during cardiac rehab. On dapagliflozin 10 (chosen for HF co-benefit); metoprolol and rosuvastatin per cardiology. eGFR 58 — monitor with SGLT2i. Aspirin allergy. Suggested focus: re-tighten glycemia without hypoglycemia — avoid sulfonylureas given cardiac status.',
+          aiMap: {
+            'HbA1c trend?': '7.1% (Feb) → 7.2% (May) → 7.4% (18 Aug). Drifting above target since PCI; cardiac rehab has limited activity.',
+            'Hypo risk?': 'On metoprolol — hypoglycemia awareness may be blunted. Avoid sulfonylureas; dapagliflozin + lifestyle preferred.',
+            'Cardiology plan?': 'Dr. V. Bose: EF recovering (38%), metoprolol up-titrated 20 Aug. No contraindication to intensifying glycemic therapy.'
+          },
+          chart: { title: "HbA1c trend — chosen for today's visit", tLbl: 'target < 7.0%', tY: 40, tV: '7.0',
+            pts: [{ x: 30, y: 34, v: '7.1', l: 'Feb 26' }, { x: 152, y: 28, v: '7.2', l: 'May 26' }, { x: 274, y: 18, v: '7.4', l: '18 Aug' }],
+            barTitle: 'eGFR — renal watch (SGLT2i)', barRef: 'ref > 60 mL/min', barPct: '48%', barMark: '50%', barCap: '58 · recheck in 4 weeks', barCapC: 'oklch(0.5 0.12 25)', barMin: '0', barMax: '120' }
+        }
+      }
+    },
+    rao: {
+      id: 'rao', name: 'Dr. Kavita Rao', init: 'KR', dept: 'City General · Hepatology', org: 'City General', email: 'k.rao@citygeneral.org',
+      p: {
+        key: 'arjun', name: 'Arjun Mehta', init: 'AM', meta: '48 M · O+ · MIR-55R21M', atlasId: 'MIR-55R21M',
+        allergy: null,
+        brief: '48 M, chronic liver disease — NAFLD-related compensated cirrhosis (Child-Pugh A, dx 2023), followed by Dr. K. Rao (Hepatology, City General). ALT improving 86 → 41 over 18 months; FibroScan 9.8 kPa (Jun), down from 12.1. On Propranolol for varices prophylaxis + Vitamin E. Alcohol-free 18 months; no ascites or encephalopathy. Suggested focus: weight reduction (BMI 31), repeat FibroScan in 6 months.',
+        briefSrc: 'Generated from 9 records at scan · visuals picked by AI for this visit · verify against source data before clinical decisions',
+        aiMap: {
+          'ALT trend?': '86 (Jan 2025) → 64 → 52 → 41 U/L (Jun 2026). Steady improvement since alcohol cessation and weight-loss plan; now near reference.',
+          'Varices status?': 'Grade I oesophageal varices on endoscopy (Feb 2026). On Propranolol 20 BD prophylaxis — heart rate at target. Repeat endoscopy due Feb 2027.',
+          'Alcohol history?': 'Self-reported abstinent since Feb 2025, corroborated by normalized GGT. Counselling completed Nov 2025.'
+        },
+        chart: { title: "ALT trend — chosen for today's visit", tLbl: 'ref < 40 U/L', tY: 44, tV: '40',
+          pts: [{ x: 30, y: 10, v: '86', l: 'Jan 25' }, { x: 116, y: 22, v: '64', l: 'Jul 25' }, { x: 202, y: 32, v: '52', l: 'Jan 26' }, { x: 274, y: 42, v: '41', l: 'Jun 26' }],
+          barTitle: 'FibroScan stiffness', barRef: 'ref < 7 kPa', barPct: '49%', barMark: '35%', barCap: '9.8 kPa · improving', barCapC: 'oklch(0.42 0.12 260)', barMin: '0', barMax: '20 kPa' },
+        conds: [{ t: 'NAFLD cirrhosis · Child-Pugh A · 2023' }, { t: 'Oesophageal varices · grade I' }, { t: 'Obesity · BMI 31' }],
+        meds: [{ t: 'Propranolol 20 mg — twice daily' }, { t: 'Vitamin E 400 IU — once daily' }],
+        results: [{ n: 'LFT panel · today', v: 'ALT 41 ▼', vC: '#22303c' }, { n: 'FibroScan · 08 Jun', v: '9.8 kPa', vC: '#22303c' }],
+        lastVisit: '14 May — surveillance visit. FibroScan improved; continue regimen, weight-loss referral. (Dr. K. Rao)',
+        roster: [
+          { n: 'Arjun Mehta', meta: '48 M · cirrhosis, compensated · seen 14 May', init: 'AM', hl: true },
+          { n: 'Rekha Iyer', meta: '52 F · hepatitis B · seen 10 Aug', init: 'RI' },
+          { n: 'Vikram Shetty', meta: '45 M · fatty liver · seen 07 Aug', init: 'VS' },
+          { n: 'Devika Menon', meta: '60 F · PBC · seen 30 Jul', init: 'DM' }
+        ],
+        expNote: 'Arjun Mehta consent ends 13 Sep 2026. Re-scan his QR to renew.',
+        events: [
+          { dt: 'Today', t: 'Lab report', title: 'Liver function tests — final', org: 'City General Labs', chip: 'LAB', h: 235, g: '2026', doc: true },
+          { dt: '08 Jun', t: 'Lab report', title: 'FibroScan — 9.8 kPa', org: 'City General · Radiology', chip: 'IMG', h: 260, g: '2026', doc: true },
+          { dt: '14 May', t: 'Consultation', title: 'Surveillance visit — compensated cirrhosis', org: 'Dr. K. Rao · City General', chip: 'CON', h: 150, g: '2026' },
+          { dt: '02 Feb', t: 'Lab report', title: 'Endoscopy — grade I varices', org: 'City General · Gastroenterology', chip: 'IMG', h: 260, g: '2026', doc: true },
+          { dt: '12 Nov', t: 'Consultation', title: 'Diet & alcohol-cessation review', org: 'Dr. K. Rao · City General', chip: 'CON', h: 150, g: '2025' },
+          { dt: '20 Mar', t: 'Diagnosis', title: 'NAFLD-related cirrhosis — Child-Pugh A', org: 'Dr. K. Rao · City General', chip: 'DX', h: 25, g: '2023' }
+        ],
+        reports: [
+          { n: 'Liver function tests', org: 'City General Labs', dt: '01 Sep 2026', s: 'Final' },
+          { n: 'FibroScan elastography', org: 'City General', dt: '08 Jun 2026', s: 'Final' },
+          { n: 'Upper GI endoscopy', org: 'City General', dt: '02 Feb 2026', s: 'Final' },
+          { n: 'Ultrasound abdomen', org: 'City General', dt: '02 Feb 2026', s: 'Final' }
+        ],
+        rx: [
+          { n: 'Propranolol 20 mg', f: 'Twice daily · varices prophylaxis', s: 'Active', by: 'Dr. K. Rao', dt: '14 May 2026' },
+          { n: 'Vitamin E 400 IU', f: 'Once daily · with food', s: 'Active', by: 'Dr. K. Rao', dt: '14 May 2026' },
+          { n: 'Spironolactone 25 mg', f: 'Discontinued — no ascites', s: 'Done', by: 'Dr. K. Rao', dt: 'Mar 2026' }
+        ]
+      }
+    },
+    kapoor: {
+      id: 'kapoor', name: 'Dr. Anita Kapoor', init: 'AK', dept: 'Apollo Cancer Centre · Oncology', org: 'Apollo Cancer Centre', email: 'a.kapoor@apollocancer.org',
+      p: {
+        key: 'lakshmi', name: 'Lakshmi Nair', init: 'LN', meta: '58 F · A− · MIR-91C48T', atlasId: 'MIR-91C48T',
+        allergy: 'Iodinated contrast — moderate reaction (2026)',
+        brief: '58 F, invasive ductal carcinoma, left breast — stage IIA, ER/PR+, HER2− (dx Jan 2026), treated by Dr. A. Kapoor (Oncology, Apollo Cancer Centre). Lumpectomy + SLNB Mar 2026: clear margins, 1/3 nodes positive. Adjuvant chemo: cycle 4 of 6 complete (12 Aug), grade 1 nausea only. CA 15-3 falling 42 → 19. Today\u2019s CBC: ANC 1.9 — adequate for cycle 5. Contrast allergy. Suggested focus: cycle 5 clearance & antiemetic review.',
+        briefSrc: 'Generated from 14 records at scan · visuals picked by AI for this visit · verify against source data before clinical decisions',
+        aiMap: {
+          'Next chemo cycle?': 'Cycle 5 of 6 scheduled 02 Sep. Today\u2019s ANC 1.9 ×10⁹/L is above the 1.5 threshold — cleared unless symptoms change.',
+          'CA 15-3 trend?': '42 (Jan) → 31 (Mar) → 24 (Jun) → 19 (Aug). Falling steadily since surgery; now within reference (< 25 U/mL).',
+          'Nausea management?': 'Grade 1 nausea in cycles 3–4 on ondansetron; no dose delays. Consider adding olanzapine 2.5 mg if worse in cycle 5.'
+        },
+        chart: { title: "CA 15-3 trend — chosen for today's visit", tLbl: 'ref < 25 U/mL', tY: 34, tV: '25',
+          pts: [{ x: 30, y: 10, v: '42', l: 'Jan 26' }, { x: 116, y: 22, v: '31', l: 'Mar 26' }, { x: 202, y: 32, v: '24', l: 'Jun 26' }, { x: 274, y: 44, v: '19', l: '12 Aug' }],
+          barTitle: 'Chemotherapy progress', barRef: 'AC-T · 6 cycles', barPct: '67%', barMark: '83%', barCap: '4 of 6 cycles · next 02 Sep', barCapC: 'oklch(0.42 0.12 260)', barMin: '0', barMax: '6' },
+        conds: [{ t: 'Breast carcinoma · stage IIA · Jan 2026' }, { t: 'ER/PR+ · HER2−' }, { t: 'Hypothyroidism' }],
+        meds: [{ t: 'AC-T chemotherapy — cycle 4 of 6' }, { t: 'Ondansetron 8 mg — before chemo & PRN' }, { t: 'Levothyroxine 50 mcg — morning' }],
+        results: [{ n: 'CBC · today', v: 'ANC 1.9 ✓', vC: '#22303c' }, { n: 'CA 15-3 · 12 Aug', v: '19 ▼', vC: '#22303c' }],
+        lastVisit: '12 Aug — chemo cycle 4, day care. Tolerated well; grade 1 nausea. (Dr. A. Kapoor)',
+        roster: [
+          { n: 'Lakshmi Nair', meta: '58 F · breast ca, stage IIA · seen 12 Aug', init: 'LN', hl: true },
+          { n: 'Suresh Kumar', meta: '64 M · colorectal ca · seen 13 Aug', init: 'SK' },
+          { n: 'Farida Khan', meta: '49 F · lymphoma · seen 09 Aug', init: 'FK' },
+          { n: 'Ramesh Gupta', meta: '71 M · prostate ca · seen 01 Aug', init: 'RG' }
+        ],
+        expNote: 'Lakshmi Nair consent ends 11 Sep 2026. Re-scan her QR to renew.',
+        events: [
+          { dt: 'Today', t: 'Lab report', title: 'Complete blood count — pre-cycle 5', org: 'Apollo Cancer Centre Labs', chip: 'LAB', h: 235, g: '2026', doc: true },
+          { dt: '12 Aug', t: 'Hospitalization', title: 'Chemotherapy cycle 4 — day care', org: 'Apollo Cancer Centre', chip: 'HOS', h: 25, g: '2026' },
+          { dt: '12 Aug', t: 'Lab report', title: 'CA 15-3 — 19 U/mL', org: 'Apollo Cancer Centre Labs', chip: 'LAB', h: 235, g: '2026', doc: true },
+          { dt: '04 Jul', t: 'Lab report', title: 'CT thorax — no new lesions', org: 'Apollo · Radiology', chip: 'IMG', h: 260, g: '2026', doc: true },
+          { dt: '18 Mar', t: 'Hospitalization', title: 'Lumpectomy + SLNB — discharge summary', org: 'Apollo Cancer Centre', chip: 'HOS', h: 25, g: '2026', doc: true },
+          { dt: '22 Jan', t: 'Lab report', title: 'Core biopsy — histopathology', org: 'Apollo Cancer Centre Labs', chip: 'LAB', h: 235, g: '2026', doc: true },
+          { dt: '20 Jan', t: 'Diagnosis', title: 'Invasive ductal carcinoma — left breast', org: 'Dr. A. Kapoor · Apollo', chip: 'DX', h: 25, g: '2026' }
+        ],
+        reports: [
+          { n: 'Complete blood count', org: 'Apollo Cancer Centre Labs', dt: '01 Sep 2026', s: 'Final' },
+          { n: 'CA 15-3 tumour marker', org: 'Apollo Cancer Centre Labs', dt: '12 Aug 2026', s: 'Final' },
+          { n: 'CT thorax', org: 'Apollo Cancer Centre', dt: '04 Jul 2026', s: 'Final' },
+          { n: 'Histopathology — core biopsy', org: 'Apollo Cancer Centre Labs', dt: '24 Jan 2026', s: 'Final' },
+          { n: 'Discharge summary — lumpectomy', org: 'Apollo Cancer Centre', dt: '20 Mar 2026', s: 'Final' }
+        ],
+        rx: [
+          { n: 'Docetaxel — cycle 5', f: 'Scheduled 02 Sep · day care', s: 'Active', by: 'Dr. A. Kapoor', dt: '12 Aug 2026' },
+          { n: 'Ondansetron 8 mg', f: 'Before chemo · PRN nausea', s: 'Active', by: 'Dr. A. Kapoor', dt: '12 Aug 2026' },
+          { n: 'Levothyroxine 50 mcg', f: 'Once daily · morning', s: 'Active', by: 'Dr. P. Shah', dt: '2021' }
+        ]
+      }
+    },
+    bose: {
+      id: 'bose', name: 'Dr. Vikram Bose', init: 'VB', dept: 'City General · Cardiology', org: 'City General', email: 'v.bose@citygeneral.org',
+      p: {
+        ...this.RAVI,
+        brief: '62 M, coronary artery disease — NSTEMI with PCI, LAD stent (Feb 2026), heart failure with EF 38% (↑ from 28%), managed by Dr. V. Bose (Cardiology); T2DM co-managed by Dr. R. Menon. NT-proBNP 890, down from 2,400. On clopidogrel (aspirin contraindicated — bronchospasm), metoprolol up-titrated 20 Aug, dapagliflozin, rosuvastatin. HbA1c 7.4% ↑. Suggested focus: continue GDMT titration; re-assess ICD candidacy at 6-month echo if EF < 35%.',
+        aiMap: {
+          'EF trend?': '28% (Feb, post-MI) → 32% (May) → 35% (Jul) → 38% (20 Aug). Recovering on GDMT; ICD re-assessment at 6-month echo if < 35%.',
+          'Why no aspirin?': 'Documented bronchospasm with aspirin (2018). Clopidogrel monotherapy approved by cardiology board, Mar 2026.',
+          'Diabetes control?': 'Managed by Dr. R. Menon: HbA1c 7.4% (18 Aug), drifting up. Dapagliflozin gives shared HF + glycemic benefit. Endocrine review 15 Sep.'
+        },
+        chart: { title: "EF trend — chosen for today's visit", tLbl: 'target ≥ 40%', tY: 12, tV: '40',
+          pts: [{ x: 30, y: 46, v: '28', l: 'Feb 26' }, { x: 116, y: 36, v: '32', l: 'May 26' }, { x: 202, y: 26, v: '35', l: 'Jul 26' }, { x: 274, y: 16, v: '38', l: '20 Aug' }],
+          barTitle: 'NT-proBNP today', barRef: 'ref < 300 pg/mL', barPct: '30%', barMark: '10%', barCap: '890 ▼ from 2,400 pg/mL', barCapC: 'oklch(0.42 0.12 260)', barMin: '0', barMax: '3,000' },
+        roster: [
+          { n: 'Ravi Krishnan', meta: '62 M · CAD + HF, EF 38% · seen 20 Aug', init: 'RK', hl: true },
+          { n: 'Meera Pillai', meta: '70 F · atrial fibrillation · seen 19 Aug', init: 'MP' },
+          { n: 'Joseph Thomas', meta: '55 M · post-CABG · seen 16 Aug', init: 'JT' },
+          { n: 'Anila George', meta: '66 F · HFpEF · seen 12 Aug', init: 'AG' }
+        ]
+      }
+    }
+  };
+  buildChart(C) {
+    const h = React.createElement, n = C.pts.length;
+    return h('svg', { width: '100%', height: 86, viewBox: '0 0 300 86', style: { marginTop: 4 } },
+      h('line', { x1: 8, y1: C.tY, x2: 292, y2: C.tY, stroke: 'oklch(0.6 0.12 25)', strokeWidth: 1, strokeDasharray: '3 4' }),
+      h('text', { x: 292, y: C.tY - 5, textAnchor: 'end', fontSize: 8.5, fill: 'oklch(0.55 0.12 25)' }, C.tV),
+      h('polyline', { points: C.pts.map(p => p.x + ',' + p.y).join(' '), fill: 'none', stroke: 'oklch(0.5 0.14 260)', strokeWidth: 2, strokeLinecap: 'round' }),
+      ...C.pts.map((p, i) => i < n - 1
+        ? h('circle', { key: 'c' + i, cx: p.x, cy: p.y, r: 3.5, fill: 'oklch(0.5 0.14 260)' })
+        : h('circle', { key: 'c' + i, cx: p.x, cy: p.y, r: 4.5, fill: '#fff', stroke: 'oklch(0.5 0.14 260)', strokeWidth: 2.5 })),
+      ...C.pts.map((p, i) => h('text', { key: 'v' + i, x: p.x, y: i === n - 1 ? p.y + 16 : Math.max(8, p.y - 6), textAnchor: 'middle', fontSize: i === n - 1 ? 9.5 : 9, fontWeight: 700, fill: i === n - 1 ? 'oklch(0.42 0.12 260)' : '#22303c' }, p.v)),
+      ...C.pts.map((p, i) => h('text', { key: 'l' + i, x: p.x, y: 82, textAnchor: 'middle', fontSize: 8.5, fill: 'rgba(34,48,60,0.5)' }, p.l))
+    );
+  }
+  renderVals() {
+    const s = this.state;
+    const role = s.role ?? (this.props.startRole || 'patient');
+    const A = 'oklch(0.45 0.13 235)', SUB = 'rgba(34,48,60,0.5)', INK = '#22303c';
+    const goP = k => () => this.setState({ role: 'patient', pScreen: k });
+    const goD = k => () => this.setState({ role: 'doctor', dScreen: k });
+    const isP = role === 'patient', isD = role === 'doctor';
+    const p = s.pScreen, d = s.dScreen;
+    const pill = on => ({ bg: on ? INK : '#fff', c: on ? '#fff' : INK });
+    const statusPill = st => st === 'Active' || st === 'Final' ? { sBg: 'oklch(0.93 0.05 150)', sC: 'oklch(0.42 0.12 150)' } : st === 'Revoked' ? { sBg: 'oklch(0.94 0.04 25)', sC: 'oklch(0.45 0.15 25)' } : st === 'Preliminary' ? { sBg: 'oklch(0.93 0.06 80)', sC: 'oklch(0.45 0.12 60)' } : st === 'Amended' ? { sBg: 'oklch(0.94 0.02 235)', sC: 'oklch(0.42 0.12 235)' } : { sBg: 'rgba(34,48,60,0.08)', sC: 'rgba(34,48,60,0.6)' };
+    const rec = s.recTab, dt = s.dTab, at = s.addType;
+    const recPills = {};
+    [['recRep', 'reports'], ['recRx', 'rx'], ['recDis', 'dis']].forEach(([k, v]) => { const x = pill(rec === v); recPills[k + 'Bg'] = x.bg; recPills[k + 'C'] = x.c; });
+    const adPills = {};
+    [['adDx', 'dx'], ['adRx', 'rx'], ['adDoc', 'doc']].forEach(([k, v]) => { const x = pill(at === v); adPills[k + 'Bg'] = x.bg; adPills[k + 'C'] = x.c; });
+    const tab = on => ({ c: on ? INK : SUB, b: on ? A : 'transparent' });
+    const tOv = tab(dt === 'overview'), tTl = tab(dt === 'timeline'), tRep = tab(dt === 'reports'), tRx = tab(dt === 'rx');
+    const tf = s.tlFilter || 'all';
+    const tlMatch = { con: ['Consultation', 'Diagnosis'], rep: ['Lab report', 'Document'], hos: ['Hospitalization'] };
+    const tlEvents = tf === 'all' ? s.events : s.events.filter(e => tlMatch[tf].includes(e.t));
+    const decorate = e => ({ ...e, tintBg: 'oklch(0.93 0.045 ' + e.h + ')', tintC: 'oklch(0.4 0.12 ' + e.h + ')', hasDoc: !!e.doc, onPdf: e.doc ? () => this.setState({ dPdf: { t: e.title, org: e.org, dt: e.dt } }) : null, cursor: e.tap ? 'pointer' : 'default', onTap: e.tap ? goP('report') : () => {} });
+    const groupUp = list => { const gs = []; list.forEach(e => { let g = gs.find(x => x.label === e.g); if (!g) { g = { label: e.g, items: [] }; gs.push(g); } g.items.push(decorate(e)); }); return gs; };
+    const tlPills = {};
+    [['tlAll', 'all'], ['tlCon', 'con'], ['tlRep', 'rep'], ['tlHos', 'hos']].forEach(([k, v]) => { const x = pill(tf === v); tlPills[k + 'Bg'] = x.bg; tlPills[k + 'C'] = x.c; });
+    const members = [
+      { n: 'Priya', full: 'Priya Sharma', init: 'PS' },
+      { n: 'Aarav', full: 'Aarav Sharma', init: 'AS' },
+      { n: 'Kamala', full: 'Kamala Sharma', init: 'KS' }
+    ];
+    const famList = members.map((m, i) => {
+      const on = i === s.famSel;
+      return { n: m.n, init: m.init, bg: on ? INK : '#fff', c: on ? '#fff' : INK, avBg: on ? 'rgba(255,255,255,0.2)' : 'oklch(0.9 0.03 235)', avC: on ? '#fff' : 'oklch(0.42 0.12 235)', onPick: () => { this.setState({ famSel: i }); if (i !== 0) this.toastMsg('Viewing ' + m.full + ' — demo data shows Priya'); } };
+    });
+    const catV = k => ({ bg: s.cats[k] ? 'oklch(0.52 0.13 235)' : 'rgba(34,48,60,0.25)', x: s.cats[k] ? '19px' : '3px' });
+    const tg = k => () => this.setState({ cats: { ...s.cats, [k]: !s.cats[k] } });
+    const dd = this.DOCS[s.dDoc || 'menon'], P = (s.dPatId && dd.xp && dd.xp[s.dPatId]) || dd.p;
+    const aiMap = P.aiMap;
+    const q = (s.dQuery || '').toLowerCase();
+    const openPt = pid => () => this.setState({ dPatId: pid, dScreen: 'patient', dTab: 'overview', aiQ: null, repView: 'list', dPdf: null });
+    const docPatients = dd.p.roster.filter(r => !q || r.n.toLowerCase().includes(q) || r.meta.toLowerCase().includes(q)).map(r => ({ ...r, avBg: r.hl || r.pid ? 'oklch(0.9 0.03 235)' : 'oklch(0.93 0.01 235)', avC: r.hl || r.pid ? 'oklch(0.42 0.12 235)' : 'rgba(34,48,60,0.55)', onOpen: r.hl ? openPt(null) : r.pid ? openPt(r.pid) : () => this.toastMsg('Prototype: this record is not populated') }));
+    const mkRep = r => ({ ...r, ...statusPill(r.s), onPdf: () => this.setState({ dPdf: { t: r.n, org: r.org, dt: r.dt } }) });
+    const repsPriya = [
+      { n: 'Lipid panel', org: 'Apollo Diagnostics', dt: '21 Aug 2026', s: 'Final' },
+      { n: 'Thyroid panel (TSH, T4)', org: 'Apollo Diagnostics', dt: '21 Aug 2026', s: 'Preliminary' },
+      { n: 'HbA1c', org: 'Apollo Diagnostics', dt: '03 Jun 2026', s: 'Final' },
+      { n: 'Chest X-ray', org: 'City General', dt: '10 Nov 2025', s: 'Amended' },
+      { n: 'Complete blood count', org: 'City General', dt: '09 Nov 2025', s: 'Final' }
+    ].map(mkRep);
+    const rxPriya = [
+      { n: 'Metformin 500 mg', f: 'Twice daily · with meals', s: 'Active', by: 'Dr. R. Menon', dt: '12 Aug 2026', ...statusPill('Active') },
+      { n: 'Atorvastatin 10 mg', f: 'Once daily · night', s: 'Active', by: 'Dr. R. Menon', dt: '12 Aug 2026', ...statusPill('Active') },
+      { n: 'Amoxicillin 500 mg', f: 'Course completed · post-surgery', s: 'Done', by: 'Dr. A. Fernandes', dt: 'Nov 2025', ...statusPill('Done') }
+    ];
+    const dur1 = pill(s.consentDur === '24 hours'), dur2 = pill(s.consentDur === '30 days'), dur3 = pill(s.consentDur === '90 days');
+    const rpL = pill(s.repView === 'list'), rpC = pill(s.repView === 'compare');
+    const extra = {
+      firstName: members[s.famSel].n, famList,
+      admBtnBg: role === 'admin' ? INK : 'transparent', admBtnC: role === 'admin' ? '#fff' : INK,
+      roleAdmin: () => this.setState({ role: 'admin' }),
+      aDash: role === 'admin' && s.aScreen === 'dash', aQueue: role === 'admin' && s.aScreen === 'queue',
+      toDash: () => this.setState({ role: 'admin', aScreen: 'dash' }), toQueue: () => this.setState({ role: 'admin', aScreen: 'queue' }),
+      retryAll: () => this.toastMsg('2 recoverable events queued for retry'),
+      resolveId: () => this.toastMsg('Routed to identity resolution — never auto-attached'),
+      viewPayload: () => this.toastMsg('Payload opened in secure viewer (metadata only)'),
+      pConsent: isP && p === 'consent', toConsent: goP('consent'),
+      consentPending: !s.consentRes,
+      dur1Bg: dur1.bg, dur1C: dur1.c, dur2Bg: dur2.bg, dur2C: dur2.c, dur3Bg: dur3.bg, dur3C: dur3.c,
+      setDur1: () => this.setState({ consentDur: '24 hours' }), setDur2: () => this.setState({ consentDur: '30 days' }), setDur3: () => this.setState({ consentDur: '90 days' }),
+      catGenBg: catV('gen').bg, catGenX: catV('gen').x, tgGen: tg('gen'),
+      catRepBg: catV('rep').bg, catRepX: catV('rep').x, tgRep: tg('rep'),
+      catMedBg: catV('med').bg, catMedX: catV('med').x, tgMed: tg('med'),
+      catMhBg: catV('mh').bg, catMhX: catV('mh').x, tgMh: tg('mh'),
+      consentApprove: () => { this.setState({ consentRes: 'ok', pScreen: 'access' }); this.toastMsg('Access granted · ' + s.consentDur + ' · every view is logged'); },
+      autoAccBg: (s.autoAcc ?? true) ? 'oklch(0.52 0.13 235)' : 'rgba(34,48,60,0.2)', autoAccX: (s.autoAcc ?? true) ? '19px' : '3px',
+      tgAutoAcc: () => { const nv = !(s.autoAcc ?? true); this.setState({ autoAcc: nv }); this.toastMsg(nv ? 'Auto-approve on — you can revoke any grant' : 'Auto-approve off — each request needs your review'); },
+      consentDeny: () => { this.setState({ consentRes: 'no', pScreen: 'access' }); this.toastMsg('Request denied · requester notified'); },
+      pEmergency: isP && p === 'emergency', toEmergency: goP('emergency'),
+      pDischarge: isP && p === 'discharge', toDischarge: goP('discharge'),
+      fuConfirm: () => this.toastMsg('Follow-up confirmed · added to your calendar'),
+      fuReschedule: () => this.toastMsg('Reschedule request sent to City General'),
+      dSearch: e => this.setState({ dQuery: e.target.value }), docPatients,
+      dBreak: isD && d === 'break', dToBreak: goD('break'),
+      emgProceed: () => { this.setState({ dScreen: 'patient', dPatId: null, dTab: 'overview', emg: true, aiGen: true }); this.toastMsg('Emergency access · compliance notified · fully audited'); setTimeout(() => this.setState({ aiGen: false }), 1600); },
+      emgBanner: isD && !!s.emg,
+      aiChips: Object.keys(aiMap).map(k => ({ q: k, onAsk: () => this.setState({ aiQ: k }) })),
+      aiQuestion: s.aiQ, aiAnswer: s.aiQ ? aiMap[s.aiQ] : null,
+      rxWarn: s.addType === 'rx' && /penicillin|amoxicillin|augmentin/i.test(s.f.a || ''),
+      fC: e => this.setState({ f: { ...this.state.f, c: e.target.value } }), fCVal: s.f.c || '', four: 4,
+      dictate: () => { this.setState({ f: { ...this.state.f, c: 'Patient reports itchy, watery eyes for 5 days. No vision changes. Bilateral conjunctival injection. Plan: antihistamine drops, review in 2 weeks.' } }); this.toastMsg('Dictated note inserted'); },
+      repList: s.repView === 'list', repCompare: s.repView === 'compare',
+      toRepList: () => this.setState({ repView: 'list' }), toRepCompare: () => this.setState({ repView: 'compare' }),
+      rpLBg: rpL.bg, rpLC: rpL.c, rpCBg: rpC.bg, rpCC: rpC.c,
+      docName: dd.name, docDept: dd.dept, docInit: dd.init, dExpNote: dd.p.expNote,
+      loginDocs: Object.values(this.DOCS).map(x => ({ init: x.init, name: x.name, dept: x.dept, email: x.email, onPick: () => { this.setState({ dDoc: x.id, dPatId: null, dScreen: 'home', dTab: 'overview', aiQ: null, dPdf: null, repView: 'list', emg: false, dQuery: '' }); this.toastMsg('Signed in · ' + x.name + ' · MFA verified'); } })),
+      dpName: P.name, dpInit: P.init, dpMeta: P.meta, dpMiraiId: P.atlasId,
+      dpHasAllergy: !!P.allergy, dpAllergy: P.allergy, dpBrief: P.brief, dpBriefSrc: P.briefSrc,
+      dpConds: P.conds, dpMeds: P.meds, dpResults: P.results, dpLastVisit: P.lastVisit,
+      dpHasCompare: !P.key,
+      dpHasScope: !!P.scope, dpScope: P.scope,
+      agTitle: P.chart.title, agTLbl: P.chart.tLbl, agChart: this.buildChart(P.chart),
+      agBarTitle: P.chart.barTitle, agBarRef: P.chart.barRef, agBarPct: P.chart.barPct, agBarMark: P.chart.barMark, agBarCap: P.chart.barCap, agBarCapC: P.chart.barCapC, agBarMin: P.chart.barMin, agBarMax: P.chart.barMax,
+      dReports: P.key ? P.reports.map(mkRep) : repsPriya,
+      dRxList: P.key ? P.rx.map(r => ({ ...r, ...statusPill(r.s) })) : rxPriya
+    };
+    return {
+      ...extra,
+      frameDark: (isP && p === 'qr') || (isD && (d === 'login' || d === 'scan' || d === 'break')),
+      tlEvents, ...tlPills, tlGroups: groupUp(tlEvents), dGroups: groupUp(P.key ? [...((s.extra || {})[P.key] || []), ...P.events] : s.events), tlSubtitle: tf === 'all' ? tlEvents.length + ' events · 2022 – today · from 3 organizations' : tlEvents.length + (tlEvents.length === 1 ? ' event' : ' events') + ' · ' + ({ con: 'consultations', rep: 'reports', hos: 'hospital' })[tf],
+      tlAll: () => this.setState({ tlFilter: 'all' }), tlCon: () => this.setState({ tlFilter: 'con' }),
+      tlRep: () => this.setState({ tlFilter: 'rep' }), tlHos: () => this.setState({ tlFilter: 'hos' }),
+      three: 3, toast: s.toast, scanning: s.scanning, events: s.events,
+      qrSmall: this.qrSvg('#22303c', '#ffffff'), qrBig: this.qrSvg('#22303c', '#ffffff'),
+      deviceComp: (s.device ?? this.props.device ?? 'ios') === 'android' ? 'AndroidDevice' : 'IOSDevice',
+      iosBtnBg: (s.device ?? 'ios') === 'ios' ? INK : 'transparent', iosBtnC: (s.device ?? 'ios') === 'ios' ? '#fff' : INK,
+      andBtnBg: s.device === 'android' ? INK : 'transparent', andBtnC: s.device === 'android' ? '#fff' : INK,
+      devIos: () => this.setState({ device: 'ios' }), devAndroid: () => this.setState({ device: 'android' }),
+      patBtnBg: isP ? INK : 'transparent', patBtnC: isP ? '#fff' : INK,
+      docBtnBg: isD ? INK : 'transparent', docBtnC: isD ? '#fff' : INK,
+      rolePatient: () => this.setState({ role: 'patient' }),
+      roleDoctor: () => this.setState({ role: 'doctor' }),
+      pWelcome: isP && p === 'welcome', pOtp: isP && p === 'otp', pHome: isP && p === 'home',
+      pQr: isP && p === 'qr', pTimeline: isP && p === 'timeline', pRecords: isP && p === 'records',
+      pReport: isP && p === 'report', pProfile: isP && p === 'profile', pAccess: isP && p === 'access', pNotifs: isP && p === 'notifs',
+      pTabbar: isP && ['home', 'timeline', 'records', 'profile'].includes(p),
+      toWelcome: goP('welcome'), toOtp: goP('otp'), toHome: goP('home'), toQr: goP('qr'),
+      toTimeline: goP('timeline'), toRecords: goP('records'), toReport: goP('report'),
+      toProfile: goP('profile'), toAccess: goP('access'), toNotifs: goP('notifs'),
+      toRecordsRx: () => this.setState({ role: 'patient', pScreen: 'records', recTab: 'rx' }),
+      cHome: p === 'home' ? A : SUB, cTimeline: p === 'timeline' ? A : SUB, cRecords: p === 'records' ? A : SUB, cProfile: p === 'profile' ? A : SUB,
+      recToRep: () => this.setState({ recTab: 'reports' }), recToRx: () => this.setState({ recTab: 'rx' }), recToDis: () => this.setState({ recTab: 'dis' }),
+      recReports: rec === 'reports', recRx: rec === 'rx', recDis: rec === 'dis', ...recPills,
+      reports: repsPriya,
+      dPdfOpen: isD && !!s.dPdf, pdfT: (s.dPdf || {}).t, pdfOrg: (s.dPdf || {}).org, pdfDt: (s.dPdf || {}).dt,
+      pdfIsLipid: /lipid/i.test((s.dPdf || {}).t || ''), pdfIsOther: !!s.dPdf && !/lipid/i.test((s.dPdf || {}).t || ''),
+      pdfMeta: /x-ray|xray/i.test((s.dPdf || {}).t || '') ? 'Modality: digital radiography · PA view · Reported by Dr. A. Deshpande, MD Radiology' : 'Verified by Dr. S. Iyer, MD Pathology · Electronically signed',
+      pdfClose: () => this.setState({ dPdf: null }),
+      rxList: rxPriya,
+      accessList: [
+        ...(s.consentRes === 'ok' ? [{ n: 'Dr. Meera Kulkarni', org: 'SkinCare Clinic · Dermatology', s: 'Active', until: 'Expires in ' + s.consentDur, act: 'Revoke', actC: 'oklch(0.5 0.16 25)', ...statusPill('Active') }] : []),
+        { n: 'Dr. Rohan Menon', org: 'City General · Endocrinology', s: 'Active', until: 'Expires 12 Sep 2026', act: 'Revoke', actC: 'oklch(0.5 0.16 25)', ...statusPill('Active') },
+        { n: 'Apollo Diagnostics', org: 'Integration · sends reports only', s: 'Active', until: 'Ongoing', act: 'Manage', actC: A, ...statusPill('Active') },
+        { n: 'Dr. A. Fernandes', org: 'City General · Surgery', s: 'Revoked', until: 'Revoked 20 Nov 2025', act: 'Re-grant', actC: A, ...statusPill('Revoked') }
+      ],
+      notifs: [
+        { t: 'Dr. Meera Kulkarni requests access', s: 'SkinCare Clinic · consent request · 8:40 today', dot: 'oklch(0.52 0.13 235)', review: !s.consentRes },
+        { t: 'Lipid panel report is ready', s: 'Apollo Diagnostics · 9:12 today', dot: 'oklch(0.52 0.13 235)' },
+        { t: 'Dr. R. Menon viewed your records', s: 'via QR scan · 12 Aug', dot: 'rgba(34,48,60,0.25)' },
+        { t: 'Follow-up with Dr. Menon on 12 Sep', s: 'City General · reminder', dot: 'rgba(34,48,60,0.25)', fu: true },
+        { t: 'Access granted to Dr. R. Menon', s: '30 days · 12 Aug', dot: 'rgba(34,48,60,0.25)' }
+      ],
+      dLogin: isD && d === 'login', dHome: isD && d === 'home', dScan: isD && d === 'scan',
+      dPatient: isD && d === 'patient', dAdd: isD && d === 'add',
+      dToHome: goD('home'), dToScan: goD('scan'), dToPatient: goD('patient'), dToAdd: goD('add'), dToLogin: goD('login'),
+      dSimulateScan: () => {
+        this.setState({ scanning: true });
+        setTimeout(() => {
+          this.setState({ scanning: false, dPatId: null, dScreen: 'patient', dTab: 'overview', aiGen: true });
+          this.toastMsg('Access granted · consult session logged in audit trail');
+          setTimeout(() => this.setState({ aiGen: false }), 1600);
+        }, 1100);
+      },
+      aiGenerating: !!s.aiGen, aiReady: !s.aiGen,
+      dEnd: () => { this.setState({ dScreen: 'home', emg: false, aiQ: null }); this.toastMsg('Consult ended · 1 session recorded'); },
+      dTabOv: () => this.setState({ dTab: 'overview' }), dTabTl: () => this.setState({ dTab: 'timeline' }),
+      dTabRep: () => this.setState({ dTab: 'reports' }), dTabRx: () => this.setState({ dTab: 'rx' }),
+      dTabOverview: dt === 'overview', dTabTimeline: dt === 'timeline', dTabReports: dt === 'reports', dTabMeds: dt === 'rx',
+      tOvC: tOv.c, tOvB: tOv.b, tTlC: tTl.c, tTlB: tTl.b, tRepC: tRep.c, tRepB: tRep.b, tRxC: tRx.c, tRxB: tRx.b,
+      addDx: () => this.setState({ addType: 'dx' }), addRx: () => this.setState({ addType: 'rx' }), addDoc: () => this.setState({ addType: 'doc' }),
+      addIsDx: at === 'dx', addIsRx: at === 'rx', addIsDoc: at === 'doc', ...adPills,
+      fA: e => this.setState({ f: { ...this.state.f, a: e.target.value } }),
+      fB: e => this.setState({ f: { ...this.state.f, b: e.target.value } }),
+      dSave: () => {
+        const f = s.f, blue = 'oklch(0.52 0.13 235)';
+        const ev = at === 'dx'
+          ? { dt: 'Today', t: 'Diagnosis', title: (f.a || 'Seasonal allergic conjunctivitis') + (f.b ? ' (' + f.b + ')' : ''), org: dd.name + ' · ' + dd.org, chip: 'DX', h: 25, g: '2026' }
+          : at === 'rx'
+            ? { dt: 'Today', t: 'Prescription', title: (f.a || 'Cetirizine 10 mg') + ' — ' + (f.b || 'once daily · 14 days'), org: dd.name, chip: 'RX', h: 150, g: '2026' }
+            : { dt: 'Today', t: 'Document', title: f.a || 'Report uploaded', org: dd.name + ' · ' + dd.org, chip: 'DOC', h: 235, g: '2026', doc: true };
+        const warned = at === 'rx' && /penicillin|amoxicillin|augmentin/i.test(f.a || '');
+        const upd = P.key ? { extra: { ...(s.extra || {}), [P.key]: [ev, ...((s.extra || {})[P.key] || [])] } } : { events: [ev, ...s.events] };
+        this.setState({ ...upd, dScreen: 'patient', dTab: 'timeline', f: {} });
+        this.toastMsg(warned ? 'Saved with allergy override — flagged to compliance' : 'Saved to record · signed & audit logged');
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

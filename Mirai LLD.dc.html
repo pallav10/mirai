@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Instrument+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#efece5;font-family:'Instrument Sans',system-ui,sans-serif;color:#22303c}a{color:oklch(0.45 0.13 235)}</style>
+</helmet>
+<div style="padding:44px 52px;min-width:1700px">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;max-width:1560px">
+    <div style="display:flex;align-items:center;gap:16px">
+      <svg width="42" height="42" viewBox="0 0 40 40"><path d="M20 3.5 C22.4 13.6 26.4 17.6 36.5 20 C26.4 22.4 22.4 26.4 20 36.5 C17.6 26.4 13.6 22.4 3.5 20 C13.6 17.6 17.6 13.6 20 3.5 Z" fill="oklch(0.52 0.13 235)"></path><circle cx="31.5" cy="8.5" r="3" fill="oklch(0.72 0.12 260)"></circle></svg>
+      <div>
+        <div style="font-family:'Instrument Serif',serif;font-size:30px">Mirai — Component-Level Design</div>
+        <div style="font-size:13.5px;color:rgba(34,48,60,0.6);margin-top:2px">UML component diagram · sequence diagrams · activity flow · domain class model</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="5">
+        <span onClick="{{ tb.onPick }}" style="cursor:pointer;font-size:12.5px;font-weight:600;padding:8px 16px;border-radius:999px;background:{{ tb.bg }};color:{{ tb.c }};border:1px solid rgba(34,48,60,0.18)">{{ tb.n }}</span>
+      </sc-for>
+    </div>
+  </div>
+  <div style="font-size:13px;color:rgba(34,48,60,0.6);margin-top:12px;max-width:1560px">{{ tabDesc }}</div>
+
+  <sc-if value="{{ tComp }}" hint-placeholder-val="{{ true }}">
+    <div style="position:relative;width:1560px;height:820px;background:#fff;border:1px solid rgba(34,48,60,0.18);border-radius:16px;margin-top:14px">
+      <div style="position:absolute;left:30px;top:40px;width:330px;height:520px;border:1.5px dashed rgba(34,48,60,0.35);border-radius:4px"><span style="position:absolute;top:-12px;left:14px;background:#fff;padding:0 8px;font-size:11px;font-weight:700;letter-spacing:0.06em;color:rgba(34,48,60,0.55)">«package» CLIENT TIER</span></div>
+      <div style="position:absolute;left:430px;top:40px;width:280px;height:700px;border:1.5px dashed rgba(34,48,60,0.35);border-radius:4px"><span style="position:absolute;top:-12px;left:14px;background:#fff;padding:0 8px;font-size:11px;font-weight:700;letter-spacing:0.06em;color:rgba(34,48,60,0.55)">«package» EDGE</span></div>
+      <div style="position:absolute;left:780px;top:40px;width:340px;height:760px;border:1.5px dashed rgba(34,48,60,0.35);border-radius:4px"><span style="position:absolute;top:-12px;left:14px;background:#fff;padding:0 8px;font-size:11px;font-weight:700;letter-spacing:0.06em;color:rgba(34,48,60,0.55)">«package» APPLICATION SERVICES</span></div>
+      <div style="position:absolute;left:1190px;top:40px;width:340px;height:760px;border:1.5px dashed rgba(34,48,60,0.35);border-radius:4px"><span style="position:absolute;top:-12px;left:14px;background:#fff;padding:0 8px;font-size:11px;font-weight:700;letter-spacing:0.06em;color:rgba(34,48,60,0.55)">«package» INFRASTRUCTURE</span></div>
+
+      <div style="position:absolute;left:60px;top:100px;width:270px;border:1.5px solid #22303c;border-radius:4px;background:oklch(0.98 0.005 90);padding:9px 12px"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«component» ⊟</div><div style="font-weight:700;font-size:13px">Patient App</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6);margin-top:3px">requires: ⊂ IPatientAPI<br>QR display · consent · records</div></div>
+      <div style="position:absolute;left:60px;top:250px;width:270px;border:1.5px solid #22303c;border-radius:4px;background:oklch(0.98 0.005 90);padding:9px 12px"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«component» ⊟</div><div style="font-weight:700;font-size:13px">Doctor App</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6);margin-top:3px">requires: ⊂ IClinicalAPI<br>scan · 360° · clinical writes</div></div>
+      <div style="position:absolute;left:60px;top:400px;width:270px;border:1.5px solid #22303c;border-radius:4px;background:oklch(0.98 0.005 90);padding:9px 12px"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«component» ⊟</div><div style="font-weight:700;font-size:13px">Admin Console</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6);margin-top:3px">requires: ⊂ IAdminAPI<br>integrations · error queue</div></div>
+
+      <div style="position:absolute;left:460px;top:100px;width:220px;height:600px;border:1.5px solid #22303c;border-radius:4px;background:oklch(0.97 0.01 235);padding:9px 12px;box-sizing:border-box"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«component» ⊟</div><div style="font-weight:700;font-size:13px">API Gateway</div><div style="font-size:10.5px;color:rgba(34,48,60,0.65);margin-top:4px;line-height:1.5">provides:<br>⊙ IPatientAPI<br>⊙ IClinicalAPI<br>⊙ IAdminAPI<br><br>tenant resolver → signed tenant ctx {id, tier, region}<br><br>per-tenant quotas · schema validation · anti-replay nonce (QR) · idempotency keys</div></div>
+
+      <div style="position:absolute;left:810px;top:100px;width:280px;height:96px;border:1.5px solid #22303c;border-radius:4px;background:#fff;padding:8px 12px;box-sizing:border-box"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«component» ⊟</div><div style="font-weight:700;font-size:13px">QR Token Service</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6)">⊙ IQRToken — issue · resolve · revoke · rotate (TTL 5 min)</div></div>
+      <div style="position:absolute;left:810px;top:226px;width:280px;height:96px;border:1.5px solid #22303c;border-radius:4px;background:#fff;padding:8px 12px;box-sizing:border-box"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«component» ⊟</div><div style="font-weight:700;font-size:13px">Records Service</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6)">⊙ IRecords — timeline · lifecycle · provenance · 360° composition</div></div>
+      <div style="position:absolute;left:810px;top:352px;width:280px;height:96px;border:1.5px solid #22303c;border-radius:4px;background:#fff;padding:8px 12px;box-sizing:border-box"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«component» ⊟</div><div style="font-weight:700;font-size:13px">Consent Service</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6)">⊙ IConsent — grants {categories, duration, purpose} · revoke · expiry</div></div>
+      <div style="position:absolute;left:810px;top:478px;width:280px;height:96px;border:1.5px solid #22303c;border-radius:4px;background:#fff;padding:8px 12px;box-sizing:border-box"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«component» ⊟</div><div style="font-weight:700;font-size:13px">AI RAG Service</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6)">⊙ ISummary — authorize → retrieve → generate → verify · citations</div></div>
+      <div style="position:absolute;left:810px;top:604px;width:280px;height:96px;border:1.5px solid #22303c;border-radius:4px;background:#fff;padding:8px 12px;box-sizing:border-box"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«component» ⊟</div><div style="font-weight:700;font-size:13px">Policy Engine</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6)">⊙ IAuthz — RBAC × ABAC × consent · break-glass · decision log</div></div>
+      <div style="position:absolute;left:810px;top:712px;width:280px;height:76px;border:1.5px solid #22303c;border-radius:4px;background:#fff;padding:8px 12px;box-sizing:border-box"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«component» ⊟</div><div style="font-weight:700;font-size:13px">Audit Service</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6)">⊙ IAudit — append-only, hash-chained</div></div>
+
+      <div style="position:absolute;left:1220px;top:100px;width:280px;height:80px;border:1.5px solid rgba(34,48,60,0.55);border-radius:4px;background:oklch(0.96 0.01 235);padding:8px 12px;box-sizing:border-box"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«datastore»</div><div style="font-weight:700;font-size:13px">Redis</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6)">token state · sessions · counters</div></div>
+      <div style="position:absolute;left:1220px;top:226px;width:280px;height:96px;border:1.5px solid rgba(34,48,60,0.55);border-radius:4px;background:oklch(0.96 0.01 235);padding:8px 12px;box-sizing:border-box"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«datastore»</div><div style="font-weight:700;font-size:13px">PostgreSQL (clinical + identity)</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6)">RLS / schema / cluster per tier · per-tenant keys</div></div>
+      <div style="position:absolute;left:1220px;top:352px;width:280px;height:80px;border:1.5px solid rgba(34,48,60,0.55);border-radius:4px;background:oklch(0.96 0.01 235);padding:8px 12px;box-sizing:border-box"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«queue»</div><div style="font-weight:700;font-size:13px">Event Bus</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6)">tenant-keyed topics · outbox-fed</div></div>
+      <div style="position:absolute;left:1220px;top:478px;width:280px;height:80px;border:1.5px solid rgba(34,48,60,0.55);border-radius:4px;background:oklch(0.96 0.01 235);padding:8px 12px;box-sizing:border-box"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«datastore»</div><div style="font-weight:700;font-size:13px">Vector Store (pgvector)</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6)">per-tenant embeddings — vectors = PHI</div></div>
+      <div style="position:absolute;left:1220px;top:604px;width:280px;height:96px;border:1.5px dashed rgba(34,48,60,0.55);border-radius:4px;background:#fff;padding:8px 12px;box-sizing:border-box"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«external»</div><div style="font-weight:700;font-size:13px">AI Providers</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6)">Azure OpenAI · Bedrock · Vertex · vLLM — via provider gateway adapters</div></div>
+      <div style="position:absolute;left:1220px;top:712px;width:280px;height:76px;border:1.5px solid rgba(34,48,60,0.55);border-radius:4px;background:oklch(0.96 0.01 235);padding:8px 12px;box-sizing:border-box"><div style="font-size:9.5px;color:rgba(34,48,60,0.5)">«datastore»</div><div style="font-weight:700;font-size:13px">Audit WORM store</div><div style="font-size:10.5px;color:rgba(34,48,60,0.6)">immutable retention</div></div>
+
+      <div style="position:absolute;left:336px;top:155px;width:124px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:0;right:0;top:-15px;text-align:center;font-size:9.5px;font-weight:600;color:rgba(34,48,60,0.6)">«use»</span><span style="position:absolute;right:-3px;top:-7px;font-size:11px">▶</span></div>
+      <div style="position:absolute;left:336px;top:305px;width:124px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:0;right:0;top:-15px;text-align:center;font-size:9.5px;font-weight:600;color:rgba(34,48,60,0.6)">«use»</span><span style="position:absolute;right:-3px;top:-7px;font-size:11px">▶</span></div>
+      <div style="position:absolute;left:336px;top:455px;width:124px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:0;right:0;top:-15px;text-align:center;font-size:9.5px;font-weight:600;color:rgba(34,48,60,0.6)">«use»</span><span style="position:absolute;right:-3px;top:-7px;font-size:11px">▶</span></div>
+      <div style="position:absolute;left:680px;top:148px;width:130px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:0;right:0;top:-15px;text-align:center;font-size:9.5px;font-weight:600;color:rgba(34,48,60,0.6)">IQRToken</span><span style="position:absolute;right:-3px;top:-7px;font-size:11px">▶</span></div>
+      <div style="position:absolute;left:680px;top:274px;width:130px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:0;right:0;top:-15px;text-align:center;font-size:9.5px;font-weight:600;color:rgba(34,48,60,0.6)">IRecords</span><span style="position:absolute;right:-3px;top:-7px;font-size:11px">▶</span></div>
+      <div style="position:absolute;left:680px;top:400px;width:130px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:0;right:0;top:-15px;text-align:center;font-size:9.5px;font-weight:600;color:rgba(34,48,60,0.6)">IConsent</span><span style="position:absolute;right:-3px;top:-7px;font-size:11px">▶</span></div>
+      <div style="position:absolute;left:680px;top:526px;width:130px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:0;right:0;top:-15px;text-align:center;font-size:9.5px;font-weight:600;color:rgba(34,48,60,0.6)">ISummary</span><span style="position:absolute;right:-3px;top:-7px;font-size:11px">▶</span></div>
+      <div style="position:absolute;left:680px;top:652px;width:130px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:0;right:0;top:-15px;text-align:center;font-size:9.5px;font-weight:600;color:rgba(34,48,60,0.6)">IAuthz</span><span style="position:absolute;right:-3px;top:-7px;font-size:11px">▶</span></div>
+      <div style="position:absolute;left:1090px;top:148px;width:130px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:0;right:0;top:-15px;text-align:center;font-size:9.5px;font-weight:600;color:rgba(34,48,60,0.6)">token state</span><span style="position:absolute;right:-3px;top:-7px;font-size:11px">▶</span></div>
+      <div style="position:absolute;left:1090px;top:274px;width:130px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:0;right:0;top:-15px;text-align:center;font-size:9.5px;font-weight:600;color:rgba(34,48,60,0.6)">SQL · RLS</span><span style="position:absolute;right:-3px;top:-7px;font-size:11px">▶</span></div>
+      <div style="position:absolute;left:1090px;top:296px;width:60px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:-4px;top:-15px;font-size:9.5px;font-weight:600;color:rgba(34,48,60,0.6)">outbox</span></div>
+      <div style="position:absolute;left:1150px;top:296px;height:96px;border-left:1.5px dashed #22303c"></div>
+      <div style="position:absolute;left:1150px;top:392px;width:70px;border-top:1.5px dashed #22303c"><span style="position:absolute;right:-3px;top:-7px;font-size:11px">▶</span></div>
+      <div style="position:absolute;left:1090px;top:526px;width:130px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:0;right:0;top:-15px;text-align:center;font-size:9.5px;font-weight:600;color:rgba(34,48,60,0.6)">k-NN</span><span style="position:absolute;right:-3px;top:-7px;font-size:11px">▶</span></div>
+      <div style="position:absolute;left:1090px;top:548px;width:65px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:-4px;top:8px;font-size:9.5px;font-weight:600;color:rgba(34,48,60,0.6)">complete() · embed()</span></div>
+      <div style="position:absolute;left:1155px;top:548px;height:104px;border-left:1.5px dashed #22303c"></div>
+      <div style="position:absolute;left:1155px;top:652px;width:65px;border-top:1.5px dashed #22303c"><span style="position:absolute;right:-3px;top:-7px;font-size:11px">▶</span></div>
+      <div style="position:absolute;left:1090px;top:742px;width:130px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:0;right:0;top:-15px;text-align:center;font-size:9.5px;font-weight:600;color:rgba(34,48,60,0.6)">append-only</span><span style="position:absolute;right:-3px;top:-7px;font-size:11px">▶</span></div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ tSeq }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;width:1560px;height:{{ seqH }}px;background:#fff;border:1px solid rgba(34,48,60,0.18);border-radius:16px;margin-top:14px">
+      <sc-for list="{{ seqParts }}" as="pp" hint-placeholder-count="8">
+        <div style="position:absolute;left:{{ pp.left }}px;top:64px;height:{{ pp.lh }}px;border-left:1.5px dashed rgba(34,48,60,0.35)"></div>
+        <div style="position:absolute;left:{{ pp.left }}px;top:16px;width:152px;margin-left:-76px;text-align:center"><div style="border:1.5px solid #22303c;background:oklch(0.96 0.01 235);border-radius:4px;padding:8px 4px;font-size:11.5px;font-weight:700">{{ pp.label }}</div></div>
+      </sc-for>
+      <sc-for list="{{ seqMsgs }}" as="mm" hint-placeholder-count="10">
+        <div style="position:absolute;left:{{ mm.left }}px;top:{{ mm.top }}px;width:{{ mm.width }}px;border-top:1.8px {{ mm.bs }} #22303c">
+          <span style="position:absolute;left:0;right:0;top:-16px;text-align:center;font-size:10.5px;font-weight:600;font-family:ui-monospace,Menlo,monospace;white-space:nowrap">{{ mm.label }}</span>
+          <span style="position:absolute;{{ mm.side }}:-3px;top:-8px;font-size:12px;line-height:1">{{ mm.arrow }}</span>
+        </div>
+      </sc-for>
+      <sc-for list="{{ seqNotes }}" as="nn" hint-placeholder-count="1">
+        <div style="position:absolute;left:{{ nn.left }}px;top:{{ nn.top }}px;width:230px;margin-left:-115px;background:oklch(0.97 0.03 80);border:1px solid oklch(0.8 0.07 80);padding:5px 9px;font-size:10px;line-height:1.45;text-align:center">{{ nn.label }}</div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ tAct }}" hint-placeholder-val="{{ false }}">
+    <div style="width:1560px;background:#fff;border:1px solid rgba(34,48,60,0.18);border-radius:16px;margin-top:14px;padding:36px 0;display:flex;flex-direction:column;align-items:center">
+      <div style="width:130px;background:#22303c;color:#fff;border-radius:999px;padding:9px 0;text-align:center;font-size:12px;font-weight:700">● Start</div>
+      <div style="height:26px;border-left:1.8px solid #22303c"></div><div style="font-size:10px;margin-top:-8px">▼</div>
+      <div style="width:330px;border:1.5px solid #22303c;border-radius:4px;padding:10px 14px;text-align:center;font-size:12.5px;font-weight:600">Authenticate source<br><span style="font-weight:400;font-size:11px;color:rgba(34,48,60,0.6)">mTLS + OAuth2 client-credentials · tenant connector</span></div>
+      <div style="height:26px;border-left:1.8px solid #22303c"></div><div style="font-size:10px;margin-top:-8px">▼</div>
+      <div style="position:relative;width:100%;display:flex;justify-content:center">
+        <div style="position:relative;width:170px;height:150px;display:flex;align-items:center;justify-content:center"><div style="position:absolute;width:106px;height:106px;border:1.5px solid #22303c;background:oklch(0.97 0.01 235);transform:rotate(45deg)"></div><div style="position:relative;font-size:11px;font-weight:700;text-align:center">authenticated?</div></div>
+        <div style="position:absolute;left:calc(50% + 85px);top:67px;width:130px;border-top:1.5px solid #22303c"><span style="position:absolute;left:8px;top:-16px;font-size:10px;font-weight:700">[no]</span><span style="position:absolute;right:-3px;top:-8px;font-size:12px">▶</span></div>
+        <div style="position:absolute;left:calc(50% + 215px);top:34px;width:250px;border:1.5px solid oklch(0.7 0.14 25);background:oklch(0.95 0.03 25);border-radius:4px;padding:9px 12px;font-size:11.5px;font-weight:600;color:oklch(0.4 0.15 25)">Reject · 401<br><span style="font-weight:400;font-size:10.5px">alert tenant admin · audit</span></div>
+      </div>
+      <div style="font-size:10px;font-weight:700;margin:2px 0">[yes]</div>
+      <div style="height:20px;border-left:1.8px solid #22303c"></div><div style="font-size:10px;margin-top:-8px">▼</div>
+      <div style="width:330px;border:1.5px solid #22303c;border-radius:4px;padding:10px 14px;text-align:center;font-size:12.5px;font-weight:600">Validate schema<br><span style="font-weight:400;font-size:11px;color:rgba(34,48,60,0.6)">FHIR R4 / HL7 v2 envelope · declared resource types</span></div>
+      <div style="height:26px;border-left:1.8px solid #22303c"></div><div style="font-size:10px;margin-top:-8px">▼</div>
+      <div style="position:relative;width:100%;display:flex;justify-content:center">
+        <div style="position:relative;width:170px;height:150px;display:flex;align-items:center;justify-content:center"><div style="position:absolute;width:106px;height:106px;border:1.5px solid #22303c;background:oklch(0.97 0.01 235);transform:rotate(45deg)"></div><div style="position:relative;font-size:11px;font-weight:700;text-align:center">valid?</div></div>
+        <div style="position:absolute;left:calc(50% + 85px);top:67px;width:130px;border-top:1.5px solid #22303c"><span style="position:absolute;left:8px;top:-16px;font-size:10px;font-weight:700">[fail]</span><span style="position:absolute;right:-3px;top:-8px;font-size:12px">▶</span></div>
+        <div style="position:absolute;left:calc(50% + 215px);top:34px;width:250px;border:1.5px solid rgba(34,48,60,0.4);background:rgba(34,48,60,0.06);border-radius:4px;padding:9px 12px;font-size:11.5px;font-weight:600">DEAD_LETTER<br><span style="font-weight:400;font-size:10.5px">admin error queue · reason (PHI-minimized)</span></div>
+      </div>
+      <div style="font-size:10px;font-weight:700;margin:2px 0">[pass]</div>
+      <div style="height:20px;border-left:1.8px solid #22303c"></div><div style="font-size:10px;margin-top:-8px">▼</div>
+      <div style="width:330px;border:1.5px solid #22303c;border-radius:4px;padding:10px 14px;text-align:center;font-size:12.5px;font-weight:600">Resolve patient identity<br><span style="font-weight:400;font-size:11px;color:rgba(34,48,60,0.6)">crosswalk HOSP-id → MIR-id · confidence scoring</span></div>
+      <div style="height:26px;border-left:1.8px solid #22303c"></div><div style="font-size:10px;margin-top:-8px">▼</div>
+      <div style="position:relative;width:100%;display:flex;justify-content:center">
+        <div style="position:relative;width:170px;height:150px;display:flex;align-items:center;justify-content:center"><div style="position:absolute;width:106px;height:106px;border:1.5px solid #22303c;background:oklch(0.97 0.01 235);transform:rotate(45deg)"></div><div style="position:relative;font-size:11px;font-weight:700;text-align:center">match<br>confident?</div></div>
+        <div style="position:absolute;left:calc(50% + 85px);top:67px;width:130px;border-top:1.5px solid #22303c"><span style="position:absolute;left:0;top:-16px;font-size:10px;font-weight:700">[ambiguous]</span><span style="position:absolute;right:-3px;top:-8px;font-size:12px">▶</span></div>
+        <div style="position:absolute;left:calc(50% + 215px);top:34px;width:250px;border:1.5px solid oklch(0.7 0.1 60);background:oklch(0.96 0.04 80);border-radius:4px;padding:9px 12px;font-size:11.5px;font-weight:600">Human resolution queue<br><span style="font-weight:400;font-size:10.5px">«constraint» never auto-attach to wrong patient</span></div>
+      </div>
+      <div style="font-size:10px;font-weight:700;margin:2px 0">[matched]</div>
+      <div style="height:20px;border-left:1.8px solid #22303c"></div><div style="font-size:10px;margin-top:-8px">▼</div>
+      <div style="width:330px;border:1.5px solid #22303c;border-radius:4px;padding:10px 14px;text-align:center;font-size:12.5px;font-weight:600">Map / normalize → dedupe<br><span style="font-weight:400;font-size:11px;color:rgba(34,48,60,0.6)">internal FHIR-aligned model · idempotency {tenant, source, id, version}</span></div>
+      <div style="height:26px;border-left:1.8px solid #22303c"></div><div style="font-size:10px;margin-top:-8px">▼</div>
+      <div style="position:relative;width:100%;display:flex;justify-content:center">
+        <div style="position:relative;width:170px;height:150px;display:flex;align-items:center;justify-content:center"><div style="position:absolute;width:106px;height:106px;border:1.5px solid #22303c;background:oklch(0.97 0.01 235);transform:rotate(45deg)"></div><div style="position:relative;font-size:11px;font-weight:700;text-align:center">duplicate?</div></div>
+        <div style="position:absolute;left:calc(50% + 85px);top:67px;width:130px;border-top:1.5px solid #22303c"><span style="position:absolute;left:8px;top:-16px;font-size:10px;font-weight:700">[yes]</span><span style="position:absolute;right:-3px;top:-8px;font-size:12px">▶</span></div>
+        <div style="position:absolute;left:calc(50% + 215px);top:34px;width:250px;border:1.5px solid rgba(34,48,60,0.4);background:rgba(34,48,60,0.06);border-radius:4px;padding:9px 12px;font-size:11.5px;font-weight:600">Acknowledge &amp; discard<br><span style="font-weight:400;font-size:10.5px">source gets 200 — safe replay</span></div>
+      </div>
+      <div style="font-size:10px;font-weight:700;margin:2px 0">[new]</div>
+      <div style="height:20px;border-left:1.8px solid #22303c"></div><div style="font-size:10px;margin-top:-8px">▼</div>
+      <div style="width:330px;border:1.5px solid #22303c;border-radius:4px;padding:10px 14px;text-align:center;font-size:12.5px;font-weight:600">Persist + provenance<br><span style="font-weight:400;font-size:11px;color:rgba(34,48,60,0.6)">source system, record id, timestamps, author, version — kept verbatim</span></div>
+      <div style="height:26px;border-left:1.8px solid #22303c"></div><div style="font-size:10px;margin-top:-8px">▼</div>
+      <div style="position:relative;width:100%;display:flex;justify-content:center">
+        <div style="position:relative;width:170px;height:150px;display:flex;align-items:center;justify-content:center"><div style="position:absolute;width:106px;height:106px;border:1.5px solid #22303c;background:oklch(0.97 0.01 235);transform:rotate(45deg)"></div><div style="position:relative;font-size:11px;font-weight:700;text-align:center">publication<br>policy?</div></div>
+        <div style="position:absolute;left:calc(50% + 85px);top:67px;width:130px;border-top:1.5px solid #22303c"><span style="position:absolute;left:8px;top:-16px;font-size:10px;font-weight:700">[hold]</span><span style="position:absolute;right:-3px;top:-8px;font-size:12px">▶</span></div>
+        <div style="position:absolute;left:calc(50% + 215px);top:34px;width:250px;border:1.5px solid rgba(34,48,60,0.4);background:#fff;border-radius:4px;padding:9px 12px;font-size:11.5px;font-weight:600">Clinician-only visibility<br><span style="font-weight:400;font-size:10.5px">manual release · restricted report types</span></div>
+      </div>
+      <div style="font-size:10px;font-weight:700;margin:2px 0">[publish]</div>
+      <div style="height:20px;border-left:1.8px solid #22303c"></div><div style="font-size:10px;margin-top:-8px">▼</div>
+      <div style="width:330px;border:1.5px solid #22303c;border-radius:4px;padding:10px 14px;text-align:center;font-size:12.5px;font-weight:600">Emit report.finalized → notify · index · audit<br><span style="font-weight:400;font-size:11px;color:rgba(34,48,60,0.6)">tenant-keyed event · PHI-free notification</span></div>
+      <div style="height:26px;border-left:1.8px solid #22303c"></div><div style="font-size:10px;margin-top:-8px">▼</div>
+      <div style="width:26px;height:26px;border-radius:50%;border:2.5px solid #22303c;display:flex;align-items:center;justify-content:center"><div style="width:14px;height:14px;border-radius:50%;background:#22303c"></div></div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ tCls }}" hint-placeholder-val="{{ false }}">
+    <div style="position:relative;width:1560px;height:840px;background:#fff;border:1px solid rgba(34,48,60,0.18);border-radius:16px;margin-top:14px">
+      <div style="position:absolute;left:50px;top:60px;width:250px;border:1.5px solid #22303c;background:oklch(0.95 0.03 25 / 0.4)"><div style="padding:6px 10px;border-bottom:1.5px solid #22303c;font-weight:700;font-size:12.5px;text-align:center">AuditEvent</div><div style="padding:6px 10px;font-size:10.5px;font-family:ui-monospace,Menlo,monospace;line-height:1.6">audit_id: UUID<br>actor_id · role<br>tenant_id: FK<br>patient_id: FK<br>action · resource<br>access_method · result<br>ts: timestamptz<br>hash_prev: sha256</div></div>
+      <div style="position:absolute;left:620px;top:40px;width:280px;border:1.5px solid #22303c;background:oklch(0.97 0.01 235)"><div style="padding:6px 10px;border-bottom:1.5px solid #22303c;font-weight:700;font-size:12.5px;text-align:center">Patient</div><div style="padding:6px 10px;font-size:10.5px;font-family:ui-monospace,Menlo,monospace;line-height:1.6">mirai_id: UUID «global»<br>name · dob · sex<br>blood_group<br>allergies: Allergy[]<br>conditions: Condition[]<br>emergency_contact<br>abha_address?: string<br>guardian_links: Link[]</div></div>
+      <div style="position:absolute;left:1180px;top:40px;width:280px;border:1.5px solid #22303c;background:#fff"><div style="padding:6px 10px;border-bottom:1.5px solid #22303c;font-weight:700;font-size:12.5px;text-align:center">TenantOrganization</div><div style="padding:6px 10px;font-size:10.5px;font-family:ui-monospace,Menlo,monospace;line-height:1.6">tenant_id: UUID<br>name · type<br>tier: pooled|siloed|dedicated<br>region: cell<br>idp_config · quotas<br>publication_rules</div></div>
+      <div style="position:absolute;left:950px;top:300px;width:230px;border:1.5px solid #22303c;background:#fff"><div style="padding:6px 10px;border-bottom:1.5px solid #22303c;font-weight:700;font-size:12.5px;text-align:center">IdentityMapping</div><div style="padding:6px 10px;font-size:10.5px;font-family:ui-monospace,Menlo,monospace;line-height:1.6">tenant_id: FK<br>external_id: string<br>mirai_id: FK<br>confidence: float<br>status: matched|pending</div></div>
+      <div style="position:absolute;left:170px;top:290px;width:280px;border:1.5px solid #22303c;background:#fff"><div style="padding:6px 10px;border-bottom:1.5px solid #22303c;font-weight:700;font-size:12.5px;text-align:center">ConsentGrant</div><div style="padding:6px 10px;font-size:10.5px;font-family:ui-monospace,Menlo,monospace;line-height:1.6">grant_id: UUID<br>patient_id: FK<br>grantee_id: FK<br>categories: enum[] «mh default-off»<br>duration · purpose<br>status: active|revoked|expired<br>expires_at · is_emergency</div></div>
+      <div style="position:absolute;left:170px;top:560px;width:280px;border:1.5px solid #22303c;background:#fff"><div style="padding:6px 10px;border-bottom:1.5px solid #22303c;font-weight:700;font-size:12.5px;text-align:center">Practitioner</div><div style="padding:6px 10px;font-size:10.5px;font-family:ui-monospace,Menlo,monospace;line-height:1.6">practitioner_id: UUID<br>tenant_id: FK<br>name · specialty<br>hpr_id?: string<br>role · mfa_enrolled</div></div>
+      <div style="position:absolute;left:620px;top:300px;width:280px;border:1.5px solid #22303c;background:#fff"><div style="padding:6px 10px;border-bottom:1.5px solid #22303c;font-weight:700;font-size:12.5px;text-align:center;font-style:italic">«abstract» TimelineEvent</div><div style="padding:6px 10px;font-size:10.5px;font-family:ui-monospace,Menlo,monospace;line-height:1.6">event_id: UUID<br>patient_id: FK · tenant_id: FK<br>type: enum · occurred_at<br>provider · organization<br>provenance: Provenance<br>version: int</div></div>
+      <div style="position:absolute;left:470px;top:640px;width:190px;border:1.5px solid #22303c;background:#fff"><div style="padding:6px 10px;border-bottom:1.5px solid #22303c;font-weight:700;font-size:12.5px;text-align:center">Diagnosis</div><div style="padding:6px 10px;font-size:10.5px;font-family:ui-monospace,Menlo,monospace;line-height:1.6">code: ICD-10<br>status · notes<br>diagnosed_by</div></div>
+      <div style="position:absolute;left:680px;top:640px;width:200px;border:1.5px solid #22303c;background:#fff"><div style="padding:6px 10px;border-bottom:1.5px solid #22303c;font-weight:700;font-size:12.5px;text-align:center">Prescription</div><div style="padding:6px 10px;font-size:10.5px;font-family:ui-monospace,Menlo,monospace;line-height:1.6">drug · dose · route<br>frequency · duration<br>status: active|done</div></div>
+      <div style="position:absolute;left:900px;top:640px;width:200px;border:1.5px solid #22303c;background:#fff"><div style="padding:6px 10px;border-bottom:1.5px solid #22303c;font-weight:700;font-size:12.5px;text-align:center">Hospitalization</div><div style="padding:6px 10px;font-size:10.5px;font-family:ui-monospace,Menlo,monospace;line-height:1.6">admitted_at · discharged_at<br>reason · procedures[]<br>discharge_summary</div></div>
+      <div style="position:absolute;left:1120px;top:640px;width:190px;border:1.5px solid #22303c;background:#fff"><div style="padding:6px 10px;border-bottom:1.5px solid #22303c;font-weight:700;font-size:12.5px;text-align:center">Report</div><div style="padding:6px 10px;font-size:10.5px;font-family:ui-monospace,Menlo,monospace;line-height:1.6">status: lifecycle enum<br>verified_at · published_at<br>amended_of?: FK</div></div>
+      <div style="position:absolute;left:1340px;top:640px;width:200px;border:1.5px solid #22303c;background:oklch(0.96 0.01 235)"><div style="padding:6px 10px;border-bottom:1.5px solid #22303c;font-weight:700;font-size:12.5px;text-align:center">Document</div><div style="padding:6px 10px;font-size:10.5px;font-family:ui-monospace,Menlo,monospace;line-height:1.6">doc_id · mime · size<br>scan_status: clean|blocked<br>storage_ref: s3://…</div></div>
+
+      <div style="position:absolute;left:310px;top:130px;height:160px;border-left:1.5px solid #22303c"></div>
+      <div style="position:absolute;left:310px;top:130px;width:310px;border-top:1.5px solid #22303c"></div>
+      <span style="position:absolute;left:585px;top:108px;font-size:11px;font-weight:700">1</span>
+      <span style="position:absolute;left:318px;top:268px;font-size:11px;font-weight:700">*</span>
+      <div style="position:absolute;left:310px;top:460px;height:100px;border-left:1.5px solid #22303c"></div>
+      <span style="position:absolute;left:320px;top:466px;font-size:11px;font-weight:700">*</span>
+      <span style="position:absolute;left:320px;top:536px;font-size:11px;font-weight:700">1 grantee</span>
+      <div style="position:absolute;left:760px;top:230px;height:70px;border-left:1.5px solid #22303c"></div>
+      <span style="position:absolute;left:770px;top:234px;font-size:11px;font-weight:700">1</span>
+      <span style="position:absolute;left:770px;top:276px;font-size:11px;font-weight:700">*</span>
+      <div style="position:absolute;left:900px;top:150px;width:165px;border-top:1.5px solid #22303c"></div>
+      <div style="position:absolute;left:1065px;top:150px;height:150px;border-left:1.5px solid #22303c"></div>
+      <span style="position:absolute;left:908px;top:130px;font-size:11px;font-weight:700">1</span>
+      <span style="position:absolute;left:1072px;top:276px;font-size:11px;font-weight:700">*</span>
+      <div style="position:absolute;left:1320px;top:190px;height:170px;border-left:1.5px solid #22303c"></div>
+      <div style="position:absolute;left:1180px;top:360px;width:140px;border-top:1.5px solid #22303c"></div>
+      <span style="position:absolute;left:1328px;top:196px;font-size:11px;font-weight:700">1</span>
+      <span style="position:absolute;left:1190px;top:340px;font-size:11px;font-weight:700">*</span>
+      <div style="position:absolute;left:1460px;top:115px;width:70px;border-top:1.5px solid #22303c"></div>
+      <div style="position:absolute;left:1530px;top:115px;height:695px;border-left:1.5px solid #22303c"></div>
+      <div style="position:absolute;left:310px;top:810px;width:1220px;border-top:1.5px solid #22303c"></div>
+      <div style="position:absolute;left:310px;top:690px;height:120px;border-left:1.5px solid #22303c"></div>
+      <span style="position:absolute;left:1470px;top:95px;font-size:11px;font-weight:700">1</span>
+      <span style="position:absolute;left:318px;top:694px;font-size:11px;font-weight:700">* employs</span>
+      <div style="position:absolute;left:760px;top:460px;height:100px;border-left:1.5px solid #22303c"></div>
+      <span style="position:absolute;left:752px;top:462px;font-size:13px">△</span>
+      <div style="position:absolute;left:565px;top:560px;width:650px;border-top:1.5px solid #22303c"></div>
+      <div style="position:absolute;left:565px;top:560px;height:80px;border-left:1.5px solid #22303c"></div>
+      <div style="position:absolute;left:780px;top:560px;height:80px;border-left:1.5px solid #22303c"></div>
+      <div style="position:absolute;left:1000px;top:560px;height:80px;border-left:1.5px solid #22303c"></div>
+      <div style="position:absolute;left:1215px;top:560px;height:80px;border-left:1.5px solid #22303c"></div>
+      <div style="position:absolute;left:1310px;top:700px;width:30px;border-top:1.5px solid #22303c"></div>
+      <span style="position:absolute;left:1290px;top:680px;font-size:11px;font-weight:700">1</span>
+      <span style="position:absolute;left:1342px;top:680px;font-size:11px;font-weight:700">0..*</span>
+      <div style="position:absolute;left:300px;top:110px;width:320px;border-top:1.5px dashed #22303c"><span style="position:absolute;left:0;right:0;top:-16px;text-align:center;font-size:10px;font-weight:600;color:rgba(34,48,60,0.6)">«references»</span><span style="position:absolute;right:-3px;top:-8px;font-size:12px">▷</span></div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1700, &quot;height&quot;: 950}}">
+class Component extends DCLogic {
+  state = { tab: 'comp' };
+  SEQS = {
+    seqA: {
+      desc: 'UML sequence — QR consult: solid arrows are synchronous calls, dashed are replies/async. The QR token carries no PHI; the policy check decides visibility.',
+      parts: ['Patient App', 'Doctor App', 'API Gateway', 'QR Token Svc', 'Policy Engine', 'Records Svc', 'AI RAG', 'Audit', 'Notification'],
+      msgs: [
+        { f: 0, t: 2, l: '1: POST /qr/tokens' },
+        { f: 2, t: 3, l: '2: issueToken(tenantCtx)' },
+        { f: 3, t: 0, l: '3: token {ttl: 300s, rotating}', r: true },
+        { f: 1, t: 2, l: '4: POST /qr/resolve {token, nonce}' },
+        { f: 2, t: 3, l: '5: resolve(token) + sessionBind' },
+        { f: 3, t: 2, l: '6: mirai_patient_id', r: true },
+        { f: 2, t: 4, l: '7: evaluate(actor, patient, purpose)' },
+        { f: 4, t: 2, l: '8: PERMIT + consultGrant(30d, categories)', r: true },
+        { f: 2, t: 5, l: '9: GET /patients/{id}/summary' },
+        { f: 5, t: 6, l: '10: generateBrief(authorizedSlice)' },
+        { f: 6, t: 5, l: '11: brief + citations (claims verified)', r: true },
+        { f: 5, t: 1, l: '12: 200 · 360° view + AI brief', r: true },
+        { f: 2, t: 7, l: '13: «async» audit: scan · grant · view', a: true },
+        { f: 2, t: 8, l: '14: «async» notify patient (PHI-free)', a: true }
+      ],
+      notes: []
+    },
+    seqB: {
+      desc: 'UML sequence — finalized lab report synchronization: async ingest with idempotency; failures divert to the per-tenant DLQ (see Activity tab).',
+      parts: ['Hospital LIS', 'Integration GW', 'Pipeline', 'Identity Registry', 'Records Svc', 'Event Bus', 'Notification', 'Patient App'],
+      msgs: [
+        { f: 0, t: 1, l: '1: POST /integration/fhir/Bundle (mTLS)' },
+        { f: 1, t: 0, l: '2: 202 Accepted {event_id}', r: true },
+        { f: 1, t: 2, l: '3: «async» enqueue {idempotency key}', a: true },
+        { n: 2, l: 'validate schema · map/normalize to internal model · dedupe on {tenant, source, record_id, version}' },
+        { f: 2, t: 3, l: '4: resolve(HOSP-928372)' },
+        { f: 3, t: 2, l: '5: MIR-82X92K (confidence 0.98)', r: true },
+        { f: 2, t: 4, l: '6: persist(record + provenance)' },
+        { f: 4, t: 2, l: '7: stored v1 · status FINAL', r: true },
+        { f: 4, t: 5, l: '8: «async» publish report.finalized', a: true },
+        { f: 5, t: 6, l: '9: «async» notification.requested', a: true },
+        { f: 6, t: 7, l: '10: push "New report available" (PHI-free)', a: true }
+      ],
+      notes: []
+    }
+  };
+  renderVals() {
+    const s = this.state;
+    const TABS = [['comp', 'Component (UML)'], ['seqA', 'Sequence · QR consult'], ['seqB', 'Sequence · Report sync'], ['act', 'Activity · Ingest'], ['cls', 'Domain model (class)']];
+    const DESCS = {
+      comp: 'UML component diagram — «component» boxes with provided (⊙) and required (⊂) interfaces, grouped in «package» boundaries; dashed arrows are «use» dependencies. The gateway is the only entry; hospitals and AI providers are external.',
+      act: 'UML activity diagram — integration ingest pipeline with decision nodes and guard conditions. Every failure path terminates in a visible state; clinical data is never silently dropped.',
+      cls: 'Domain class model — key entities with attributes and associations (cardinalities at line ends). TimelineEvent is abstract; △ marks generalization to its subtypes. AuditEvent references, never owns, clinical entities.'
+    };
+    const tabs = TABS.map(([k, n]) => ({ n, bg: s.tab === k ? '#22303c' : '#fff', c: s.tab === k ? '#fff' : '#22303c', onPick: () => this.setState({ tab: k }) }));
+    const isSeq = s.tab === 'seqA' || s.tab === 'seqB';
+    let seqParts = [], seqMsgs = [], seqNotes = [], seqH = 0, desc = DESCS[s.tab];
+    if (isSeq) {
+      const sq = this.SEQS[s.tab];
+      desc = sq.desc;
+      const n = sq.parts.length, pad = 120, span = 1560 - 2 * pad, gap = span / (n - 1);
+      const X = i => Math.round(pad + i * gap);
+      const rows = sq.msgs.length;
+      seqH = 110 + rows * 48 + 40;
+      seqParts = sq.parts.map((label, i) => ({ label, left: X(i), lh: seqH - 100 }));
+      let y = 110;
+      sq.msgs.forEach(m => {
+        if (m.n !== undefined) { seqNotes.push({ left: X(m.n), top: y - 6, label: m.l }); y += 48; return; }
+        const x1 = X(m.f), x2 = X(m.t), right = x2 > x1;
+        seqMsgs.push({ top: y, left: Math.min(x1, x2), width: Math.abs(x2 - x1), label: m.l, bs: m.r || m.a ? 'dashed' : 'solid', side: right ? 'right' : 'left', arrow: m.r || m.a ? (right ? '▷' : '◁') : (right ? '▶' : '◀') });
+        y += 48;
+      });
+    }
+    return {
+      tabs, tabDesc: desc,
+      tComp: s.tab === 'comp', tSeq: isSeq, tAct: s.tab === 'act', tCls: s.tab === 'cls',
+      seqParts, seqMsgs, seqNotes, seqH
+    };
+  }
+}
+</script>
+</body>
+</html>

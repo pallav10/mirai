@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Instrument+Sans:wght@400;500;600&amp;family=Sora:wght@400;600;700&amp;family=Source+Sans+3:wght@400;600&amp;family=Outfit:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0;background:#f0eee9;font-family:system-ui,sans-serif}a{color:#2a6b8f;text-decoration:none}a:hover{color:#1d4d68}.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}.dv-tname{font:600 13px/1.2 system-ui,sans-serif;color:#1a1a1a}.dv-opts{display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start}.dv-opt{flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px}.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 system-ui,sans-serif;color:rgba(0,0,0,.55)}.dv-opt:target .dv-oid{background:#2a78d6;color:#fff}.dv-next{margin:22px 0 0;font:12px/1.5 system-ui,sans-serif;color:rgba(0,0,0,.5)}</style>
+</helmet>
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Mirai — three visual directions (logo + patient home)</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a">
+<div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Meridian · editorial calm · Instrument Serif · ocean blue on warm paper</div>
+<div style="width:390px;display:flex;align-items:center;gap:14px;padding:16px 18px;background:#fdfbf7;border:1px solid rgba(40,60,80,0.12);border-radius:14px">
+  <svg width="40" height="40" viewBox="0 0 40 40"><path d="M20 3.5 C22.4 13.6 26.4 17.6 36.5 20 C26.4 22.4 22.4 26.4 20 36.5 C17.6 26.4 13.6 22.4 3.5 20 C13.6 17.6 17.6 13.6 20 3.5 Z" fill="oklch(0.52 0.13 235)"></path><circle cx="31.5" cy="8.5" r="3" fill="oklch(0.72 0.12 260)"></circle></svg>
+  <div style="font-family:'Instrument Serif',serif;font-size:26px;color:#22303c">Mirai</div>
+  <div style="margin-left:auto;display:flex;gap:6px"><span style="width:18px;height:18px;border-radius:50%;background:#fdfbf7;border:1px solid rgba(0,0,0,0.15)"></span><span style="width:18px;height:18px;border-radius:50%;background:#22303c"></span><span style="width:18px;height:18px;border-radius:50%;background:oklch(0.52 0.13 235)"></span></div>
+</div>
+<data-screen-label style="display:none">1a Meridian patient home</data-screen-label>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="390px,844px">
+  <div style="height:100%;display:flex;flex-direction:column;background:#faf7f1;font-family:'Instrument Sans',sans-serif;color:#22303c">
+    <div style="padding:62px 22px 0;display:flex;align-items:flex-start;justify-content:space-between">
+      <div><div style="font-size:13px;color:rgba(34,48,60,0.55)">Wednesday, 21 August</div>
+      <div style="font-family:'Instrument Serif',serif;font-size:30px;line-height:1.15;margin-top:2px">Good morning,<br>Priya</div></div>
+      <div style="width:40px;height:40px;border-radius:50%;background:oklch(0.9 0.03 235);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;color:oklch(0.42 0.12 235)">PS</div>
+    </div>
+    <div style="margin:18px 22px 0;background:#ffffff;border:1px solid rgba(34,48,60,0.1);border-radius:16px;padding:16px;display:flex;gap:14px;align-items:center;box-shadow:0 1px 2px rgba(34,48,60,0.05)">
+      <div style="width:84px;height:84px;flex:none;padding:6px;background:#fff;border:1px solid rgba(34,48,60,0.12);border-radius:10px">{{ qrA }}</div>
+      <div style="flex:1"><div style="font-weight:600;font-size:15px">My Mirai QR</div>
+      <div style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:rgba(34,48,60,0.55);margin-top:2px">MIR-82X92K</div>
+      <div style="margin-top:8px;display:inline-block;font-size:12.5px;font-weight:600;color:oklch(0.45 0.13 235);border-bottom:1px solid oklch(0.72 0.08 235)">Present to doctor</div></div>
+    </div>
+    <div style="padding:20px 22px 0">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Instrument Serif',serif;font-size:19px">Today's medication</span><a style="font-size:12.5px;color:oklch(0.45 0.13 235)">All</a></div>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:0">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="width:8px;height:8px;border-radius:50%;background:oklch(0.52 0.13 235)"></span><div style="flex:1"><span style="font-weight:600;font-size:14px">Metformin 500 mg</span><span style="font-size:12.5px;color:rgba(34,48,60,0.55)"> · with breakfast</span></div><span style="font-size:12px;color:rgba(34,48,60,0.45)">8:00</span></div>
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(34,48,60,0.08)"><span style="width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(34,48,60,0.35)"></span><div style="flex:1"><span style="font-weight:600;font-size:14px">Atorvastatin 10 mg</span><span style="font-size:12.5px;color:rgba(34,48,60,0.55)"> · after dinner</span></div><span style="font-size:12px;color:rgba(34,48,60,0.45)">21:00</span></div>
+      </div>
+    </div>
+    <div style="padding:18px 22px 0">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Instrument Serif',serif;font-size:19px">Recent</span><a style="font-size:12.5px;color:oklch(0.45 0.13 235)">Timeline</a></div>
+      <div style="margin-top:10px;border-left:2px solid oklch(0.85 0.05 235);padding-left:14px;display:flex;flex-direction:column;gap:12px">
+        <div><div style="font-size:11px;color:rgba(34,48,60,0.5)">Today · Apollo Diagnostics</div><div style="font-size:14px;font-weight:600">Lipid panel report available</div><div style="font-size:12.5px;color:oklch(0.45 0.13 235);margin-top:1px">View report</div></div>
+        <div><div style="font-size:11px;color:rgba(34,48,60,0.5)">12 Aug · Dr. R. Menon</div><div style="font-size:14px;font-weight:600">Consultation — follow-up, Type 2 diabetes</div></div>
+      </div>
+    </div>
+    <div style="margin-top:auto;display:flex;justify-content:space-around;align-items:center;padding:10px 8px 6px;border-top:1px solid rgba(34,48,60,0.1);background:#fdfbf7">
+      <div style="text-align:center;font-size:10.5px;font-weight:600;color:oklch(0.45 0.13 235)"><div style="width:5px;height:5px;border-radius:50%;background:oklch(0.45 0.13 235);margin:0 auto 4px"></div>Home</div>
+      <div style="text-align:center;font-size:10.5px;color:rgba(34,48,60,0.5)"><div style="width:5px;height:5px;border-radius:50%;background:rgba(34,48,60,0.3);margin:0 auto 4px"></div>Timeline</div>
+      <div style="width:46px;height:46px;border-radius:50%;background:#22303c;display:flex;align-items:center;justify-content:center;margin-top:-18px;box-shadow:0 4px 10px rgba(34,48,60,0.3)"><div style="width:18px;height:18px;border:2.5px solid #fff;border-radius:4px"></div></div>
+      <div style="text-align:center;font-size:10.5px;color:rgba(34,48,60,0.5)"><div style="width:5px;height:5px;border-radius:50%;background:rgba(34,48,60,0.3);margin:0 auto 4px"></div>Records</div>
+      <div style="text-align:center;font-size:10.5px;color:rgba(34,48,60,0.5)"><div style="width:5px;height:5px;border-radius:50%;background:rgba(34,48,60,0.3);margin:0 auto 4px"></div>Profile</div>
+    </div>
+  </div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="1b">
+<div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Pulse Glass · soft dark · Sora · mint glow</div>
+<div style="width:390px;display:flex;align-items:center;gap:14px;padding:16px 18px;background:oklch(0.22 0.015 220);border-radius:14px">
+  <svg width="40" height="40" viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="28" rx="9" fill="none" stroke="oklch(0.85 0.13 165)" stroke-width="3.5"></rect><rect x="15" y="15" width="10" height="10" rx="3.5" fill="oklch(0.85 0.13 165)"></rect></svg>
+  <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:#f2f6f5;letter-spacing:0.5px">mirai</div>
+  <div style="margin-left:auto;display:flex;gap:6px"><span style="width:18px;height:18px;border-radius:50%;background:oklch(0.22 0.015 220);border:1px solid rgba(255,255,255,0.25)"></span><span style="width:18px;height:18px;border-radius:50%;background:oklch(0.3 0.02 200)"></span><span style="width:18px;height:18px;border-radius:50%;background:oklch(0.85 0.13 165)"></span></div>
+</div>
+<data-screen-label style="display:none">1b Pulse Glass patient home</data-screen-label>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="390px,844px">
+  <div style="height:100%;display:flex;flex-direction:column;background:linear-gradient(180deg,oklch(0.23 0.02 210),oklch(0.18 0.015 230));font-family:'Source Sans 3',sans-serif;color:#eef4f3">
+    <div style="padding:62px 22px 0;display:flex;align-items:center;justify-content:space-between;font-family:'Sora',sans-serif">
+      <div><div style="font-size:12px;color:rgba(238,244,243,0.5)">Good morning</div><div style="font-weight:700;font-size:22px">Priya Sharma</div></div>
+      <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600">PS</div>
+    </div>
+    <div style="margin:18px 22px 0;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:22px;padding:20px;text-align:center;backdrop-filter:blur(10px)">
+      <div style="width:128px;height:128px;margin:0 auto;padding:10px;background:oklch(0.87 0.13 165);border-radius:18px;box-shadow:0 0 40px oklch(0.85 0.13 165 / 0.35)">{{ qrB }}</div>
+      <div style="font-family:'Sora',sans-serif;font-weight:600;font-size:15px;margin-top:12px">My Mirai QR</div>
+      <div style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:oklch(0.85 0.1 165);margin-top:2px">MIR-82X92K · rotates in 4:52</div>
+    </div>
+    <div style="margin:16px 22px 0;display:flex;gap:10px">
+      <div style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:12px"><div style="font-size:11px;color:rgba(238,244,243,0.5)">Active meds</div><div style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;margin-top:2px">2</div></div>
+      <div style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:12px"><div style="font-size:11px;color:rgba(238,244,243,0.5)">New reports</div><div style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;margin-top:2px;color:oklch(0.85 0.13 165)">1</div></div>
+      <div style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:12px"><div style="font-size:11px;color:rgba(238,244,243,0.5)">Access</div><div style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;margin-top:2px">3</div></div>
+    </div>
+    <div style="margin:18px 22px 0">
+      <div style="font-family:'Sora',sans-serif;font-weight:600;font-size:14px;margin-bottom:10px">Recent activity</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:center"><span style="width:10px;height:10px;flex:none;border-radius:50%;background:oklch(0.85 0.13 165)"></span><div style="flex:1"><div style="font-weight:600;font-size:13.5px">Lipid panel report is ready</div><div style="font-size:11.5px;color:rgba(238,244,243,0.5)">Apollo Diagnostics · today</div></div></div>
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:center"><span style="width:10px;height:10px;flex:none;border-radius:50%;background:rgba(238,244,243,0.3)"></span><div style="flex:1"><div style="font-weight:600;font-size:13.5px">Dr. R. Menon viewed your records</div><div style="font-size:11.5px;color:rgba(238,244,243,0.5)">via QR · 12 Aug</div></div></div>
+      </div>
+    </div>
+    <div style="margin-top:auto;display:flex;justify-content:space-around;align-items:center;margin-bottom:8px;padding:10px 14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:999px;margin-left:22px;margin-right:22px;backdrop-filter:blur(10px)">
+      <span style="font-size:11px;font-weight:600;font-family:'Sora',sans-serif;color:oklch(0.85 0.13 165)">Home</span>
+      <span style="font-size:11px;color:rgba(238,244,243,0.55)">Timeline</span>
+      <span style="font-size:11px;color:rgba(238,244,243,0.55)">Records</span>
+      <span style="font-size:11px;color:rgba(238,244,243,0.55)">Access</span>
+      <span style="font-size:11px;color:rgba(238,244,243,0.55)">Profile</span>
+    </div>
+  </div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="1c">
+<div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Orbit · friendly geometric · Outfit · indigo on cool white</div>
+<div style="width:390px;display:flex;align-items:center;gap:14px;padding:16px 18px;background:#ffffff;border:1px solid rgba(60,55,120,0.12);border-radius:14px">
+  <svg width="40" height="40" viewBox="0 0 40 40"><rect x="11" y="11" width="18" height="18" rx="5" fill="oklch(0.45 0.17 275)" transform="rotate(45 20 20)"></rect><circle cx="20" cy="20" r="4" fill="#ffffff"></circle></svg>
+  <div style="font-family:'Outfit',sans-serif;font-weight:700;font-size:24px;color:oklch(0.3 0.06 275)">Mirai</div>
+  <div style="margin-left:auto;display:flex;gap:6px"><span style="width:18px;height:18px;border-radius:50%;background:oklch(0.97 0.008 270);border:1px solid rgba(0,0,0,0.12)"></span><span style="width:18px;height:18px;border-radius:50%;background:oklch(0.3 0.06 275)"></span><span style="width:18px;height:18px;border-radius:50%;background:oklch(0.45 0.17 275)"></span></div>
+</div>
+<data-screen-label style="display:none">1c Orbit patient home</data-screen-label>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="390px,844px">
+  <div style="height:100%;display:flex;flex-direction:column;background:oklch(0.97 0.008 270);font-family:'Outfit',sans-serif;color:oklch(0.28 0.05 275)">
+    <div style="padding:62px 22px 0;display:flex;align-items:center;justify-content:space-between">
+      <div><div style="font-weight:700;font-size:24px">Hi Priya 👋</div><div style="font-size:13px;color:rgba(50,45,100,0.55)">Everything looks good today</div></div>
+      <div style="width:42px;height:42px;border-radius:14px;background:oklch(0.9 0.05 275);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:oklch(0.42 0.15 275)">PS</div>
+    </div>
+    <div style="margin:16px 22px 0;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div style="grid-row:span 2;background:oklch(0.45 0.17 275);border-radius:24px;padding:16px;color:#fff;display:flex;flex-direction:column">
+        <div style="font-weight:600;font-size:15px">My QR</div>
+        <div style="font-size:11px;opacity:0.75;margin-top:1px">MIR-82X92K</div>
+        <div style="margin-top:12px;width:110px;height:110px;padding:8px;background:oklch(0.38 0.15 275);border-radius:16px;align-self:center">{{ qrC }}</div>
+        <div style="margin-top:auto;background:rgba(255,255,255,0.18);border-radius:999px;padding:8px 0;text-align:center;font-weight:600;font-size:13px">Present</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(60,55,120,0.1);border-radius:24px;padding:14px"><div style="font-weight:600;font-size:14px">Meds</div><div style="font-size:12px;color:rgba(50,45,100,0.55);margin-top:2px">2 due today</div><div style="margin-top:8px;height:6px;border-radius:3px;background:oklch(0.93 0.02 275)"><div style="width:50%;height:100%;border-radius:3px;background:oklch(0.45 0.17 275)"></div></div></div>
+      <div style="background:#fff;border:1px solid rgba(60,55,120,0.1);border-radius:24px;padding:14px"><div style="font-weight:600;font-size:14px">Reports</div><div style="font-size:12px;color:rgba(50,45,100,0.55);margin-top:2px">1 new</div><div style="margin-top:8px;display:inline-block;font-size:11px;font-weight:600;color:oklch(0.45 0.17 275);background:oklch(0.93 0.03 275);border-radius:999px;padding:3px 9px">Lipid panel</div></div>
+    </div>
+    <div style="margin:18px 22px 0">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-weight:700;font-size:16px">Timeline</span><a style="font-size:12.5px;font-weight:600;color:oklch(0.45 0.17 275)">See all</a></div>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+        <div style="background:#fff;border:1px solid rgba(60,55,120,0.1);border-radius:18px;padding:12px 14px;display:flex;gap:12px;align-items:center"><div style="width:36px;height:36px;flex:none;border-radius:12px;background:oklch(0.93 0.03 275);display:flex;align-items:center;justify-content:center"><div style="width:12px;height:12px;border-radius:4px;background:oklch(0.45 0.17 275)"></div></div><div><div style="font-weight:600;font-size:13.5px">Lipid panel — report ready</div><div style="font-size:11.5px;color:rgba(50,45,100,0.55)">Apollo Diagnostics · today</div></div></div>
+        <div style="background:#fff;border:1px solid rgba(60,55,120,0.1);border-radius:18px;padding:12px 14px;display:flex;gap:12px;align-items:center"><div style="width:36px;height:36px;flex:none;border-radius:12px;background:oklch(0.95 0.01 275);display:flex;align-items:center;justify-content:center"><div style="width:12px;height:12px;border-radius:50%;border:2.5px solid rgba(50,45,100,0.4)"></div></div><div><div style="font-weight:600;font-size:13.5px">Consultation with Dr. R. Menon</div><div style="font-size:11.5px;color:rgba(50,45,100,0.55)">Follow-up · 12 Aug</div></div></div>
+      </div>
+    </div>
+    <div style="margin-top:auto;display:flex;justify-content:space-around;align-items:center;padding:12px 8px 6px;background:#fff;border-top:1px solid rgba(60,55,120,0.1)">
+      <span style="font-size:11.5px;font-weight:700;color:oklch(0.45 0.17 275)">Home</span>
+      <span style="font-size:11.5px;font-weight:500;color:rgba(50,45,100,0.5)">Timeline</span>
+      <span style="font-size:11.5px;font-weight:500;color:rgba(50,45,100,0.5)">QR</span>
+      <span style="font-size:11.5px;font-weight:500;color:rgba(50,45,100,0.5)">Records</span>
+      <span style="font-size:11.5px;font-weight:500;color:rgba(50,45,100,0.5)">Profile</span>
+    </div>
+  </div>
+</x-import>
+</div>
+
+</div>
+<p class="dv-next">Try next: "build the full app in <a class="dv-oid" href="#1b">1b</a>" · "use <a class="dv-oid" href="#1a">1a</a>'s type with <a class="dv-oid" href="#1c">1c</a>'s layout" · "show the doctor side in one of these"</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  qrSvg(fg, bg) {
+    let seed = 42;
+    const rnd = () => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
+    const c = 6, n = 21, els = [];
+    const finder = (fx, fy, k) => {
+      els.push(React.createElement('rect', { key: 'o' + k, x: fx * c, y: fy * c, width: 7 * c, height: 7 * c, rx: 3, fill: fg }));
+      els.push(React.createElement('rect', { key: 'm' + k, x: (fx + 1) * c, y: (fy + 1) * c, width: 5 * c, height: 5 * c, rx: 2, fill: bg }));
+      els.push(React.createElement('rect', { key: 'i' + k, x: (fx + 2) * c, y: (fy + 2) * c, width: 3 * c, height: 3 * c, rx: 1.5, fill: fg }));
+    };
+    finder(0, 0, 'a'); finder(14, 0, 'b'); finder(0, 14, 'c');
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+      const inF = (x < 8 && y < 8) || (x > 12 && y < 8) || (x < 8 && y > 12);
+      if (!inF && rnd() < 0.42) els.push(React.createElement('rect', { key: x + '_' + y, x: x * c, y: y * c, width: c, height: c, fill: fg }));
+    }
+    return React.createElement('svg', { viewBox: '0 0 126 126', style: { width: '100%', height: '100%', display: 'block' } }, els);
+  }
+  renderVals() {
+    return {
+      qrA: this.qrSvg('#22303c', '#ffffff'),
+      qrB: this.qrSvg('#10201e', 'oklch(0.87 0.13 165)'),
+      qrC: this.qrSvg('#ffffff', 'oklch(0.38 0.15 275)')
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Instrument+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script src="./doc-page.js"></script>
+<style>
+doc-page:not(:defined){visibility:hidden}
+body{margin:0;font-family:'Instrument Sans',system-ui,sans-serif;color:#22303c}
+a{color:oklch(0.45 0.13 235);text-decoration:none}a:hover{color:oklch(0.38 0.12 235)}
+h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:34px;line-height:1.15;margin:0 0 6px}
+h2{font-family:'Instrument Serif',serif;font-weight:400;font-size:24px;line-height:1.2;margin:34px 0 10px;padding-top:14px;border-top:1px solid rgba(34,48,60,0.15)}
+h3{font-size:15px;font-weight:700;margin:20px 0 6px}
+p{font-family:'Instrument Sans',system-ui,sans-serif;font-size:15px;line-height:1.65;margin:0 0 10px}
+li{font-family:'Instrument Sans',system-ui,sans-serif;font-size:15px;line-height:1.6;margin:0 0 5px}
+td,th,.callout,.flow{font-family:'Instrument Sans',system-ui,sans-serif}
+ul,ol{margin:0 0 12px;padding-left:22px}
+table{border-collapse:collapse;width:100%;margin:8px 0 14px;font-size:13.5px}
+th{text-align:left;font-size:11px;font-weight:700;letter-spacing:0.06em;color:rgba(34,48,60,0.55);border-bottom:1.5px solid rgba(34,48,60,0.25);padding:7px 10px 6px 0}
+td{border-bottom:1px solid rgba(34,48,60,0.1);padding:8px 10px 8px 0;line-height:1.5;vertical-align:top}
+code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:oklch(0.96 0.01 235);border-radius:4px;padding:1px 5px}
+.callout{break-inside:avoid;background:oklch(0.96 0.015 235);border:1px solid oklch(0.85 0.05 235);border-radius:10px;padding:12px 16px;margin:12px 0 14px;font-size:14px;line-height:1.6}
+.flow{break-inside:avoid;background:#fbf9f4;border:1px solid rgba(34,48,60,0.15);border-radius:10px;padding:12px 16px;margin:10px 0 14px}
+.flow ol{margin:6px 0 0}
+.flow li{font-size:14px}
+</style>
+</helmet>
+<doc-page margin="0.9in">
+  <div slot="header" style="display:flex;justify-content:space-between;font-size:10px;color:rgba(34,48,60,0.5);padding:6px 0"><span>Mirai — End-to-End Architecture</span><span>v1.0 · August 2026 · Confidential</span></div>
+  <div slot="footer" style="text-align:center;font-size:10px;color:rgba(34,48,60,0.5);padding:6px 0">Mirai Platform Architecture</div>
+
+  <div style="display:flex;align-items:center;gap:14px;margin:34px 0 6px">
+    <svg width="40" height="40" viewBox="0 0 40 40"><path d="M20 3.5 C22.4 13.6 26.4 17.6 36.5 20 C26.4 22.4 22.4 26.4 20 36.5 C17.6 26.4 13.6 22.4 3.5 20 C13.6 17.6 17.6 13.6 20 3.5 Z" fill="oklch(0.52 0.13 235)"></path><circle cx="31.5" cy="8.5" r="3" fill="oklch(0.72 0.12 260)"></circle></svg>
+    <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;color:oklch(0.45 0.13 235)">MIRAI PLATFORM · TECHNICAL ARCHITECTURE</div>
+  </div>
+  <h1>End-to-End Architecture</h1>
+  <p style="font-size:16px;color:rgba(34,48,60,0.65)">A multi-tenant, patient-centric health-record platform: one patient → one identity → one QR → complete medical history → controlled doctor access. This document describes the full system, from client applications to data stores, for engineering, security review, and infrastructure planning.</p>
+
+  <h2>1 · System context and goals</h2>
+  <p>Mirai aggregates a patient's medical history across healthcare encounters and exposes it, under patient control, to authenticated healthcare professionals through a QR-based access mechanism. Hospitals keep their existing EHR/HIS/LIS as systems of record; Mirai is the patient-centric aggregation and access layer on top.</p>
+  <ul>
+    <li><b>Tenant</b> = a healthcare organization (hospital, clinic chain, diagnostics network). Tenants own the clinical records they produce.</li>
+    <li><b>Patient identity is global</b> — one Mirai Patient ID spans tenants, so a consolidated timeline can be composed across organizations with consent.</li>
+    <li><b>Doctors belong to tenants</b> and authenticate through their organization's identity provider.</li>
+    <li>Primary quality goals: security and auditability first; near-instant QR-to-patient lookup; high availability during active patient care; interoperability-ready data model (FHIR-aligned).</li>
+  </ul>
+
+  <h2>2 · Architecture principles</h2>
+  <ol>
+    <li><b>The QR identifies; auth decides.</b> The QR carries an opaque token, never PHI. Authentication and authorization determine what a doctor sees.</li>
+    <li><b>Consent is a first-class object</b> — scoped by grantee, category, duration, and purpose; evaluated on every read.</li>
+    <li><b>Tenant isolation by construction.</b> Tenant context is derived server-side, stamped at the edge, and enforced at gateway, service, and database layers.</li>
+    <li><b>Hospitals never write to core stores.</b> All external data passes through the integration layer with validation, identity resolution, and provenance.</li>
+    <li><b>Everything sensitive is audited</b> in an append-only, tamper-evident store.</li>
+    <li><b>API-first.</b> Every capability is an API; apps and integrations are peers of the same surface.</li>
+    <li><b>Stateless services, isolated state.</b> Compute scales horizontally; isolation lives in the data layer.</li>
+    <li><b>Fail loudly, never silently.</b> Failed clinical data lands in a visible error queue, never dropped.</li>
+  </ol>
+
+  <h2>3 · Multi-tenancy model</h2>
+  <h3>3.1 Control plane vs. data plane</h3>
+  <p>A shared <b>control plane</b> (no PHI) manages tenant lifecycle: provisioning, tiers and plans, quotas, feature flags, IdP and integration configuration, branding, metering, and offboarding. The <b>data plane</b> serves clinical traffic and is partitioned per tenant according to tier.</p>
+  <h3>3.2 Isolation tiers</h3>
+  <table>
+    <thead><tr><th>Tier</th><th>Compute</th><th>Database</th><th>Storage / search</th><th>Typical customer</th></tr></thead>
+    <tbody>
+      <tr><td><b>Pooled</b></td><td>Shared</td><td>Shared tables + <code>tenant_id</code> + Postgres row-level security</td><td>Per-tenant prefixes / index aliases</td><td>Clinics, small labs</td></tr>
+      <tr><td><b>Siloed</b></td><td>Shared, optional dedicated consumers</td><td>Schema-per-tenant on shared clusters</td><td>Dedicated bucket + index partition</td><td>Hospitals</td></tr>
+      <tr><td><b>Dedicated</b></td><td>Dedicated cell</td><td>Own cluster, pinned region, optional BYOK</td><td>Fully dedicated</td><td>Hospital networks, government</td></tr>
+    </tbody>
+  </table>
+  <h3>3.3 Tenancy invariants</h3>
+  <ul>
+    <li><code>tenant_id</code> is derived server-side (subdomain, client certificate, or token claim) — never trusted from client input.</li>
+    <li>All queries go through a tenant-aware repository layer; row-level security is the backstop, not the primary control.</li>
+    <li>Per-tenant envelope encryption keys — one leaked key exposes one tenant.</li>
+    <li>Rate limits, quotas, queues, indexes, caches, and dead-letter queues are all namespaced by tenant.</li>
+    <li>Cross-tenant reads exist only as patient-consented composition, and are always audited.</li>
+    <li>Offboarding exports the tenant's data, then provably deletes it; audit records are retained per regulation.</li>
+  </ul>
+
+  <h2>4 · Client tier</h2>
+  <ul>
+    <li><b>Patient app (iOS/Android)</b> — registration and OTP/passkey sign-in, QR presentation, timeline, records and reports, medications, consent management, family profiles (guardian links), emergency lock-screen card, notifications. The QR screen and emergency card are cached for offline display.</li>
+    <li><b>Doctor app</b> — org SSO + MFA, patient search (identity-only results), QR scanning, patient 360° view with AI clinical brief, clinical write flows (diagnosis, prescription, document upload), break-glass emergency access.</li>
+    <li><b>Admin console (web)</b> — staff and role management, integration configuration and credentials, error queue, publication rules, audit export.</li>
+    <li>Device posture: certificate pinning, jailbreak/root detection for clinical apps, no PHI in push payloads, biometric unlock gating cached data.</li>
+  </ul>
+
+  <h2>5 · Edge and API tier</h2>
+  <p>Traffic enters through CDN + WAF (TLS 1.3, DDoS and OWASP filtering), then the <b>API gateway</b>, which is where multi-tenancy begins:</p>
+  <ul>
+    <li>Resolves the tenant from subdomain (<code>citygeneral.mirai.health</code>), mTLS client certificate (system integrations), or token claim, and stamps a signed, immutable <b>tenant context</b> — <code>{tenant_id, tier, region, plan}</code> — onto the request. Downstream services accept only the signed header.</li>
+    <li>Per-tenant rate limits and quotas (noisy-neighbor control); stricter anti-replay and nonce checks on QR endpoints.</li>
+    <li>Request schema validation, API versioning (<code>/v1</code>), idempotency keys on writes.</li>
+    <li>Regional load balancing honors each tenant's data-residency pin.</li>
+  </ul>
+
+  <h2>6 · Identity and authentication</h2>
+  <ul>
+    <li><b>Patients:</b> mobile OTP as baseline, passkeys and Face ID once enrolled, optional ABHA (ABDM) federation in India deployments. Patients are platform-level identities, not tenant members.</li>
+    <li><b>Doctors and staff:</b> OIDC/SAML federation to the tenant's IdP, MFA enforced, professional-registry verification hook (HPR-ready). Sessions are short-lived with refresh; device binding for clinical apps.</li>
+    <li><b>System clients (hospital integrations):</b> mTLS + OAuth2 client-credentials, scoped per tenant, secrets held in the platform secrets manager and never exposed to users.</li>
+    <li><b>Tenant directory:</b> registry of tenants, facilities, org hierarchy, practitioner records, IdP configuration, and per-tenant feature flags.</li>
+  </ul>
+
+  <h2>7 · Authorization and consent</h2>
+  <p>A central policy engine evaluates every access: <b>RBAC</b> (patient, doctor, org-admin, platform roles) layered with <b>ABAC</b> (tenant, facility, specialty, purpose-of-use) and <b>consent grants</b>.</p>
+  <ul>
+    <li>Consent grant = <code>{patient, grantee (doctor/org), categories, duration, purpose, status}</code>. Categories: general history, reports &amp; labs, medications, diagnoses, mental/behavioral health (default off), sensitive clinical data.</li>
+    <li>Grants are created by QR scan (implicit consult grant with default duration), by explicit patient approval of a request, or by organization policy for records the org itself created. Patients can enable <b>auto-approve</b> (default on): requests from verified practitioners are granted instantly, with notification and one-tap revoke. A patient may hold concurrent grants to multiple practitioners across specialties (<b>shared care</b>) — each grantee sees the same underlying record scoped to their own categories and purpose-of-use. All grants auto-expire and are revocable.</li>
+    <li><b>Break-glass:</b> emergency access with mandatory reason, limited to the emergency profile plus critical history, immediately alerting compliance and the patient, and flagged in audit for review.</li>
+    <li>Policy decisions are cached seconds-scale and logged with inputs, for explainability.</li>
+  </ul>
+
+  <h2>8 · QR access subsystem</h2>
+  <ul>
+    <li>The QR encodes an opaque token resolvable only by Mirai — no identifiers or PHI. Tokens are short-lived (minutes), rotate automatically, and can be revoked.</li>
+    <li>Resolution binds the token to the scanning doctor's session (session binding), consumes a nonce (anti-replay), and is rate-limited per doctor and per tenant.</li>
+    <li>Token state lives in a replicated cache with strict TTL; issuing and resolution are both audited.</li>
+    <li>Printed/static fallback QRs (for patients without phones) resolve to a higher-friction flow requiring an additional identity check.</li>
+  </ul>
+
+  <h2>9 · Core domain services</h2>
+  <table>
+    <thead><tr><th>Service</th><th>Responsibilities</th><th>Key data</th></tr></thead>
+    <tbody>
+      <tr><td><b>Patient identity &amp; registry</b></td><td>Global Mirai Patient ID; demographic golden record; per-tenant external-ID crosswalk; probabilistic matching with confidence thresholds — ambiguous matches route to human resolution, never auto-attach; family/guardian links.</td><td>Identity registry DB</td></tr>
+      <tr><td><b>Medical records</b></td><td>Timeline events, diagnoses, prescriptions, hospitalizations, discharge summaries; FHIR-aligned internal model; record versioning; report lifecycle (ORDERED → IN_PROGRESS → COMPLETED → VERIFIED → FINAL → PUBLISHED_TO_PATIENT); provenance retained on every synchronized record.</td><td>Clinical DB</td></tr>
+      <tr><td><b>Consent &amp; access</b></td><td>Grant lifecycle (request, approve, deny, revoke, expire); patient-visible access log; emergency-access records.</td><td>Clinical DB</td></tr>
+      <tr><td><b>Documents</b></td><td>Upload/download via pre-signed URLs; malware-scanning pipeline before records become visible; metadata and linkage to timeline events; PDF, images, DICOM.</td><td>Object storage</td></tr>
+      <tr><td><b>Search</b></td><td>Patient lookup by name, ID, phone, DOB; results expose identity only until an authorization check passes; per-tenant index partitions rebuilt from source of truth.</td><td>Search index</td></tr>
+      <tr><td><b>Notifications</b></td><td>Push/SMS/email; PHI-free templates; consent requests, report-ready, access alerts, follow-up reminders; per-tenant and per-user preferences.</td><td>Queue + prefs</td></tr>
+      <tr><td><b>AI summary</b></td><td>Patient-friendly summaries, clinical briefs at scan time, ask-the-record Q&amp;A. Generated only from the requester's <i>authorized slice</i>; citations to source records; disclaimers; per-tenant configuration; no cross-tenant training; prompts and outputs logged for review.</td><td>Stateless over records API</td></tr>
+      <tr><td><b>Audit</b></td><td>Append-only, hash-chained events for every view, write, grant, QR scan, break-glass, export; separate credentials and WORM retention; per-tenant export.</td><td>Audit store</td></tr>
+    </tbody>
+  </table>
+
+  <h2>10 · AI architecture</h2>
+  <h3>10.1 Capabilities</h3>
+  <ul>
+    <li><b>Patient summary</b> — plain-language read of new reports, diagnoses, and medication changes on the patient home; regenerated when new records publish.</li>
+    <li><b>Clinical brief</b> — generated at QR scan for the doctor: conditions, latest results with flags, allergies, suggested focus, with citations into the source records.</li>
+    <li><b>Adaptive visuals (AGUI)</b> — the summary service returns declarative chart specs (trend lines, threshold gauges) chosen per visit and per specialty — HbA1c trend for an endocrinologist, EF trend for a cardiologist on the same shared patient; clients render them natively.</li>
+    <li><b>Ask-the-record Q&amp;A</b> — free-form questions answered strictly from the record ("last eye exam?", "HbA1c trend?").</li>
+    <li><b>Report explanation</b> — per-report plain-language explanation of values and reference ranges for patients.</li>
+    <li>Deferred (post-MVP): drug-interaction detection, coding suggestions, clinical decision support — the pipeline below is designed to host them without rework.</li>
+  </ul>
+  <h3>10.2 RAG pipeline</h3>
+  <p><code>authorize → retrieve → assemble → generate → verify → respond</code> — grounding is computed per request, never from a pre-built cross-record corpus:</p>
+  <ol>
+    <li><b>Authorize:</b> the policy engine resolves the requester's <i>authorized slice</i> (role + consent categories + tenant). Everything downstream sees only this slice — consent revocation takes effect instantly because retrieval is authorization-filtered at query time.</li>
+    <li><b>Retrieve:</b> hybrid retrieval over the slice — structured pulls from the FHIR-aligned records API (active problems, meds, latest labs are always included) plus semantic search over embedded record chunks for the long tail (old notes, discharge summaries, document text extracted at ingest).</li>
+    <li><b>Assemble:</b> prompt built from normalized clinical facts with record IDs attached; documents and notes are injected as quoted data, never as instructions (prompt-injection boundary).</li>
+    <li><b>Generate:</b> call through the AI provider gateway (below) with per-use-case model routing — small/fast model for patient summaries, stronger model for clinical briefs and Q&amp;A.</li>
+    <li><b>Verify:</b> post-processing checks every factual claim against the retrieved facts (numbers, dates, drug names must appear in sources); unsupported claims are dropped or the response is refused; output filters catch PHI leakage outside the authorized slice.</li>
+    <li><b>Respond:</b> answer with inline citations back to source records, fixed disclaimers ("not medical advice" / "verify before clinical decisions"); prompt, retrieved set, and output logged to audit.</li>
+  </ol>
+  <h3>10.3 Pluggable provider gateway</h3>
+  <p>All model calls go through an internal <b>AI provider gateway</b> — one interface (<code>complete</code>, <code>embed</code>), N adapters. No service talks to a vendor SDK directly.</p>
+  <table>
+    <thead><tr><th>Adapter</th><th>Typical use</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Azure OpenAI</td><td>Tenants on Azure / existing Microsoft BAA</td><td>Regional deployments, no-training + zero-retention flags</td></tr>
+      <tr><td>AWS Bedrock (Claude)</td><td>Default for AWS-hosted cells</td><td>In-region endpoints; model version pinning</td></tr>
+      <tr><td>GCP Vertex</td><td>GCP-resident tenants</td><td>Same contract via adapter</td></tr>
+      <tr><td>Self-hosted (vLLM)</td><td>Government / dedicated cells with no-egress rules</td><td>Open-weight models inside the tenant cell</td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li><b>Per-tenant routing policy:</b> provider, model, and region are tenant configuration (residency, compliance posture, cost tier) — switching providers is a config change, not a code change.</li>
+    <li><b>Contracts:</b> BAA/DPA per provider; zero data retention and no training on tenant data are hard requirements; requests carry no tenant identifiers beyond what the contract covers.</li>
+    <li><b>Resilience &amp; cost:</b> failover chains per use case, timeouts and circuit breakers, model version pinning with staged upgrades, per-tenant token metering feeding the control plane's billing.</li>
+  </ul>
+  <h3>10.4 Embeddings and caching</h3>
+  <ul>
+    <li>Embeddings generated at ingest (and re-embedded on amendment) into a per-tenant, encrypted vector store (pgvector / OpenSearch k-NN), scoped by patient — disposable and rebuilt from source of truth.</li>
+    <li>Vectors are treated as PHI: same encryption, residency, and deletion obligations as the records they derive from.</li>
+    <li>Summary cache keyed by <code>{patient, authorized-slice hash, model version}</code> — a new record, changed consent, or model upgrade invalidates it. Scan-time brief SLO: p95 &lt; 2.5 s (precomputed on <code>report.finalized</code> where the tenant enables it).</li>
+  </ul>
+  <h3>10.5 Safety and evaluation</h3>
+  <ul>
+    <li>Human-in-the-loop by design: AI output is never written to the record and triggers no clinical action; MVP explicitly defers decision support.</li>
+    <li>Evaluation harness with clinician-reviewed golden sets per use case; regression runs gate model/prompt changes; red-teaming for prompt injection via uploaded documents.</li>
+    <li>Full auditability: every generation logged (requester, slice hash, model, prompt, output) — reviewable per tenant, exportable for compliance.</li>
+  </ul>
+
+  <h2>11 · Integration layer</h2>
+  <p>The integration layer is the only door for external clinical data. Per-tenant connectors carry their own credentials, identifier mappings, resource whitelists, and publication rules.</p>
+  <h3>11.1 Protocols</h3>
+  <p>REST APIs and FHIR R4 first; HL7 v2 messaging, webhooks/event push, and secure file-based transfer (SFTP) for legacy systems; scheduled sync where events are unavailable. Adapters normalize into one internal pipeline so new protocols never touch the core model.</p>
+  <h3>11.2 Processing pipeline</h3>
+  <p><code>authenticate source → validate schema → resolve patient identity → map/normalize → dedupe → persist with provenance → apply publication policy → emit events → notify</code></p>
+  <ul>
+    <li>Idempotency key: <code>{tenant, source_system, source_record_id, version}</code> — duplicate events are detected and acknowledged without reprocessing.</li>
+    <li>Processing states: RECEIVED → VALIDATING → PROCESSED | REJECTED | RETRYING → FAILED → DEAD_LETTER, all visible to tenant admins with failure reasons that avoid unnecessary PHI.</li>
+    <li>Retry with exponential backoff; per-tenant dead-letter queues; ambiguous identity matches route to the admin resolution queue.</li>
+    <li>Provenance preserved verbatim: source system, source organization, source record ID, original clinical timestamp, author, record status, import time, version. Transformations never overwrite provenance.</li>
+    <li>Amendments create new versions; published records visibly indicate when an updated version exists.</li>
+  </ul>
+
+  <h2>12 · Eventing and async processing</h2>
+  <ul>
+    <li>Event bus with topics such as <code>report.finalized</code>, <code>record.created</code>, <code>consent.granted</code>, <code>consent.revoked</code>, <code>access.viewed</code>, <code>integration.failed</code>, <code>notification.requested</code>.</li>
+    <li>Producers use the transactional outbox pattern; consumers are idempotent; partitions are keyed by <code>tenant_id</code> (per-tenant ordering where required).</li>
+    <li>Async consumers: notification dispatch, search indexing, audit projection, AI pre-computation (where enabled), webhook fan-out to tenant systems.</li>
+  </ul>
+
+  <h2>13 · Data architecture</h2>
+  <table>
+    <thead><tr><th>Store</th><th>Technology class</th><th>Isolation</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Clinical DB</td><td>PostgreSQL</td><td>RLS / schema / cluster by tier</td><td>Partitioned by tenant; read replicas for patient-360 composition</td></tr>
+      <tr><td>Identity registry</td><td>PostgreSQL</td><td>Platform-global, service-only access</td><td>Golden records + per-tenant crosswalk</td></tr>
+      <tr><td>Documents</td><td>Object storage (S3-class)</td><td>Per-tenant bucket/prefix</td><td>Pre-signed URLs, lifecycle rules, legal hold</td></tr>
+      <tr><td>Search</td><td>OpenSearch-class</td><td>Per-tenant partitions/aliases</td><td>Disposable — rebuilt from source of truth</td></tr>
+      <tr><td>Audit</td><td>WORM store</td><td>Per-tenant streams</td><td>Hash-chained, anchored daily, immutable retention</td></tr>
+      <tr><td>Cache / sessions / QR state</td><td>Redis-class</td><td>Tenant-namespaced keys</td><td>TTL-bound; no durable PHI</td></tr>
+      <tr><td>Event bus</td><td>Kafka-class</td><td>Tenant-keyed partitions</td><td>Outbox-fed; DLQs per tenant</td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li><b>Encryption:</b> AES-256 at rest everywhere; envelope encryption with per-tenant data keys wrapped by KMS master keys; key rotation; optional BYOK for dedicated tier.</li>
+    <li><b>Residency:</b> each tenant is pinned to a regional cell; backups and replicas stay in-region.</li>
+    <li><b>Retention &amp; deletion:</b> policy-driven per record class and jurisdiction; secure deletion honoring audit-retention obligations.</li>
+  </ul>
+
+  <h2>14 · Security architecture (defense in depth)</h2>
+  <ol>
+    <li><b>Edge:</b> WAF, DDoS protection, TLS 1.3, certificate pinning in apps.</li>
+    <li><b>Gateway:</b> tenant resolution, signed context, rate limits, schema validation, anti-replay.</li>
+    <li><b>Service:</b> authN + policy engine on every call; purpose-of-use recorded; input validation; secure file handling with malware scanning.</li>
+    <li><b>Data:</b> tenant-aware repositories, RLS backstop, per-tenant keys, least-privilege DB roles, secrets manager.</li>
+    <li><b>Operations:</b> SAST/DAST in CI, dependency scanning, pen tests, admin access via JIT elevation with audit, no standing production access to PHI.</li>
+  </ol>
+
+  <h2>15 · API surface</h2>
+  <p>Versioned REST (FHIR-compatible read endpoints planned): <code>/auth</code> · <code>/patients</code> · <code>/doctors</code> · <code>/organizations</code> · <code>/encounters</code> · <code>/diagnoses</code> · <code>/prescriptions</code> · <code>/medications</code> · <code>/reports</code> · <code>/documents</code> · <code>/hospitalizations</code> · <code>/discharge-summaries</code> · <code>/consents</code> · <code>/access</code> · <code>/audit</code> · <code>/qr</code> · <code>/notifications</code> · <code>/integration</code> (tenant-scoped ingest). Webhooks deliver tenant-facing events with signed payloads.</p>
+
+  <h2>16 · Key end-to-end flows</h2>
+  <div class="flow"><b>A · QR consult (synchronous)</b>
+    <ol>
+      <li>Patient opens QR screen; app fetches a fresh rotating token.</li>
+      <li>Doctor scans; gateway resolves the doctor's tenant, checks rate limits and nonce.</li>
+      <li>QR service resolves token → Mirai Patient ID; binds to the doctor's session.</li>
+      <li>Policy engine evaluates role + consent; a consult grant is created with default duration.</li>
+      <li>Records service composes the authorized 360° slice (cross-tenant, consent-trimmed); AI service generates the clinical brief from that slice only.</li>
+      <li>Audit events written (scan, grant, view); patient notified "Dr. X viewed your records."</li>
+    </ol>
+  </div>
+  <div class="flow"><b>B · Lab report sync (asynchronous)</b>
+    <ol>
+      <li>LIS finalizes a report and pushes it via the tenant's connector (FHIR/HL7/file).</li>
+      <li>Pipeline authenticates the source, validates schema, resolves the patient (crosswalk → golden record; ambiguity → admin queue).</li>
+      <li>Record persisted with full provenance; publication policy applied (auto-publish, hold-for-review, or clinician-only).</li>
+      <li><code>report.finalized</code> event → notification to patient, search indexing, audit.</li>
+      <li>Failures land in RETRYING or the per-tenant DLQ, visible in the admin error queue.</li>
+    </ol>
+  </div>
+  <div class="flow"><b>C · Consent request</b>
+    <ol>
+      <li>Doctor (or org) requests access; patient gets a PHI-free notification.</li>
+      <li>Patient reviews requester, picks duration (24 h / 30 d / 90 d) and categories (sensitive categories default off), approves or denies — skipped when the patient has auto-approve enabled (the grant is issued instantly and stays revocable).</li>
+      <li>Grant stored; policy cache invalidated; both parties notified; audit written; grant auto-expires.</li>
+    </ol>
+  </div>
+  <div class="flow"><b>D · Break-glass emergency access</b>
+    <ol>
+      <li>Doctor selects emergency access with mandatory reason and patient identifier.</li>
+      <li>Policy engine issues a constrained emergency grant (emergency profile + critical history).</li>
+      <li>Compliance and the patient are alerted immediately; the session is flagged for post-hoc review.</li>
+    </ol>
+  </div>
+  <div class="flow"><b>E · Tenant onboarding</b>
+    <ol>
+      <li>Control plane creates the tenant: tier, region, subdomain, quotas.</li>
+      <li>Provisioning automation creates schema/DB, storage prefix, KMS key, search partition, IdP config — idempotent, minutes not days.</li>
+      <li>Admin configures integrations (credentials, mappings, publication rules) and invites staff; test events flow through a sandbox connector before go-live.</li>
+    </ol>
+  </div>
+
+  <h2>17 · Deployment and operations</h2>
+  <ul>
+    <li><b>Topology:</b> regional cells (e.g., India, EU, US), each multi-AZ. Pooled and siloed tenants share cell infrastructure; dedicated tenants get their own cell or cluster. Residency never crosses cells.</li>
+    <li><b>Runtime:</b> containerized services on Kubernetes-class orchestration; horizontal autoscaling per service (API, records, integration workers, AI scale independently).</li>
+    <li><b>Delivery:</b> trunk-based CI/CD, blue/green or canary deploys, schema migrations gated and reversible, per-tenant feature flags for progressive rollout.</li>
+    <li><b>Observability:</b> logs, metrics, traces tagged with <code>tenant_id</code>; per-tenant dashboards; SLOs — QR-to-patient p95 &lt; 500 ms, patient-360 load &lt; 1 s, integration lag alerting, DLQ depth alarms surfaced to tenant admins.</li>
+  </ul>
+
+  <h2>18 · Reliability and disaster recovery</h2>
+  <ul>
+    <li>Multi-AZ by default; in-region failover preserves residency. RPO ≤ 5 min, RTO ≤ 1 h for clinical reads.</li>
+    <li>Point-in-time-recovery backups per tenant DB/schema; regular restore drills; integrity checks on clinical records.</li>
+    <li>Graceful degradation: QR presentation and the emergency card serve from cache if core services degrade; reads outlive writes.</li>
+  </ul>
+
+  <h2>19 · Suggested technology stack</h2>
+  <table>
+    <thead><tr><th>Layer</th><th>Suggestion</th></tr></thead>
+    <tbody>
+      <tr><td>Mobile apps</td><td>Native iOS/Android or React Native (shared design system)</td></tr>
+      <tr><td>Edge / gateway</td><td>CloudFront/Cloudflare + WAF; Kong/Envoy-based gateway</td></tr>
+      <tr><td>Services</td><td>Kotlin/Java or Go microservices; gRPC internal, REST external</td></tr>
+      <tr><td>Policy engine</td><td>OPA/Cedar-class with consent extension</td></tr>
+      <tr><td>Data</td><td>PostgreSQL (RLS), Redis, Kafka, OpenSearch, S3-class storage, KMS/HSM</td></tr>
+      <tr><td>AI</td><td>AI provider gateway (Azure OpenAI / Bedrock / Vertex / self-hosted vLLM adapters); RAG over the authorized slice; pgvector or OpenSearch k-NN for embeddings</td></tr>
+      <tr><td>Infra</td><td>Kubernetes, Terraform, per-cell isolation; OpenTelemetry observability</td></tr>
+    </tbody>
+  </table>
+
+  <h2>20 · MVP boundary and evolution</h2>
+  <p><b>In MVP:</b> patient/doctor/org registration, QR generate + scan + authorized lookup, patient overview and timeline, diagnoses, prescriptions, document upload/view, discharge summaries, basic consent, audit logging, one integration path (REST/FHIR ingest of finalized reports), identity mapping, patient notifications, pooled + siloed tiers in one region.</p>
+  <p><b>Deferred:</b> full FHIR interoperability surface, HL7 v2 breadth, insurance/pharmacy integrations, dedicated cells and BYOK, advanced analytics, clinical decision support. The FHIR-aligned model, provenance capture, and the integration boundary are designed so none of these require re-architecture — the platform grows toward a portable health identity and interoperability layer (cross-hospital history, consent marketplace, national platform federation) without touching the core.</p>
+</doc-page>
+</x-dc>
+</body>
+</html>
